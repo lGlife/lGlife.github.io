@@ -537,7 +537,8 @@ a {
   cursor: pointer;
   text-transform: uppercase;
   float: none;
-  height: 170px;
+  height: 180px;
+  margin-top: -25px;
   *margin-left: -12px;
   text-align: center;
   display: -webkit-box;
@@ -568,6 +569,7 @@ a {
 }
 #header .switch-btn {
   width: 60px;
+  top: -10px;
   align: center;
 }
 #header .turn-left {
@@ -700,6 +702,7 @@ a {
 }
 #header .switch-part3 {
   left: 200%;
+  top: 20px;
   line-height: 30px;
 }
 #header .switch-part3 .switch-friends-link {
