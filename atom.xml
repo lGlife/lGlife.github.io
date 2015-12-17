@@ -4,7 +4,7 @@
   <subtitle><![CDATA[远离闹市才是真正的自我]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-12-17T09:25:56.750Z</updated>
+  <updated>2015-12-17T09:38:22.581Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -18,14 +18,15 @@
     <title><![CDATA[Hello World]]></title>
     <link href="http://yoursite.com/2015/12/17/Hello%20World/"/>
     <id>http://yoursite.com/2015/12/17/Hello World/</id>
-    <published>2015-12-17T09:25:56.750Z</published>
-    <updated>2015-12-17T09:25:56.750Z</updated>
+    <published>2015-12-17T09:38:22.581Z</published>
+    <updated>2015-12-17T09:38:22.581Z</updated>
     <content type="html"><![CDATA[<p>终于有时间来写写了，离搭建好博客的时间一个有半个月了，期间发生了各种奇葩的事情（一个高中玩的好的朋友居然失踪了，各种联系，各种奔波，居然TMD自己玩失踪）。</p>
 <p>开始还想写记录下来搭建博客的一下步骤的，现在过的太久，遇到的问题差不多忘记了（记忆力不好），这也是我搭建博客的主要原因之一，记录自己学习的知识点，以及工作中遇到的一些问题。</p>
 <p>我主要就是参考下面的资料搭建了</p>
 <ol>
 <li><a href="http://blog.csdn.net/poem_of_sunshine/article/details/29369785" target="_blank" rel="external">独立博客搭建教程</a></li>
 <li><a href="https://github.com/iissnan/hexo-theme-next/wiki/%E6%98%BE%E7%A4%BA-feed-%E9%93%BE%E6%8E%A5" target="_blank" rel="external">hexo特性配置</a></li>
+<li><a href="http://www.jianshu.com/p/73779eacb494" target="_blank" rel="external">hexo 静态博客使用指南</a></li>
 </ol>
 ]]></content>
     <summary type="html">
