@@ -4,7 +4,7 @@
   <subtitle><![CDATA[远离闹市才是真正的自我]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-12-24T03:00:39.205Z</updated>
+  <updated>2015-12-24T04:15:51.078Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -13,6 +13,21 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Http编程]]></title>
+    <link href="http://yoursite.com/2015/12/24/Http%E7%BC%96%E7%A8%8B/"/>
+    <id>http://yoursite.com/2015/12/24/Http编程/</id>
+    <published>2015-12-24T03:21:02.000Z</published>
+    <updated>2015-12-24T04:15:51.078Z</updated>
+    <content type="html"></content>
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="学习" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[sublime text2 插件安装及激活]]></title>
