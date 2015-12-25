@@ -4,7 +4,7 @@
   <subtitle><![CDATA[远离闹市才是真正的自我]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-12-25T09:30:18.381Z</updated>
+  <updated>2015-12-25T09:38:06.993Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yoursite.com/2015/12/24/Http%E5%8D%8F%E8%AE%AE/"/>
     <id>http://yoursite.com/2015/12/24/Http协议/</id>
     <published>2015-12-24T03:21:02.000Z</published>
-    <updated>2015-12-25T09:30:18.381Z</updated>
+    <updated>2015-12-25T09:38:06.993Z</updated>
     <content type="html"><![CDATA[<h3 id="什么是http协议">什么是http协议</h3><p>http协议：对浏览器客户端和服务端之间数据传输的格式规范<font color="red">数据传输的格式规范</font></p>
 <h3 id="查看http协议的工具">查看http协议的工具</h3><ol>
 <li>使用火狐的firebug插件（右键-&gt;firebug-&gt;网络）</li>
@@ -102,7 +102,7 @@
 实体内容：
     response.getWriter<span class="literal">()</span>.writer<span class="literal">()</span>;   发送字符实体内容
     response.getOutputStream<span class="literal">()</span>.writer<span class="literal">()</span>  发送字节实体内容
-</code></pre><p>此文章知识点来源创智博客发布的学习教程里面。以后会定期的更新，记录自己的学习历程，总结所学的知识点。</p>
+</code></pre><p>此文章知识点来源传智博客发布的学习教程里面。以后会定期的更新，记录自己的学习历程，总结所学的知识点。</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<h3 id="什么是http协议">什么是http协议</h3><p>http协议：对浏览器客户端和服务端之间数据传输的格式规范<font color="red">数据传输的格式规范</font></p>
