@@ -4,7 +4,7 @@
   <subtitle><![CDATA[远离闹市才是真正的自我]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-12-28T08:49:37.197Z</updated>
+  <updated>2015-12-28T08:55:46.908Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yoursite.com/2015/12/28/servlet%E7%BC%96%E7%A8%8B/"/>
     <id>http://yoursite.com/2015/12/28/servlet编程/</id>
     <published>2015-12-28T01:24:51.000Z</published>
-    <updated>2015-12-28T08:49:37.197Z</updated>
+    <updated>2015-12-28T08:55:46.908Z</updated>
     <content type="html"><![CDATA[<h3 id="如何开发一个Servlet">如何开发一个Servlet</h3><p>步骤</p>
 <ol>
 <li>编写java类，继承HttpServlet类</li>
@@ -51,6 +51,8 @@
 <li>在wed.xml文件中进行配置</li>
 <]]>
     </summary>
+    
+      <category term="学习" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
