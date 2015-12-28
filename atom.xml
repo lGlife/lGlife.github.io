@@ -4,7 +4,7 @@
   <subtitle><![CDATA[远离闹市才是真正的自我]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-12-28T09:59:07.136Z</updated>
+  <updated>2015-12-28T10:00:14.919Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yoursite.com/2015/12/28/servlet%E7%BC%96%E7%A8%8B/"/>
     <id>http://yoursite.com/2015/12/28/servlet编程/</id>
     <published>2015-12-28T01:24:51.000Z</published>
-    <updated>2015-12-28T09:59:07.136Z</updated>
+    <updated>2015-12-28T10:00:14.919Z</updated>
     <content type="html"><![CDATA[<h3 id="如何开发一个Servlet">如何开发一个Servlet</h3><p>步骤</p>
 <ol>
 <li>编写java类，继承HttpServlet类</li>
@@ -125,7 +125,7 @@
 <li>获取数据： java.lang.Object getAttribute(java.lang.String name)  </li>
 <li>删除数据： void removeAttribute(java.lang.String name)  </li>
 </ul>
-<font color="red">ServletContext域对象：作用范围在整个web应用中有效！！！<br>所有域对象：<br>&gt;　HttpServletRequet 域对象<br>ServletContext域对象<br>HttpSession 域对象<br>PageContext域对象    </font>
+<font color="red">ServletContext域对象：作用范围在整个web应用中有效！！！<br>所有域对象：<br>&gt; HttpServletRequet 域对象<br>ServletContext域对象<br>HttpSession 域对象<br>PageContext域对象    </font>
 
 <h4 id="转发法"><strong>转发法</strong></h4><p><code>RequestDispatcher getRequestDispatcher(java.lang.String path)</code><br>转发<br><code>request.setAttribute(&quot;name&quot;,&quot;rose&quot;);</code><br><code>this.getServletContext().getRequestDispatcher(&quot;/GetDateServlet&quot;).forward(request, response);</code></p>
 <ul>
