@@ -33,7 +33,7 @@ Servlet程序交给tomcat服务器运行12345678910111213141516&amp;lt;!-- 配�
 在wed.xml文件中进行配置
 Servlet程序交给tomcat服务器运行12345678910111213141516&amp;lt;!-- 配置一个servlet --&amp;gt;  &amp;lt;!-- servlet的配置 --&amp;gt;  &amp;lt;servlet&amp;gt;        &amp;lt;">
 <meta property="og:image" content="http://yoursite.com/images/servlet.png">
-<meta property="og:updated_time" content="2015-12-29T01:47:30.219Z">
+<meta property="og:updated_time" content="2015-12-29T03:47:39.952Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="servlet编程">
 <meta name="twitter:description" content="如何开发一个Servlet步骤
@@ -371,6 +371,50 @@ Servlet程序交给tomcat服务器运行12345678910111213141516&amp;lt;!-- 配�
 <li>不能再重定向的过程，把数据保存到request中。</li>
 </ul>
 <font color="red">结论： 如果要使用request域对象进行数据共享，只能用转发技术！！！</font>
+
+<h3 id="总结">总结</h3><h4 id="Servlet编程">Servlet编程</h4><ul>
+<li>Servlet生命周期（重点）<ul>
+<li>构造方法： 创建servlet对象。默认情况下，第一次访问servlet对象时。只调用1次。</li>
+<li>init方法（有参）： 创建完servlet对象后调用。只调用1次。注意： 会调用无参的init方法。<br>3+ service方法： servlet提供服务的方法。每次发出请求调用。注意： request对象 ，response对象</li>
+<li>destroy方法：tomcat服务器停止或web应用重新部署，servlet对象销毁，destroy方法被调用。</li>
+</ul>
+</li>
+<li>ServletConfig对象<ul>
+<li>获取servlet的初始化参数：<blockquote>
+<p>getInitParameter(“name”);<br>getInitParameterNames();</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>ServletContext对象</p>
+<ul>
+<li><p>得到web应用路径：</p>
+<blockquote>
+<p>context.getContextPath();<br>request.getContextPath();  等价于上面的代码</p>
+</blockquote>
+</li>
+<li><p>得到web应用参数：</p>
+<blockquote>
+<p>context.getInitParameter(“name”);<br>context.getInitParameterNames();</p>
+</blockquote>
+</li>
+<li><p>域对象:</p>
+<blockquote>
+<p>context.setAttribute(“name”,Object): 保存数据<br>context.getAttribute(“name”)   得到数据<br>context.removeAttribue(“name”)  清除数据</p>
+</blockquote>
+</li>
+<li><p>转发</p>
+<blockquote>
+<p>context.getRequestDispatcher(“路径”).forward(request,response);<br>request.getRequestDispacher(“路径”).forward(request,response);  等价于上面的代码</p>
+</blockquote>
+</li>
+<li>得到web应用中的资源文件<blockquote>
+<p>context.getRealPath(“路径”)<br>context.getResourceAsStream(“路径”);</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
