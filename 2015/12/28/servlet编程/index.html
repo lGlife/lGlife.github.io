@@ -33,7 +33,7 @@ Servlet程序交给tomcat服务器运行12345678910111213141516&amp;lt;!-- 配�
 在wed.xml文件中进行配置
 Servlet程序交给tomcat服务器运行12345678910111213141516&amp;lt;!-- 配置一个servlet --&amp;gt;  &amp;lt;!-- servlet的配置 --&amp;gt;  &amp;lt;servlet&amp;gt;        &amp;lt;">
 <meta property="og:image" content="http://yoursite.com/images/servlet.png">
-<meta property="og:updated_time" content="2015-12-29T03:47:39.952Z">
+<meta property="og:updated_time" content="2015-12-29T04:18:26.927Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="servlet编程">
 <meta name="twitter:description" content="如何开发一个Servlet步骤
@@ -375,7 +375,8 @@ Servlet程序交给tomcat服务器运行12345678910111213141516&amp;lt;!-- 配�
 <h3 id="总结">总结</h3><h4 id="Servlet编程">Servlet编程</h4><ul>
 <li>Servlet生命周期（重点）<ul>
 <li>构造方法： 创建servlet对象。默认情况下，第一次访问servlet对象时。只调用1次。</li>
-<li>init方法（有参）： 创建完servlet对象后调用。只调用1次。注意： 会调用无参的init方法。<br>3+ service方法： servlet提供服务的方法。每次发出请求调用。注意： request对象 ，response对象</li>
+<li>init方法（有参）： 创建完servlet对象后调用。只调用1次。注意： 会调用无参的init方法。</li>
+<li>service方法： servlet提供服务的方法。每次发出请求调用。注意： request对象 ，response对象</li>
 <li>destroy方法：tomcat服务器停止或web应用重新部署，servlet对象销毁，destroy方法被调用。</li>
 </ul>
 </li>

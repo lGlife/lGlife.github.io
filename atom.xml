@@ -4,7 +4,7 @@
   <subtitle><![CDATA[远离闹市才是真正的自我]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-12-29T03:47:39.952Z</updated>
+  <updated>2015-12-29T04:18:26.927Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yoursite.com/2015/12/28/servlet%E7%BC%96%E7%A8%8B/"/>
     <id>http://yoursite.com/2015/12/28/servlet编程/</id>
     <published>2015-12-28T01:24:51.000Z</published>
-    <updated>2015-12-29T03:47:39.952Z</updated>
+    <updated>2015-12-29T04:18:26.927Z</updated>
     <content type="html"><![CDATA[<h3 id="如何开发一个Servlet">如何开发一个Servlet</h3><p>步骤</p>
 <ol>
 <li>编写java类，继承HttpServlet类</li>
@@ -161,7 +161,8 @@
 <h3 id="总结">总结</h3><h4 id="Servlet编程">Servlet编程</h4><ul>
 <li>Servlet生命周期（重点）<ul>
 <li>构造方法： 创建servlet对象。默认情况下，第一次访问servlet对象时。只调用1次。</li>
-<li>init方法（有参）： 创建完servlet对象后调用。只调用1次。注意： 会调用无参的init方法。<br>3+ service方法： servlet提供服务的方法。每次发出请求调用。注意： request对象 ，response对象</li>
+<li>init方法（有参）： 创建完servlet对象后调用。只调用1次。注意： 会调用无参的init方法。</li>
+<li>service方法： servlet提供服务的方法。每次发出请求调用。注意： request对象 ，response对象</li>
 <li>destroy方法：tomcat服务器停止或web应用重新部署，servlet对象销毁，destroy方法被调用。</li>
 </ul>
 </li>
