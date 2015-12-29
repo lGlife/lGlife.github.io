@@ -17,7 +17,8 @@
   <title>会话管理 | 时间旅程 | 矛盾体</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="会话管理： 管理浏览器客户端 和 服务器端之间会话过程中产生的会话数据。
-Cooke技术特点Cookie技术：会话数据保存在浏览器客户端。
+Cookie技术Cookie特点：会话数据保存在浏览器客户端。
+
 Cookie技术核心Cookie类：用于存储会话数据
 
 构造Cookie对象Cookie(java.lang.String name, java.lang.String value)
@@ -27,16 +28,18 @@ Cookie技术核心Cookie类：用于存储会话数据
 <meta property="og:url" content="http://yoursite.com/2015/12/29/会话管理/index.html">
 <meta property="og:site_name" content="时间旅程 | 矛盾体">
 <meta property="og:description" content="会话管理： 管理浏览器客户端 和 服务器端之间会话过程中产生的会话数据。
-Cooke技术特点Cookie技术：会话数据保存在浏览器客户端。
+Cookie技术Cookie特点：会话数据保存在浏览器客户端。
+
 Cookie技术核心Cookie类：用于存储会话数据
 
 构造Cookie对象Cookie(java.lang.String name, java.lang.String value)
 设置cookievoid setPath(java.lang.String">
-<meta property="og:updated_time" content="2015-12-29T08:02:37.868Z">
+<meta property="og:updated_time" content="2015-12-29T09:21:27.854Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="会话管理">
 <meta name="twitter:description" content="会话管理： 管理浏览器客户端 和 服务器端之间会话过程中产生的会话数据。
-Cooke技术特点Cookie技术：会话数据保存在浏览器客户端。
+Cookie技术Cookie特点：会话数据保存在浏览器客户端。
+
 Cookie技术核心Cookie类：用于存储会话数据
 
 构造Cookie对象Cookie(java.lang.String name, java.lang.String value)
@@ -234,50 +237,51 @@ Cookie技术核心Cookie类：用于存储会话数据
     <div class="article-entry" itemprop="articleBody">
       
         <p>会话管理： 管理浏览器客户端 和 服务器端之间会话过程中产生的会话数据。</p>
-<h3 id="Cooke技术">Cooke技术</h3><h4 id="特点">特点</h4><p>Cookie技术：会话数据保存在浏览器客户端。</p>
-<h4 id="Cookie技术核心">Cookie技术核心</h4><p>Cookie类：用于存储会话数据</p>
-<ol>
+<h3 id="Cookie技术">Cookie技术</h3><font color="red">Cookie特点：会话数据保存在浏览器客户端。</font>
+
+<h4 id="Cookie技术核心"><strong>Cookie技术核心</strong></h4><p>Cookie类：用于存储会话数据</p>
+<ul>
 <li>构造Cookie对象<br><code>Cookie(java.lang.String name, java.lang.String value)</code></li>
 <li>设置cookie<br><code>void setPath(java.lang.String uri) 设置cookie的有效访问路径</code><br><code>void setMaxAge(int expiry) ： 设置cookie的有效时间</code><br><code>void setValue(java.lang.String newValue) ：设置cookie的值</code></li>
 <li>发送cookie到浏览器端保存<br><code>void response.addCookie(Cookie cookie)  : 发送cookie</code></li>
 <li>服务器接收cookie<br><code>Cookie[] request.getCookies()  : 接收cookie</code></li>
-</ol>
-<h4 id="Cookie原理">Cookie原理</h4><ol>
+</ul>
+<h4 id="Cookie原理"><strong>Cookie原理</strong></h4><ul>
 <li>服务器创建cookie对象，把会话数据存储到cookie对象中。<br><code>new Cookie(&quot;name&quot;,&quot;value&quot;);</code></li>
 <li>服务器发送cookie信息到浏览器<br><code>response.addCookie(cookie);</code><br><code>举例： set-cookie: name=eric  (隐藏发送了一个set-cookie名称的响应头)</code></li>
 <li>浏览器得到服务器发送的cookie，然后保存在浏览器端。</li>
 <li>浏览器在下次访问服务器时，会带着cookie信息<br><code>举例： cookie: name=eric  (隐藏带着一个叫cookie名称的请求头)</code></li>
 <li>服务器接收到浏览器带来的cookie信息<br><code>request.getCookies();</code></li>
-</ol>
-<h4 id="Cookie的细节">Cookie的细节</h4><ol>
+</ul>
+<h4 id="Cookie的细节"><strong>Cookie的细节</strong></h4><ul>
 <li><code>void setPath(java.lang.String uri)</code>   ：设置cookie的有效访问路径。有效路径指的是cookie的有效路径保存在哪里，那么浏览器在有效路径下访问服务器时就会带着cookie信息，否则不带cookie信息。</li>
 <li><code>void setMaxAge(int expiry)</code> ： 设置cookie的有效时间。<blockquote>
 <p>正整数：表示cookie数据保存浏览器的缓存目录（硬盘中），数值表示保存的时间。<br>负整数：表示cookie数据保存浏览器的内存中。浏览器关闭cookie就丢失了！！<br>零：表示删除同名的cookie数据 </p>
 </blockquote>
 </li>
 <li>Cookie数据类型只能保存非中文字符串类型的。可以保存多个cookie，但是浏览器一般只允许存放300个Cookie，每个站点最多存放20个Cookie，每个Cookie的大小限制为4KB。</li>
-</ol>
-<h3 id="Session技术">Session技术</h3><h4 id="引入">引入</h4><p>Cookie的局限：</p>
+</ul>
+<h3 id="Session技术">Session技术</h3><h4 id="引入"><strong>引入</strong></h4><p>Cookie的局限：</p>
 <blockquote>
 <p>Cookie只能存字符串类型。不能保存对象<br>只能存非中文。<br>1个Cookie的容量不超过4KB。</p>
 </blockquote>
 <p>如果要保存非字符串，超过4kb内容，只能使用session技术！！！</p>
 <font color="red">Session特点：会话数据保存在服务器端。（内存中）</font>
 
-<h4 id="Session技术核心">Session技术核心</h4><p>HttpSession类：用于保存会话数据</p>
+<h4 id="Session技术核心"><strong>Session技术核心</strong></h4><p>HttpSession类：用于保存会话数据</p>
 <ol>
 <li>创建或得到session对象<br><code>HttpSession getSession()</code><br><code>HttpSession getSession(boolean create)</code></li>
 <li>设置session对象<br><code>void setMaxInactiveInterval(int interval)  ： 设置session的有效时间</code><br><code>void invalidate()     ： 销毁session对象</code><br><code>java.lang.String getId()  ： 得到session编号</code></li>
 <li>保存会话数据到session对象<br><code>void setAttribute(java.lang.String name, java.lang.Object value)  ： 保存数据</code><br><code>java.lang.Object getAttribute(java.lang.String name)  ： 获取数据</code><br><code>void removeAttribute(java.lang.String name) ： 清除数据</code></li>
 </ol>
-<h4 id="Session原理">Session原理</h4><p>问题： 服务器能够识别不同的浏览者！！<br>前提： 在哪个session域对象保存数据，就必须从哪个域对象取出！！！！</p>
+<h4 id="Session原理"><strong>Session原理</strong></h4><p>问题： 服务器能够识别不同的浏览者！！<br>前提： 在哪个session域对象保存数据，就必须从哪个域对象取出！！！！</p>
 <ul>
 <li><p>浏览器1：(给s1分配一个唯一的标记：s001,把s001发送给浏览器)</p>
 <ul>
 <li>创建session对象，保存会话数据<br><code>HttpSession session = request.getSession();   --保存会话数据s1</code></li>
 </ul>
 </li>
-<li><p>浏览器1    的新窗口（带着s001的标记到服务器查询，s001-&gt;s1,返回s1）    </p>
+<li><p>浏览器1 的新窗口（带着s001的标记到服务器查询，s001-&gt;s1,返回s1） </p>
 <ul>
 <li>得到session对象的会话数据<br><code>HttpSession session = request.getSession();   --可以取出  s1</code></li>
 </ul>
@@ -301,7 +305,7 @@ Cookie技术核心Cookie类：用于存储会话数据
 <li>第二次访问的时候，浏览器带着JSESSIONID的cookie访问服务器</li>
 <li>服务器得到JSESSIONID，在服务器的内存中搜索是否存放对应编号的session对象。<blockquote>
 <p><code>if(找到){
- return map.get(sessionID);
+return map.get(sessionID);
 }
 Map&lt;String,HttpSession&gt;
 &lt;&quot;s001&quot;, s1&gt;
@@ -313,7 +317,7 @@ Map&lt;String,HttpSession&gt;
 </ul>
 <font color="red">结论：通过JSESSION的cookie值在服务器找session对象！！！！！</font>
 
-<h4 id="Sesson细节">Sesson细节</h4><ul>
+<h4 id="Sesson细节"><strong>Sesson细节</strong></h4><ul>
 <li><code>java.lang.String getId()</code>  ： 得到session编号</li>
 <li>两个getSession方法：<br><code>getSession(true) / getSession()</code>  : 创建或得到session对象。没有匹配的session编号，自动创建新的session对象。<br><code>getSession(false)</code>: 得到session对象。没有匹配的session编号，返回null</li>
 <li><code>void setMaxInactiveInterval(int interval)</code>  ： 设置session的有效时间<br><font color="red">session对象销毁时间</font>：<ul>
@@ -322,7 +326,7 @@ Map&lt;String,HttpSession&gt;
 <li>全局修改session有效时间<blockquote>
 <p><code>&lt;!-- 修改session全局有效时间:分钟 --&gt;
 &lt;session-config&gt;
-   &lt;session-timeout&gt;1&lt;/session-timeout&gt;
+&lt;session-timeout&gt;1&lt;/session-timeout&gt;
 &lt;/session-config&gt;</code></p>
 </blockquote>
 </li>
