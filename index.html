@@ -262,8 +262,17 @@
 </tr>
 </tbody>
 </table>
-<font color="red">注意<br><br>- url-pattern要么以 / 开头，要么以<em>开头。  例如， itcast是非法路径。<br>- 不能同时使用两种模糊匹配，例如 /itcast/</em>.do是非法路径<br>- 当有输入的URL有多个servlet同时被匹配的情况下：<br>    - 精确匹配优先。（长的最像优先被匹配）<br>    - 以后缀名结尾的模糊url-pattern优先级最低！！！<br><br></font>
+<font color="red"><strong>注意</strong></font>
 
+<ul>
+<li>url-pattern要么以 / 开头，要么以*开头。  例如， itcast是非法路径。</li>
+<li>不能同时使用两种模糊匹配，例如 /itcast/*.do是非法路径</li>
+<li>当有输入的URL有多个servlet同时被匹配的情况下：<ul>
+<li>精确匹配优先。（长的最像优先被匹配） </li>
+<li>以后缀名结尾的模糊url-pattern优先级最低！！！</li>
+</ul>
+</li>
+</ul>
 <h3 id="Servlet缺省路径">Servlet缺省路径</h3><p>　　servlet的缺省路径(<code>&lt;url-pattern&gt;/&lt;/url-pattern&gt;</code>）是在tomcat服务器内置的一个路径。该路径对应的是一个DefaultServlet（缺省Servlet）。这个缺省的Servlet的作用是用于解析web应用的静态资源文件。<br>问题： URL输入<a href="http://localhost:8080/day10/index.html" target="_blank" rel="external">http://localhost:8080/day10/index.html</a> 如何读取文件？？？？</p>
 <ul>
 <li>到当前day10应用下的web.xml文件查找是否有匹配的url-pattern。</li>
