@@ -291,7 +291,11 @@ Map&lt;String,HttpSession&gt;
 
 <h4 id="Sesson细节"><strong>Sesson细节</strong></h4><ul>
 <li><code>java.lang.String getId()</code>  ： 得到session编号</li>
-<li>两个getSession方法：<br><code>getSession(true) / getSession()</code>  : 创建或得到session对象。没有匹配的session编号，自动创建新的session对象。<br><code>getSession(false)</code>: 得到session对象。没有匹配的session编号，返回null</li>
+<li>两个getSession方法：<ul>
+<li><code>getSession(true) / getSession()</code>  : 创建或得到session对象。没有匹配的session编号，自动创建新的session对象。</li>
+<li><code>getSession(false)</code>: 得到session对象。没有匹配的session编号，返回null</li>
+</ul>
+</li>
 <li><code>void setMaxInactiveInterval(int interval)</code>  ： 设置session的有效时间<br><font color="red">session对象销毁时间</font>：<ul>
 <li>默认情况30分服务器自动回收</li>
 <li>修改session回收时间</li>

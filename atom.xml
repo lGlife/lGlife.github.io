@@ -4,7 +4,7 @@
   <subtitle><![CDATA[远离闹市才是真正的自我]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-12-29T09:21:27.854Z</updated>
+  <updated>2015-12-29T09:31:00.259Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yoursite.com/2015/12/29/%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86/"/>
     <id>http://yoursite.com/2015/12/29/会话管理/</id>
     <published>2015-12-29T06:02:12.000Z</published>
-    <updated>2015-12-29T09:21:27.854Z</updated>
+    <updated>2015-12-29T09:31:00.259Z</updated>
     <content type="html"><![CDATA[<p>会话管理： 管理浏览器客户端 和 服务器端之间会话过程中产生的会话数据。</p>
 <h3 id="Cookie技术">Cookie技术</h3><font color="red">Cookie特点：会话数据保存在浏览器客户端。</font>
 
@@ -103,7 +103,11 @@ Map&lt;String,HttpSession&gt;
 
 <h4 id="Sesson细节"><strong>Sesson细节</strong></h4><ul>
 <li><code>java.lang.String getId()</code>  ： 得到session编号</li>
-<li>两个getSession方法：<br><code>getSession(true) / getSession()</code>  : 创建或得到session对象。没有匹配的session编号，自动创建新的session对象。<br><code>getSession(false)</code>: 得到session对象。没有匹配的session编号，返回null</li>
+<li>两个getSession方法：<ul>
+<li><code>getSession(true) / getSession()</code>  : 创建或得到session对象。没有匹配的session编号，自动创建新的session对象。</li>
+<li><code>getSession(false)</code>: 得到session对象。没有匹配的session编号，返回null</li>
+</ul>
+</li>
 <li><code>void setMaxInactiveInterval(int interval)</code>  ： 设置session的有效时间<br><font color="red">session对象销毁时间</font>：<ul>
 <li>默认情况30分服务器自动回收</li>
 <li>修改session回收时间</li>
