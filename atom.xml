@@ -4,7 +4,7 @@
   <subtitle><![CDATA[远离闹市才是真正的自我]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-12-29T09:31:00.259Z</updated>
+  <updated>2015-12-30T07:28:31.116Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -13,6 +13,107 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Jsp基础]]></title>
+    <link href="http://yoursite.com/2015/12/30/Jsp%E5%9F%BA%E7%A1%80/"/>
+    <id>http://yoursite.com/2015/12/30/Jsp基础/</id>
+    <published>2015-12-30T06:30:25.000Z</published>
+    <updated>2015-12-30T07:28:31.116Z</updated>
+    <content type="html"><![CDATA[<h3 id="Jsp基础">Jsp基础</h3><ul>
+<li><strong>引入</strong><br>Servlet的作用： 用java语言开发动态资源的技术！！！<br>Jsp的作用：用java语言（+html语言）开发动态资源的技术！！！<br>Jsp就是servlet！！！</li>
+<li><p><strong>Jsp的特点</strong></p>
+<ul>
+<li><p>jsp的运行必须交给tomcat服务器！！！！</p>
+<blockquote>
+<p>tomcat的work目录： tomcat服务器存放jsp运行时的临时文件</p>
+</blockquote>
+</li>
+<li><p>jsp页面既可以写html代码，也可以写java代码。</p>
+<blockquote>
+<p>html页面不能写java代码。而jsp页面可以写java代码</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><strong>Jsp的执行过程</strong><br>问题： 访问<a href="http://localhost:8080/day12/01.hello.jsp" target="_blank" rel="external">http://localhost:8080/day12/01.hello.jsp</a>  如何显示效果？</p>
+<ul>
+<li><p>访问到01.hello.jsp页面，tomcat扫描到jsp文件，在%tomcat%/work把jsp文件翻译成java源文件</p>
+<blockquote>
+<p>(01.hello.jsp   -&gt;   _01_hello_jsp.java) （翻译）</p>
+</blockquote>
+</li>
+<li><p>tomcat服务器把java源文件编译成class字节码文件 （编译）</p>
+<blockquote>
+<p>（_01_hello_jsp.java  -&gt;  _01_hello_jsp.class）</p>
+</blockquote>
+</li>
+<li><p>tomcat服务器构造_01_hello_jsp类对象</p>
+</li>
+<li>tomcat服务器调用_01_hello_jsp类里面方法，返回内容显示到浏览器。</li>
+</ul>
+<font color="red"> 第一次访问jsp：    走（1）（2）（3）（4）<br>第n次访问jsp：    走（4）<br>注意：jsp文件修改了或jsp的临时文件被删除了，要重新走翻译（1）和编译  （2）的过程</font>
+</li>
+<li><p><strong>疑问</strong><br>问题： 为什么Jsp就是servlet！！！</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">jsp翻译的java文件：</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">_01_hello_jsp</span> <span class="keyword">extends</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">HttpJspBase</span></span><br><span class="line">    <span class="keyword">implements</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">JspSourceDependent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">HttpJspBase类：</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">HttpJspBase</span> <span class="keyword">extends</span> <span class="title">javax</span>.<span class="title">servlet</span>.<span class="title">http</span>.<span class="title">HttpServlet</span> <span class="keyword">implements</span> <span class="title">javax</span>.<span class="title">servlet</span>.<span class="title">jsp</span>.<span class="title">HttpJspPage</span> </span>&#123;</span><br></pre></td></tr></table></figure>
+<font color="red">结论：Jsp就是一个servlet程序！！！<br>　　　servlet的技术可以用在jsp程序中<br>　　　jsp的技术并不是全部适用于servlet程序！</font>
+
+<p>Servlet的生命周期：</p>
+<blockquote>
+<p>构造方法（第1次访问）<br>init方法（第1次访问）<br>service方法<br>destroy方法</p>
+</blockquote>
+<p>Jsp的生命周期</p>
+<blockquote>
+<p>翻译： jsp-&gt;java文件<br>编译： java文件-&gt;class文件（servlet程序）<br>构造方法（第1次访问）<br>init方法（第1次访问）：_jspInit()<br>service方法：_jspService()<br>destroy方法：_jspDestroy()</p>
+</blockquote>
+<h3 id="Jsp语法">Jsp语法</h3><ul>
+<li><p><strong>Jsp表达式</strong><br>语法：&lt;%=变量或表达式%&gt;<br>作用： 向浏览器输出变量的值或表达式计算的结果<br>注意：        </p>
+<blockquote>
+<p>表达式的原理就是翻译成out.print(“变量” );通过该方法向浏览器写出内容<br>表达式后面不需要带分号结束。</p>
+</blockquote>
+</li>
+<li><p><strong>Jsp的脚本</strong><br>语法：&lt;%java代码 %&gt;<br>作用： 执行java代码<br>注意：</p>
+<blockquote>
+<p>原理把脚本中java代码原封不动拷贝到_jspService方法中执行。</p>
+</blockquote>
+</li>
+<li><p><strong>Jsp的声明</strong><br>语法：&lt;%! 变量或方法 %&gt;<br>作用： 声明jsp的变量或方法<br>注意:</p>
+<blockquote>
+<p>变量翻译成成员变量，方法翻译成成员方法。</p>
+</blockquote>
+</li>
+<li><p><strong>Jsp的注释</strong><br>语法： &lt;%!–  jsp注释  –%&gt;<br>注意：</p>
+<blockquote>
+<p>html的注释会被翻译和执行。而jsp的注释不能被翻译和执行。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="Jsp的三大指令">Jsp的三大指令</h3><ul>
+<li><p><strong>include指令</strong><br>作用： 在当前页面用于包含其他页面<br>语法： &lt;%@include file=”common/header.jsp”%&gt;<br>注意：</p>
+<blockquote>
+<p>原理是把被包含的页面（header.jsp）的内容翻译到包含页面(index.jsp)中,合并成翻译成一个java源文件，再编译运行！！，这种包含叫静态包含（源码包含）<br>如果使用静态包含，被包含页面中不需要出现全局的html标签了！！！（如html、head、body）</p>
+</blockquote>
+</li>
+<li><p><strong>page指令</strong><br>作用： 告诉tomcat服务器如何翻译jsp文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">"java"</span>   --告诉服务器使用什么动态语言来翻译jsp文件</span><br><span class="line">	<span class="keyword">import</span>=<span class="string">"java.util.*"</span> --告诉服务器java文件使用什么包,导入包，多个包之间用逗号分割</span><br><span class="line">    pageEncoding=<span class="string">"utf-8"</span>  --告诉服务器使用什么编码翻译jsp文件（成java文件）</span><br><span class="line">	contentType=<span class="string">"text/html; charset=utf-8"</span>  --服务器发送浏览器的数据类型和内容编码</span><br><span class="line">	</span><br><span class="line">注意：在开发工具中，以后只需要设置pageEncoding即可解决中文乱码问题</span><br><span class="line">	errorPage=<span class="string">"error.jsp"</span></span><br><span class="line">	isErrorPage=<span class="string">"false"</span></span><br><span class="line">	buffer=<span class="string">"8kb"</span></span><br><span class="line">	session=<span class="string">"true"</span></span><br><span class="line">	isELIgnored=<span class="string">"false"</span></span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>配置全局的错误处理页面：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 全局错误处理页面配置 --&gt;</span><br><span class="line">&lt;error-page&gt;</span><br><span class="line">  &lt;error-code&gt;500&lt;/error-code&gt;</span><br><span class="line">  &lt;location&gt;/common/500.jsp&lt;/location&gt;</span><br><span class="line">&lt;/error-page&gt;</span><br><span class="line">&lt;error-page&gt;</span><br><span class="line">  &lt;error-code&gt;404&lt;/error-code&gt;</span><br><span class="line">  &lt;location&gt;/common/404.html&lt;/location&gt;</span><br><span class="line">&lt;/error-page&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>taglib指令</strong></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="Jsp基础">Jsp基础</h3><ul>
+<li><strong>引入</strong><br>Servlet的作用： 用java语言开发动态资源的技术！！！<br>Jsp的作用：用java语言（+html语言）开发动态资源的技术！！！<br>Jsp就是serv]]>
+    </summary>
+    
+      <category term="学习" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[会话管理]]></title>
