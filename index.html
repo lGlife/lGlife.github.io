@@ -118,7 +118,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ѧϰ/" style="font-size: 10px;">ѧϰ</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/随性/" style="font-size: 10px;">随性</a>
+						<a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/随性/" style="font-size: 10px;">随性</a>
 					</div>
 				</section>
 				
@@ -199,7 +199,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/31/Jsp加强/">Jsp��ǿ</a>
+      <a class="article-title" href="/2015/12/31/Jsp加强/">Jsp加强</a>
     </h1>
   
 
@@ -208,15 +208,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Jsp�����ö���">Jsp�����ö���</h3><h4 id="ʲô�����ö�����">ʲô�����ö�����</h4><p>��jsp�����У���Ƶ��ʹ�õ�һЩ������<br>��������HttpSession,ServletContext,ServletContext,HttpServletRequet����������ÿ��Ҫʹ����Щ������ȥ������Щ��������ʾ�ǳ��鷳������Sun��˾����Jspʱ����jspҳ����������֮���ͻ��Զ��￪���ߴ�������Щ���󣬶�������ֻ��Ҫֱ��ʹ����Щ�������÷������ɣ�����Щ�����õĶ����ͽ�<font color="red">���ö��󣡣�����</font><br><strong>������</strong></p>
+        <h3 id="Jsp的内置对象">Jsp的内置对象</h3><h4 id="什么是内置对象？">什么是内置对象？</h4><p>在jsp开发中，会频繁使用到一些对象。<br>　　例如HttpSession,ServletContext,ServletContext,HttpServletRequet。如果我们每次要使用这些对象都去创建这些对象就显示非常麻烦。所以Sun公司设计Jsp时，在jsp页面加载完毕之后就会自动帮开发者创建好这些对象，而开发者只需要直接使用这些对象调用方法即可！，这些创建好的对象就叫<font color="red">内置对象！！！！</font><br><strong>举例：</strong></p>
 <blockquote>
-<p>servlet:<br><code>HttpSession session = request.getSession(true); ����Ҫ����������</code><br>jsp:<br><code>tomcat��������HttpSession session =request.getSession(true);(����Ҫ��������)</code><br><code>���������ģ� session.getId();</code></p>
+<p>servlet:<br><code>HttpSession session = request.getSession(true); （需要开发者做）</code><br>jsp:<br><code>tomcat服务器：HttpSession session =request.getSession(true);(不需要开发者做)</code><br><code>开发者做的： session.getId();</code></p>
 </blockquote>
-<h4 id="�Ŵ����ö���">�Ŵ����ö���</h4><table>
+<h4 id="九大内置对象">九大内置对象</h4><table>
 <thead>
 <tr>
-<th>���ö�����</th>
-<th>����</th>
+<th>内置对象名</th>
+<th>类型</th>
 </tr>
 </thead>
 <tbody>
@@ -258,31 +258,31 @@
 </tr>
 </tbody>
 </table>
-<h4 id="Out����">Out����</h4><p>out�������ͣ�JspWriter�࣬�൱�ڴ�������PrintWriter</p>
+<h4 id="Out对象">Out对象</h4><p>out对象类型，JspWriter类，相当于带缓存的PrintWriter</p>
 <blockquote>
-<p>PrintWriter<br>wrier(����)�� ֱ����������д�����ݡ�<br>JspWriter<br>writer(����): ��jsp������д������</p>
+<p>PrintWriter<br>wrier(内容)： 直接向浏览器写出内容。<br>JspWriter<br>writer(内容): 向jsp缓冲区写出内容</p>
 </blockquote>
-<p>��������������֮һ������������д����</p>
+<p>当满足以下条件之一，缓冲区内容写出：</p>
 <ul>
-<li>����������</li>
-<li>ˢ�»�����</li>
-<li>�رջ�����</li>
-<li>ִ������jspҳ��</li>
+<li>缓冲区满了</li>
+<li>刷新缓存区</li>
+<li>关闭缓存区</li>
+<li>执行完毕jsp页面</li>
 </ul>
 <p><img src="/images/jspcache.png" alt=""></p>
-<h4 id="pageContext����">pageContext����</h4><p>pageContext������������PageContext����jsp�������Ķ���</p>
+<h4 id="pageContext对象">pageContext对象</h4><p>pageContext对象的类型是PageContext，叫jsp的上下文对象</p>
 <ol>
-<li>���Ի�ȡ�����˸����ö���<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> 01<span class="title">_hello_jsp</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">_jspService</span><span class="params">(request,response)</span></span>&#123;</span><br><span class="line">		�������ö���</span><br><span class="line">		HttpSession session =....;</span><br><span class="line">		ServletConfig config = ....;</span><br><span class="line"></span><br><span class="line">		��<span class="number">8</span>������ʹ�õ����ö�����װ��PageContext������</span><br><span class="line">		PageContext pageContext  = ��װ��</span><br><span class="line">		����method1����</span><br><span class="line">		method1(pageContext);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">(PageContext pageContext)</span></span>&#123;</span><br><span class="line">		ϣ��ʹ�����ö���</span><br><span class="line">		��PageContext�����л�ȡ����<span class="number">8</span>�����ö���</span><br><span class="line">		JspWriter out =pageContext.getOut();</span><br><span class="line">		HttpServletRequest rquest = pageContext.getRequest();</span><br><span class="line">		........</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li>可以获取其他八个内置对象<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> 01<span class="title">_hello_jsp</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">_jspService</span><span class="params">(request,response)</span></span>&#123;</span><br><span class="line">		创建内置对象</span><br><span class="line">		HttpSession session =....;</span><br><span class="line">		ServletConfig config = ....;</span><br><span class="line"></span><br><span class="line">		把<span class="number">8</span>个经常使用的内置对象封装到PageContext对象中</span><br><span class="line">		PageContext pageContext  = 封装；</span><br><span class="line">		调用method1方法</span><br><span class="line">		method1(pageContext);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">(PageContext pageContext)</span></span>&#123;</span><br><span class="line">		希望使用内置对象</span><br><span class="line">		从PageContext对象中获取其他<span class="number">8</span>个内置对象</span><br><span class="line">		JspWriter out =pageContext.getOut();</span><br><span class="line">		HttpServletRequest rquest = pageContext.getRequest();</span><br><span class="line">		........</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<font color="red">ʹ�ó����� ���Զ�����ǩ��ʱ����PageContext����Ƶ��ʹ�õ�������</font><br> 2. ������һ��������<br>| | | | |<br>| —– | — |<br>|ServletContext|context��|–Servletѧϰ��|<br>|HttpServletRequest|request��|–Servletѧϰ��|<br>|HttpSession|session��|–Servletѧϰ��|<br>|PageContext|page�� | –jspѧϰ��(�����ĸ�)|<br><br>���⣺Servlet�����м�����������Jsp�����м�����������<br><br><font color="red">���������ã� �������ݺͻ�ȡ���ݣ����ڹ�������</font><br>&gt; ��������:<br>1��Ĭ�������£����浽page��<br>    <code>pageContext.setAttribute(&quot;name&quot;);</code><br>2���������ĸ������󱣴�����<br>    <code>pageContext.setAttribute(&quot;name&quot;,����Χ����)</code><br><br>&gt; ��ȡ����:<br>1��Ĭ�������£���page����ȡ<br>    <code>pageContext.getAttribute(&quot;name&quot;)</code><br>2�����Դ��ĸ����л�ȡ����<br>    <code>pageContext.getAttribute(&quot;name&quot;,����Χ����)</code><br>    ����Χ����:<br>    <code>PageContext.PAGE_SCOPE</code><br>    <code>PageContext.REQUEST_SCOPE</code><br>    <code>PageContext..SESSION_SCOPE</code><br>    <code>PageContext.APPLICATION_SCOPE</code><br>3���Զ����ĸ�������������<br>    <code>pageContext.findAttribute(&quot;name&quot;);</code><br>˳���� <code>page�� -&gt; request�� -&gt; session��- &gt; context����application����</code><br><br>#### Jsp�е��ĸ�������<br><br> 1. ���������ã���������  �� ��ȡ���� ���������ݹ�����<br><br> 2. �����󷽷���<br>    &gt; setAttribute(“name”,Object) ��������<br>    getAttribute(“name”)  ��ȡ����<br>    removeAttribute(“name”) ��������<br><br> 3. ���������÷�Χ��<br>    &gt; <font color="red">page���� ֻ���ڵ�ǰjspҳ����ʹ�ã���ǰҳ�棩<br>    request���� ֻ����ͬһ��������ʹ�ã�ת����<br>    session���� ֻ����ͬһ���Ự��session��������ʹ�ã�˽�еģ�<br>    context���� ֻ����ͬһ��webӦ����ʹ�á���ȫ�ֵģ�</font>
+<font color="red">使用场景： 在自定义标签的时候，PageContext对象频繁使用到！！！</font><br> 2. 本身是一个域对象<br>| | | | |<br>| —– | — |<br>|ServletContext|context域|–Servlet学习的|<br>|HttpServletRequest|request域|–Servlet学习的|<br>|HttpSession|session域|–Servlet学习的|<br>|PageContext|page域 | –jsp学习的(包含四个)|<br><br>问题：Servlet里面有几个域对象，Jsp里面有几个域对象？<br><br><font color="red">域对象作用： 保存数据和获取数据，用于共享数据</font><br>&gt; 保存数据:<br>1）默认情况下，保存到page域<br>    <code>pageContext.setAttribute(&quot;name&quot;);</code><br>2）可以向四个域对象保存数据<br>    <code>pageContext.setAttribute(&quot;name&quot;,域范围常量)</code><br><br>&gt; 获取数据:<br>1）默认情况下，从page域获取<br>    <code>pageContext.getAttribute(&quot;name&quot;)</code><br>2）可以从四个域中获取数据<br>    <code>pageContext.getAttribute(&quot;name&quot;,域范围常量)</code><br>    域范围常量:<br>    <code>PageContext.PAGE_SCOPE</code><br>    <code>PageContext.REQUEST_SCOPE</code><br>    <code>PageContext..SESSION_SCOPE</code><br>    <code>PageContext.APPLICATION_SCOPE</code><br>3）自动在四个域中搜索数据<br>    <code>pageContext.findAttribute(&quot;name&quot;);</code><br>顺序： <code>page域 -&gt; request域 -&gt; session域- &gt; context域（application域）</code><br><br>#### Jsp中的四个域对象<br><br> 1. 域对象作用：保存数据  和 获取数据 ，用于数据共享。<br><br> 2. 域对象方法：<br>    &gt; setAttribute(“name”,Object) 保存数据<br>    getAttribute(“name”)  获取数据<br>    removeAttribute(“name”) 清除数据<br><br> 3. 域对象作用范围：<br>    &gt; <font color="red">page域： 只能在当前jsp页面中使用（当前页面）<br>    request域： 只能在同一个请求中使用（转发）<br>    session域： 只能在同一个会话（session对象）中使用（私有的）<br>    context域： 只能在同一个web应用中使用。（全局的）</font>
 
-<h4 id="Jsp������ʵ��">Jsp������ʵ��</h4><p>Servlet������ ������̬��Դ����һ��java�࣬���ó�дjava����<br>jsp������ ������̬��Դ��ͨ��java�������ó�����html���롣</p>
+<h4 id="Jsp的最佳实践">Jsp的最佳实践</h4><p>Servlet技术： 开发动态资源。是一个java类，最擅长写java代码<br>jsp技术： 开发动态资源。通过java代码最擅长输出html代码。</p>
 <blockquote>
-<font color="red">��ȡ������<br>������web��Ŀ���漰���߼���<br>��������1�����ղ���      servlet��<br>��������2������ҵ���߼������ؽ���    servlet��<br>��������3����ʾ���ݵ�������      jsp��<br>��������4����ת������ҳ��        servlet��<br><br>servlet+jspģʽ<br>����servlet:<br>��������1�����ղ���<br>��������2������ҵ���߼�<br>��������3���ѽ������浽��������<br>��������4����ת��jspҳ��<br>����Jsp:<br>��������1����������ȡ������<br>��������2����������ʾ��������<br><br>servlet������    -&gt;   jspҳ��<br>List<contact>    ʹ�������� ��������</contact></font>
+<font color="red">各取所长：<br>　　在web项目中涉及到逻辑：<br>　　　　1）接收参数      servlet做<br>　　　　2）处理业务逻辑，返回结果    servlet做<br>　　　　3）显示数据到浏览器      jsp做<br>　　　　4）跳转到其他页面        servlet做<br><br>servlet+jsp模式<br>　　servlet:<br>　　　　1）接收参数<br>　　　　2）处理业务逻辑<br>　　　　3）把结果保存到域对象中<br>　　　　4）跳转到jsp页面<br>　　Jsp:<br>　　　　1）从域对象取出数据<br>　　　　2）把数据显示到浏览器<br><br>servlet的数据    -&gt;   jsp页面<br>List<contact>    使用域对象 共享数据</contact></font>
 
 </blockquote>
-<h4 id="EL����ʽ">EL����ʽ</h4>
+<h4 id="EL表达式">EL表达式</h4>
       
     </div>
     
@@ -290,7 +290,7 @@
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ѧϰ/">ѧϰ</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习/">学习</a></li></ul>
 	</div>
 
       
