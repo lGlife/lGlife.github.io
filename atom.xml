@@ -4,7 +4,7 @@
   <subtitle><![CDATA[远离闹市才是真正的自我]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-12-30T10:09:24.586Z</updated>
+  <updated>2015-12-31T09:12:53.906Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -13,6 +13,95 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Jsp��ǿ]]></title>
+    <link href="http://yoursite.com/2015/12/31/Jsp%E5%8A%A0%E5%BC%BA/"/>
+    <id>http://yoursite.com/2015/12/31/Jsp加强/</id>
+    <published>2015-12-31T07:42:30.000Z</published>
+    <updated>2015-12-31T09:12:53.906Z</updated>
+    <content type="html"><![CDATA[<h3 id="Jsp�����ö���">Jsp�����ö���</h3><h4 id="ʲô�����ö�����">ʲô�����ö�����</h4><p>��jsp�����У���Ƶ��ʹ�õ�һЩ������<br>��������HttpSession,ServletContext,ServletContext,HttpServletRequet����������ÿ��Ҫʹ����Щ������ȥ������Щ��������ʾ�ǳ��鷳������Sun��˾����Jspʱ����jspҳ����������֮���ͻ��Զ��￪���ߴ�������Щ���󣬶�������ֻ��Ҫֱ��ʹ����Щ�������÷������ɣ�����Щ�����õĶ����ͽ�<font color="red">���ö��󣡣�����</font><br><strong>������</strong></p>
+<blockquote>
+<p>servlet:<br><code>HttpSession session = request.getSession(true); ����Ҫ����������</code><br>jsp:<br><code>tomcat��������HttpSession session =request.getSession(true);(����Ҫ��������)</code><br><code>���������ģ� session.getId();</code></p>
+</blockquote>
+<h4 id="�Ŵ����ö���">�Ŵ����ö���</h4><table>
+<thead>
+<tr>
+<th>���ö�����</th>
+<th>����</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>request</td>
+<td>HttpServletRequest</td>
+</tr>
+<tr>
+<td>response</td>
+<td>HttpServletResponse</td>
+</tr>
+<tr>
+<td>config</td>
+<td>ServletConfig</td>
+</tr>
+<tr>
+<td>application</td>
+<td>ServletContext</td>
+</tr>
+<tr>
+<td>session</td>
+<td>HttpSession</td>
+</tr>
+<tr>
+<td>exception</td>
+<td>Throwable</td>
+</tr>
+<tr>
+<td>page</td>
+<td>Object(this)</td>
+</tr>
+<tr>
+<td>out</td>
+<td>JspWriter</td>
+</tr>
+<tr>
+<td>pageContext</td>
+<td>PageContext</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Out����">Out����</h4><p>out�������ͣ�JspWriter�࣬�൱�ڴ�������PrintWriter</p>
+<blockquote>
+<p>PrintWriter<br>wrier(����)�� ֱ����������д�����ݡ�<br>JspWriter<br>writer(����): ��jsp������д������</p>
+</blockquote>
+<p>��������������֮һ������������д����</p>
+<ul>
+<li>����������</li>
+<li>ˢ�»�����</li>
+<li>�رջ�����</li>
+<li>ִ������jspҳ��</li>
+</ul>
+<p><img src="/images/jspcache.png" alt=""></p>
+<h4 id="pageContext����">pageContext����</h4><p>pageContext������������PageContext����jsp�������Ķ���</p>
+<ol>
+<li>���Ի�ȡ�����˸����ö���<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> 01<span class="title">_hello_jsp</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">_jspService</span><span class="params">(request,response)</span></span>&#123;</span><br><span class="line">		�������ö���</span><br><span class="line">		HttpSession session =....;</span><br><span class="line">		ServletConfig config = ....;</span><br><span class="line"></span><br><span class="line">		��<span class="number">8</span>������ʹ�õ����ö�����װ��PageContext������</span><br><span class="line">		PageContext pageContext  = ��װ��</span><br><span class="line">		����method1����</span><br><span class="line">		method1(pageContext);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">(PageContext pageContext)</span></span>&#123;</span><br><span class="line">		ϣ��ʹ�����ö���</span><br><span class="line">		��PageContext�����л�ȡ����<span class="number">8</span>�����ö���</span><br><span class="line">		JspWriter out =pageContext.getOut();</span><br><span class="line">		HttpServletRequest rquest = pageContext.getRequest();</span><br><span class="line">		........</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<font color="red">ʹ�ó����� ���Զ�����ǩ��ʱ����PageContext����Ƶ��ʹ�õ�������</font><br> 2. ������һ��������<br>| | | | |<br>| —– | — |<br>|ServletContext|context��|–Servletѧϰ��|<br>|HttpServletRequest|request��|–Servletѧϰ��|<br>|HttpSession|session��|–Servletѧϰ��|<br>|PageContext|page�� | –jspѧϰ��(�����ĸ�)|<br><br>���⣺Servlet�����м�����������Jsp�����м�����������<br><br><font color="red">���������ã� �������ݺͻ�ȡ���ݣ����ڹ�������</font><br>&gt; ��������:<br>1��Ĭ�������£����浽page��<br>    <code>pageContext.setAttribute(&quot;name&quot;);</code><br>2���������ĸ������󱣴�����<br>    <code>pageContext.setAttribute(&quot;name&quot;,����Χ����)</code><br><br>&gt; ��ȡ����:<br>1��Ĭ�������£���page����ȡ<br>    <code>pageContext.getAttribute(&quot;name&quot;)</code><br>2�����Դ��ĸ����л�ȡ����<br>    <code>pageContext.getAttribute(&quot;name&quot;,����Χ����)</code><br>    ����Χ����:<br>    <code>PageContext.PAGE_SCOPE</code><br>    <code>PageContext.REQUEST_SCOPE</code><br>    <code>PageContext..SESSION_SCOPE</code><br>    <code>PageContext.APPLICATION_SCOPE</code><br>3���Զ����ĸ�������������<br>    <code>pageContext.findAttribute(&quot;name&quot;);</code><br>˳���� <code>page�� -&gt; request�� -&gt; session��- &gt; context����application����</code><br><br>#### Jsp�е��ĸ�������<br><br> 1. ���������ã���������  �� ��ȡ���� ���������ݹ�����<br><br> 2. �����󷽷���<br>    &gt; setAttribute(“name”,Object) ��������<br>    getAttribute(“name”)  ��ȡ����<br>    removeAttribute(“name”) ��������<br><br> 3. ���������÷�Χ��<br>    &gt; <font color="red">page���� ֻ���ڵ�ǰjspҳ����ʹ�ã���ǰҳ�棩<br>    request���� ֻ����ͬһ��������ʹ�ã�ת����<br>    session���� ֻ����ͬһ���Ự��session��������ʹ�ã�˽�еģ�<br>    context���� ֻ����ͬһ��webӦ����ʹ�á���ȫ�ֵģ�</font>
+
+<h4 id="Jsp������ʵ��">Jsp������ʵ��</h4><p>Servlet������ ������̬��Դ����һ��java�࣬���ó�дjava����<br>jsp������ ������̬��Դ��ͨ��java�������ó�����html���롣</p>
+<blockquote>
+<font color="red">��ȡ������<br>������web��Ŀ���漰���߼���<br>��������1�����ղ���      servlet��<br>��������2������ҵ���߼������ؽ���    servlet��<br>��������3����ʾ���ݵ�������      jsp��<br>��������4����ת������ҳ��        servlet��<br><br>servlet+jspģʽ<br>����servlet:<br>��������1�����ղ���<br>��������2������ҵ���߼�<br>��������3���ѽ������浽��������<br>��������4����ת��jspҳ��<br>����Jsp:<br>��������1����������ȡ������<br>��������2����������ʾ��������<br><br>servlet������    -&gt;   jspҳ��<br>List<contact>    ʹ�������� ��������</contact></font>
+
+</blockquote>
+<h4 id="EL����ʽ">EL����ʽ</h4>]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="Jsp�����ö���">Jsp�����ö���</h3><h4 id="ʲô�����ö�����">ʲô�����ö�����</h4><p>��jsp�����У���Ƶ��ʹ�õ�һЩ������<br>��������HttpSession,Serv]]>
+    </summary>
+    
+      <category term="ѧϰ" scheme="http://yoursite.com/tags/%D1%A7%CF%B0/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Jsp基础]]></title>
