@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="时间旅程 | 矛盾体">
 <meta property="og:description" content="Jsp的内置对象什么是内置对象？在jsp开发中，会频繁使用到一些对象。　　例如HttpSession,ServletContext,ServletContext,HttpServletRequet。如果我们每次要使用这些对象都去创建这些对象就显示非常麻烦。所以Sun公司设计Jsp时，在jsp页面加载完毕之后就会自动帮开发者创建好这些对象，而开发者只需要直接使用这些对象调用方法即可！，这些创建好的对">
 <meta property="og:image" content="http://yoursite.com/images/jspcache.png">
-<meta property="og:updated_time" content="2016-01-01T06:23:05.577Z">
+<meta property="og:updated_time" content="2016-01-01T06:25:06.718Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jsp加强">
 <meta name="twitter:description" content="Jsp的内置对象什么是内置对象？在jsp开发中，会频繁使用到一些对象。　　例如HttpSession,ServletContext,ServletContext,HttpServletRequet。如果我们每次要使用这些对象都去创建这些对象就显示非常麻烦。所以Sun公司设计Jsp时，在jsp页面加载完毕之后就会自动帮开发者创建好这些对象，而开发者只需要直接使用这些对象调用方法即可！，这些创建好的对">
@@ -291,7 +291,37 @@
 <ol>
 <li>本身是一个域对象</li>
 </ol>
-<p>| ————- | ————- | ————- |<br>| ServletContext | context域 | Servlet学习的 |<br>| HttpServletRequest | request域 | Servlet学习的 |<br>| HttpSession | session域 | Servlet学习的 |<br>| PageContext | page域 | jsp学习的(包含四个) |</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ServletContext</td>
+<td>context域</td>
+<td>Servlet学习的</td>
+</tr>
+<tr>
+<td>HttpServletRequest</td>
+<td>request域</td>
+<td>Servlet学习的</td>
+</tr>
+<tr>
+<td>HttpSession</td>
+<td>session域</td>
+<td>Servlet学习的</td>
+</tr>
+<tr>
+<td>PageContext</td>
+<td>page域</td>
+<td>jsp学习的(包含四个)</td>
+</tr>
+</tbody>
+</table>
 <p>问题：Servlet里面有几个域对象，Jsp里面有几个域对象？</p>
 <font color="red">域对象作用： 保存数据和获取数据，用于共享数据</font>
 
