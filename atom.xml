@@ -4,7 +4,7 @@
   <subtitle><![CDATA[远离闹市才是真正的自我]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2016-01-01T06:21:21.417Z</updated>
+  <updated>2016-01-01T06:23:05.577Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yoursite.com/2015/12/31/Jsp%E5%8A%A0%E5%BC%BA/"/>
     <id>http://yoursite.com/2015/12/31/Jsp加强/</id>
     <published>2015-12-31T07:42:30.000Z</published>
-    <updated>2016-01-01T06:21:21.417Z</updated>
+    <updated>2016-01-01T06:23:05.577Z</updated>
     <content type="html"><![CDATA[<h3 id="Jsp的内置对象">Jsp的内置对象</h3><h4 id="什么是内置对象？">什么是内置对象？</h4><p>在jsp开发中，会频繁使用到一些对象。<br>　　例如HttpSession,ServletContext,ServletContext,HttpServletRequet。如果我们每次要使用这些对象都去创建这些对象就显示非常麻烦。所以Sun公司设计Jsp时，在jsp页面加载完毕之后就会自动帮开发者创建好这些对象，而开发者只需要直接使用这些对象调用方法即可！，这些创建好的对象就叫<font color="red">内置对象！！！！</font><br><strong>举例：</strong></p>
 <blockquote>
 <p>servlet:<br><code>HttpSession session = request.getSession(true); （需要开发者做）</code><br>jsp:<br><code>tomcat服务器：HttpSession session =request.getSession(true);(不需要开发者做)</code><br><code>开发者做的： session.getId();</code></p>
@@ -92,37 +92,7 @@
 <ol>
 <li>本身是一个域对象</li>
 </ol>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ServletContext</td>
-<td>context域</td>
-<td>Servlet学习的</td>
-</tr>
-<tr>
-<td>HttpServletRequest</td>
-<td>request域</td>
-<td>Servlet学习的</td>
-</tr>
-<tr>
-<td>HttpSession</td>
-<td>session域</td>
-<td>Servlet学习的</td>
-</tr>
-<tr>
-<td>PageContext</td>
-<td>page域</td>
-<td>jsp学习的(包含四个)</td>
-</tr>
-</tbody>
-</table>
+<p>| ————- | ————- | ————- |<br>| ServletContext | context域 | Servlet学习的 |<br>| HttpServletRequest | request域 | Servlet学习的 |<br>| HttpSession | session域 | Servlet学习的 |<br>| PageContext | page域 | jsp学习的(包含四个) |</p>
 <p>问题：Servlet里面有几个域对象，Jsp里面有几个域对象？</p>
 <font color="red">域对象作用： 保存数据和获取数据，用于共享数据</font>
 
