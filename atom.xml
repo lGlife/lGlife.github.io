@@ -4,7 +4,7 @@
   <subtitle><![CDATA[远离闹市才是真正的自我]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2016-01-01T06:27:04.242Z</updated>
+  <updated>2016-01-02T07:07:07.615Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yoursite.com/2015/12/31/Jsp%E5%8A%A0%E5%BC%BA/"/>
     <id>http://yoursite.com/2015/12/31/Jsp加强/</id>
     <published>2015-12-31T07:42:30.000Z</published>
-    <updated>2016-01-01T06:27:04.242Z</updated>
+    <updated>2016-01-02T07:07:07.615Z</updated>
     <content type="html"><![CDATA[<h3 id="Jsp的内置对象">Jsp的内置对象</h3><h4 id="什么是内置对象？">什么是内置对象？</h4><p>在jsp开发中，会频繁使用到一些对象。<br>　　例如HttpSession,ServletContext,ServletContext,HttpServletRequet。如果我们每次要使用这些对象都去创建这些对象就显示非常麻烦。所以Sun公司设计Jsp时，在jsp页面加载完毕之后就会自动帮开发者创建好这些对象，而开发者只需要直接使用这些对象调用方法即可！，这些创建好的对象就叫<font color="red">内置对象！！！！</font><br><strong>举例：</strong></p>
 <blockquote>
 <p>servlet:<br><code>HttpSession session = request.getSession(true); （需要开发者做）</code><br>jsp:<br><code>tomcat服务器：HttpSession session =request.getSession(true);(不需要开发者做)</code><br><code>开发者做的： session.getId();</code></p>
@@ -150,7 +150,58 @@
 <font color="red">各取所长：<br>　　在web项目中涉及到逻辑：<br>　　　　1）接收参数      servlet做<br>　　　　2）处理业务逻辑，返回结果    servlet做<br>　　　　3）显示数据到浏览器      jsp做<br>　　　　4）跳转到其他页面        servlet做<br><br>servlet+jsp模式<br>　　servlet:<br>　　　　1）接收参数<br>　　　　2）处理业务逻辑<br>　　　　3）把结果保存到域对象中<br>　　　　4）跳转到jsp页面<br>　　Jsp:<br>　　　　1）从域对象取出数据<br>　　　　2）把数据显示到浏览器<br><br>servlet的数据    -&gt;   jsp页面<br>List<contact>    使用域对象 共享数据</contact></font>
 
 </blockquote>
-<h4 id="EL表达式">EL表达式</h4>]]></content>
+<h4 id="EL表达式">EL表达式</h4><ul>
+<li><p>EL作用<br>jsp的核心语法： <font color="red">jsp表达式 &lt;%=%&gt;和 jsp脚本&lt;%  %&gt;。</font><br>以后开发jsp的原则：<font color="red"> 尽量在jsp页面中少写甚至不写java代码。</font><br><strong>使用EL表达式替换掉jsp表达式<br>EL表达式作用： 向浏览器输出域对象中的变量值或表达式计算的结果！！！<br>语法： ${变量或表达式}</strong></p>
+</li>
+<li><p>EL语法</p>
+<ul>
+<li>输出基本数据类型变量<blockquote>
+<p>从四个域获取<br><code>${name}</code><br>指定域获取<br><code>${pageScope.name}</code><br>域范围： <code>pageScoep / requestScope / sessionScope / applicationScope</code></p>
+</blockquote>
+</li>
+<li>输出对象的属性值<br><code>Student</code></li>
+<li>输出集合对象<br><code>List 和 Map</code></li>
+<li>EL表达式计算</li>
+</ul>
+</li>
+</ul>
+<h4 id="jsp标签">jsp标签</h4><ul>
+<li><p>jsp标签的作用<br>jsp标签作用：替换jsp脚本。</p>
+</li>
+<li><p>Jsp标签分类</p>
+<ul>
+<li>内置标签（动作标签）： 不需要在jsp页面导入标签</li>
+<li>jstl标签： 需要在jsp页面中导入标签</li>
+<li>自定义标签 ： 开发者自行定义，需要在jsp页面导入标签</li>
+</ul>
+</li>
+<li><p>动作标签</p>
+<ul>
+<li>转发标签：    <code>&lt;jsp:forward /&gt;</code></li>
+<li>参数标签：  <code>&lt;jsp:pararm/&gt;</code></li>
+<li>包含标签：  <code>&lt;jsp:include/&gt;</code><blockquote>
+<p>原理： 包含与被包含的页面先各自翻译成java源文件，然后再运行时合并在一起。（先翻译再合并），动态包含。<br>静态包含  vs  动态包含的区别？<br>1） 语法不同<br>静态包含语法： <code>&lt;%@inclue file=&quot;被包含的页面&quot;%&gt;</code><br>动态包含语法：　<code>&lt;jsp:include page=&quot;被包含的页面&quot;&gt;</code><br>2）参数传递不同<br>静态包含不能向被包含页面传递参数<br>动态包含可以向被包含页面传递参数<br>3）原理不同<br>静态包含： 先合并再翻译<br>动态包含： 先翻译再合并</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>JSTL标签<br>JSTL (全名：java  standard  tag  libarary   -  java标准标签库  )</p>
+<blockquote>
+<p><font color="red"><strong>核心标签库 （c标签库） 天天用</strong></font><br>国际化标签（fmt标签库）<br>EL函数库（fn函数库）<br>xml标签库（x标签库）<br>sql标签库（sql标签库）</p>
+</blockquote>
+</li>
+<li><p>使用JSTL标签步骤</p>
+<ul>
+<li>导入jstl支持的jar包（标签背后隐藏的java代码）<br><code>注意：使用javaee5.0的项目自动导入jstl支持jar包</code></li>
+<li>使用taglib指令导入标签库<br><code>&lt;%@taglib uri=&quot;tld文件的uri名称&quot; prefix=&quot;简写&quot; %&gt;</code></li>
+<li>在jsp中使用标签    <blockquote>
+<p>核心标签库的重点标签：<br>保存数据：<br>　　 <code>&lt;c:set&gt;&lt;/c:set&gt;</code><br>获取数据：<br>　　<code>&lt;c:out value=&quot;&quot;&gt;&lt;/c:out&gt;</code><br>单条件判断<br>　　<code>&lt;c:if test=&quot;&quot;&gt;&lt;/c:if&gt;</code><br>多条件判断<br>　　<code>&lt;c:choose&gt;&lt;/c:choose&gt;</code><br>　　<code>&lt;c:when test=&quot;&quot;&gt;&lt;/c:when&gt;</code><br>　　<code>&lt;c:otherwise&gt;&lt;/c:otherwise&gt;</code><br>循环数据<br>　　<code>&lt;c:forEach&gt;&lt;/c:forEach&gt;</code><br>　　<code>&lt;c:forTokens items=&quot;&quot; delims=&quot;&quot;&gt;&lt;/c:forTokens&gt;</code><br>重定向<br>　　<code>&lt;c:redirect&gt;&lt;/c:redirect&gt;</code></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
     <summary type="html">
     <![CDATA[<h3 id="Jsp的内置对象">Jsp的内置对象</h3><h4 id="什么是内置对象？">什么是内置对象？</h4><p>在jsp开发中，会频繁使用到一些对象。<br>　　例如HttpSession,ServletContext,ServletContext,HttpSe]]>
     </summary>
