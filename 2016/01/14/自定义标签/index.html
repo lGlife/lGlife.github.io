@@ -30,7 +30,7 @@
 编写一个普通的java类，继承SimpleTagSupport类，叫标签处理器类
 
 1234567891011121314151617181920212223242526272829 /** * 标签处理器类 * @author APPle * 1）继承SimpleTagSupport * */">
-<meta property="og:updated_time" content="2016-01-14T02:22:29.500Z">
+<meta property="og:updated_time" content="2016-01-14T02:24:48.229Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义标签">
 <meta name="twitter:description" content="自定义标签引入需求： 向浏览器输出当前客户的IP地址 （只能使用jsp标签）
@@ -271,9 +271,8 @@
 <li>控制重复输出标签体内容</li>
 <li>改变标签体内容</li>
 <li>带属性的标签<blockquote>
-<p><strong>属性的标签</strong>:在标签处理器中添加一个成语变量和setter方法<br>//1.声明属性的成员变量<br>  <code>private Integer num;</code><br>//2.关键点： 必须提供公开的setter方法，用于给属性赋值<br>  `public void setNum(Integer num) {</p>
-<pre><code><span class="keyword">this</span>.<span class="built_in">num</span> = <span class="built_in">num</span>;
-</code></pre><p>  }`</p>
+<p><strong>属性的标签</strong>:在标签处理器中添加一个成语变量和setter方法<br>//1.声明属性的成员变量<br>  <code>private Integer num;</code><br>//2.关键点： 必须提供公开的setter方法，用于给属性赋值</p>
+  <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public <span class="keyword">void</span> setNum(Integer <span class="built_in">num</span>) &#123;</span><br><span class="line">	<span class="keyword">this</span>.<span class="built_in">num</span> = <span class="built_in">num</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </blockquote>
 </li>
 </ul>
