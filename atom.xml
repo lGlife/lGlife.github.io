@@ -4,7 +4,7 @@
   <subtitle><![CDATA[远离闹市才是真正的自我]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2016-01-14T02:15:37.599Z</updated>
+  <updated>2016-01-14T02:22:29.500Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yoursite.com/2016/01/14/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE/"/>
     <id>http://yoursite.com/2016/01/14/自定义标签/</id>
     <published>2016-01-14T01:20:17.000Z</published>
-    <updated>2016-01-14T02:15:37.599Z</updated>
+    <updated>2016-01-14T02:22:29.500Z</updated>
     <content type="html"><![CDATA[<h3 id="自定义标签">自定义标签</h3><h4 id="引入">引入</h4><p>需求： 向浏览器输出当前客户的IP地址 （只能使用jsp标签）</p>
 <h4 id="第一个自定义标签开发步骤">第一个自定义标签开发步骤</h4><ul>
 <li>编写一个普通的java类，继承SimpleTagSupport类，叫标签处理器类</li>
@@ -46,9 +46,38 @@
 <li>得到 gz.itcast.a_tag.ShowIpTag<br>　　构造ShowIpTag对象，然后调用ShowIpTag里面的方法</li>
 </ol>
 </blockquote>
-<h4 id="自定义标签处理器类的生命周期">自定义标签处理器类的生命周期</h4><font color="red">SimpleTag接口：</font><br>&gt; void     setJspContext(JspContext pc)–设置pageContext对象，传入pageContext（一定调用）通过getJspCotext()方法得到pageContext对象<br><br>&gt; void     setParent(JspTag parent)–设置父标签对象，传入父标签对象，如果没有父标签，则不调用此方法。通过getParent()方法得到父标签对象。<br><br>&gt; void     setXXX(值)  –设置属性值。<br><br>&gt; void     setJspBody(JspFragment jspBody)–设置标签体内容。标签体内容封装到JspFragment对象中，然后传入JspFragment对象。通过getJspBody()方法得到标签体内容。如果没有标签体内容，则不会调用此方法<br><br>&gt; void     doTag()–执行标签时调用的方法。（一定调用）<br><br>#### 自定义标签的作用<br><br>+ 控制标签体内容是否输出<br>+ 控制标签余下内容是否输出<br>+ 控制重复输出标签体内容<br>+ 改变标签体内容<br>+ 带属性的标签<br>&gt; <strong>属性的标签</strong>:在标签处理器中添加一个成语变量和setter方法<br>  //1.声明属性的成员变量<br>    <code>private Integer num;</code><br>  //2.关键点： 必须提供公开的setter方法，用于给属性赋值<br>    <code>public void setNum(Integer num) {
-        this.num = num;
-    }</code><br><br>#### 输出标签体内容格式<br><br>JSP：   在传统标签中使用的。可以写和执行jsp的java代码。<br>scriptless:  标签体不可以写jsp的java代码<br>empty:    必须是空标签。<br>tagdependent : 标签体内容可以写jsp的java代码，但不会执行。<br><br>### 编码实战<br><br>#### JavaBean<br><br>JavaBean,  咖啡豆。 JavaBean是一种开发规范，可以说是一种技术。<br><br>JavaBean就是一个普通的java类。只有符合以下规定才能称之为javabean：<br>&gt; 1. 必须提供无参数的构造方法<br>&gt; 1. 类中属性都必须私有化(private)<br>&gt; 1. 该类提供公开的getter 和 setter方法<br><br><font color="red">JavaBean的作用： 用于封装数据，保存数据。<br>访问javabean只能使用getter和setter方法</font>
+<h4 id="自定义标签处理器类的生命周期">自定义标签处理器类的生命周期</h4><font color="red">SimpleTag接口：</font> 
+
+<blockquote>
+<p>void     setJspContext(JspContext pc)–设置pageContext对象，传入pageContext（一定调用）通过getJspCotext()方法得到pageContext对象</p>
+<p>void     setParent(JspTag parent)–设置父标签对象，传入父标签对象，如果没有父标签，则不调用此方法。通过getParent()方法得到父标签对象。</p>
+<p>void     setXXX(值)  –设置属性值。</p>
+<p>void     setJspBody(JspFragment jspBody)–设置标签体内容。标签体内容封装到JspFragment对象中，然后传入JspFragment对象。通过getJspBody()方法得到标签体内容。如果没有标签体内容，则不会调用此方法</p>
+<p>void     doTag()–执行标签时调用的方法。（一定调用）</p>
+</blockquote>
+<h4 id="自定义标签的作用">自定义标签的作用</h4><ul>
+<li>控制标签体内容是否输出</li>
+<li>控制标签余下内容是否输出</li>
+<li>控制重复输出标签体内容</li>
+<li>改变标签体内容</li>
+<li>带属性的标签<blockquote>
+<p><strong>属性的标签</strong>:在标签处理器中添加一个成语变量和setter方法<br>//1.声明属性的成员变量<br>  <code>private Integer num;</code><br>//2.关键点： 必须提供公开的setter方法，用于给属性赋值<br>  `public void setNum(Integer num) {</p>
+<pre><code><span class="keyword">this</span>.<span class="built_in">num</span> = <span class="built_in">num</span>;
+</code></pre><p>  }`</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="输出标签体内容格式">输出标签体内容格式</h4><p>JSP：   在传统标签中使用的。可以写和执行jsp的java代码。<br>scriptless:  标签体不可以写jsp的java代码<br>empty:    必须是空标签。<br>tagdependent : 标签体内容可以写jsp的java代码，但不会执行。</p>
+<h3 id="编码实战">编码实战</h3><h4 id="JavaBean">JavaBean</h4><p>JavaBean,  咖啡豆。 JavaBean是一种开发规范，可以说是一种技术。</p>
+<p>JavaBean就是一个普通的java类。只有符合以下规定才能称之为javabean：</p>
+<blockquote>
+<ol>
+<li>必须提供无参数的构造方法</li>
+<li>类中属性都必须私有化(private)</li>
+<li>该类提供公开的getter 和 setter方法</li>
+</ol>
+</blockquote>
+<font color="red">JavaBean的作用： 用于封装数据，保存数据。<br>访问javabean只能使用getter和setter方法</font>
 
 <p>JavaBean的使用场景：</p>
 <blockquote>
@@ -75,7 +104,7 @@
 <ol>
 <li>自定义标签步骤：<br>1.1. 编写标签处理器类，继承SimpleTagSupport类，覆盖doTag方法<br>1.2. 在WEB-INF目录下建立tld文件，在tld配置标签<br>1.3. 在jsp页面导入标签库，使用taglib指令<br>1.4. 在jsp页面中使用标签库中的标签</li>
 <li>自定义标签生命周期：<br> SimpleTag接口：<blockquote>
-<p><code>setJspContext(JspContext context)</code>  –传入pagContext对象<br> <code>setParent(JspTag tag)</code>   –传入父标签对象<br><code>setXXX(参数)</code>     –给属性赋值<br> s<code>etJspBody(JspFrament jspBody)</code>  –传入标签体内容<br> <code>doTag()</code>      –执行标签</p>
+<p><code>setJspContext(JspContext context)</code>  –传入pagContext对象<br> <code>setParent(JspTag tag)</code>   –传入父标签对象<br><code>setXXX(参数)</code>     –给属性赋值<br> <code>setJspBody(JspFrament jspBody)</code>  –传入标签体内容<br> <code>doTag()</code>      –执行标签</p>
 </blockquote>
 </li>
 <li>自定义标签的作用：<br>3.1. 控制是否输出标签体内容<br>　　输出： <code>this.getJspBody().invoke(null)</code><br>　　不输出:  不调用<code>invoke(null)</code>方法<br>3.2. 控制标签余下内容是否输出<br>　　输出： 什么不都做！<br>　　不输出： 抛出<code>SkipPageException</code>异常<br>3.3. 重复输出标签体内容<br>　　重复调用： <code>this.getJspBody().invoke(null)</code><br>3.4. 修改标签体内容<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">StringWriter sw = <span class="keyword">new</span> StringWriter();</span><br><span class="line"><span class="keyword">this</span>.getJspBody().invoke(sw);</span><br><span class="line">String content = sw.toString();</span><br><span class="line"><span class="comment">//修改内容</span></span><br><span class="line"><span class="comment">//手动输出到浏览器</span></span><br><span class="line"><span class="keyword">this</span>.getJspContext().getOut().writer(修改过的内容);</span><br></pre></td></tr></table></figure>
