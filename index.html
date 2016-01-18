@@ -182,6 +182,229 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-mysql基础" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/18/mysql基础/" class="article-date">
+  	<time datetime="2016-01-18T00:47:02.000Z" itemprop="datePublished">2016-01-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/18/mysql基础/">mysql基础</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="数据库入门">数据库入门</h3><h4 id="引入">引入</h4><p>数据保存到内存：<br>优点：</p>
+<ol>
+<li>读写非常快<br>缺点：</li>
+<li>程序关闭导致数据丢失</li>
+</ol>
+<p>数据保存到文件：<br>优点：</p>
+<ol>
+<li>数据可以永久保存<br>缺点：</li>
+<li>频繁地IO操作，效率不高！</li>
+<li>数据管理不方便。例如查询某个数据需要全部读取出来，再匹配。</li>
+</ol>
+<p>数据保存到数据库软件：<br>优点：</p>
+<ol>
+<li>数据永久保存下来</li>
+<li>数据管理非常方便。（例如查询非常快速和方便）</li>
+</ol>
+<font color="red">数据可以说是企业的灵魂！！</font>
+
+<h4 id="什么是数据库软件">什么是数据库软件</h4><p>数据库，俗称数据的仓库。方便管理数据的软件（或程序）。</p>
+<h4 id="市面上数据库软件">市面上数据库软件</h4><p>Oracle，甲骨文公司的产品。 当前最流行应用最广泛的数据库软件。和java语言兼容非常好。适合中大型，中大应用。</p>
+<p>SQL Server: 是微软公司的产品。window平台应用非常广泛。和c#，net平台兼容非常好。</p>
+<p>DB2： IBM公司的产品。IBM服务器–&gt; UNIX -&gt; DB2- &gt; Websphere</p>
+<p>MySQL: 开源组织的产品。甲骨文公司的产品。免费！！！和java语言兼容非常好！适合中小企业，中小应用</p>
+<p>关系型数据库。</p>
+<p>MongoDB： 非关系型数据库。</p>
+<p>先学mysql，后面再学oracle</p>
+<h4 id="MySQL入门">MySQL入门</h4><ol>
+<li>到mysql官网下载。</li>
+<li>安装mysql软件</li>
+<li>使用</li>
+</ol>
+<p>验证是否成功<br>打开cmd  -&gt; 输入 mysql -u root -p  回车   -&gt; 输入密码   回车<br><code>C:\Users\APPle&gt;mysql -u root -p</code><br><code>Enter password: ****</code></p>
+<blockquote>
+<p>Welcome to the MySQL monitor.  Commands end with ; or \g.<br>Your MySQL connection id is 2<br>Server version: 5.5.40 MySQL Community Server (GPL)<br>Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.<br>Oracle is a registered trademark of Oracle Corporation and/or its<br>affiliates. Other names may be trademarks of their respective<br>owners.<br>Type ‘help;’ or ‘\h’ for help. Type ‘\c’ to clear the current input statement.<br>mysql&gt;</p>
+</blockquote>
+<h3 id="数据库管理">数据库管理</h3><h4 id="查询所有数据库">查询所有数据库</h4><blockquote>
+<p>mysql&gt; show databases;<br>+——————–+<br>| Database           |<br>+——————–+<br>| information_schema | – mysql元数据，基础数据<br>| mysql              |    –mysql配置数据库，其中包含用户信息。（用户名和密码，权限管理）<br>| performance_schema |    –mysql数据库软件的运行数据，日志信息，性能数据<br>| test               |     –测试数据库。空的<br>+——————–+<br>4 rows in set (0.00 sec)</p>
+</blockquote>
+<h4 id="创建数据库">创建数据库</h4><blockquote>
+<p>mysql&gt; create database day15       – 指定默认字符集创建数据库<br>-&gt; default character set utf8<br>-&gt; ;<br>Query OK, 1 row affected (0.00 sec)</p>
+</blockquote>
+<h4 id="查看数据库的默认字符集">查看数据库的默认字符集</h4><blockquote>
+<p>mysql&gt; show create database day15;<br>+———-+—————————————————————-+<br>| Database | Create Database                                                |<br>+———-+—————————————————————-+<br>| day15    | CREATE DATABASE <code>day15</code> /<em>!40100 DEFAULT CHARACTER SET utf8 </em>/ |<br>+———-+—————————————————————-+<br>1 row in set (0.00 sec)</p>
+</blockquote>
+<h4 id="删除数据库">删除数据库</h4><blockquote>
+<p>mysql&gt; drop database day15;<br>Query OK, 0 rows affected (0.01 sec)</p>
+</blockquote>
+<h4 id="修改数据库">修改数据库</h4><blockquote>
+<p>mysql&gt; alter database day15 default character set gbk;<br>Query OK, 1 row affected (0.00 sec)</p>
+</blockquote>
+<h3 id="表管理">表管理</h3><p>选择数据库</p>
+<h4 id="查看所有表">查看所有表</h4><blockquote>
+<p>mysql&gt; show tables;<br>+—————–+<br>| Tables_in_day15 |<br>+—————–+<br>| student         |<br>+—————–+<br>1 row in set (0.00 sec)</p>
+</blockquote>
+<h4 id="创建表">创建表</h4><blockquote>
+<p>mysql&gt; create table student(<br>    -&gt; sid int,<br>    -&gt; sname varchar(20),<br>    -&gt; sage int<br>    -&gt; );<br>Query OK, 0 rows affected (0.01 sec)</p>
+</blockquote>
+<h4 id="查看表结构">查看表结构</h4><blockquote>
+<p>mysql&gt; desc student;<br>+——-+————-+——+—–+———+——-+<br>| Field | Type        | Null | Key | Default | Extra |<br>+——-+————-+——+—–+———+——-+<br>| sid   | int(11)     | YES  |     | NULL    |       |<br>| sname | varchar(20) | YES  |     | NULL    |       |<br>| sage  | int(11)     | YES  |     | NULL    |       |<br>+——-+————-+——+—–+———+——-+<br>3 rows in set (0.01 sec)</p>
+</blockquote>
+<h4 id="删除表">删除表</h4><blockquote>
+<p>mysql&gt; drop table student;<br>Query OK, 0 rows affected (0.01 sec)</p>
+</blockquote>
+<h4 id="修改表">修改表</h4><ol>
+<li><p>添加字段</p>
+<blockquote>
+<p>mysql&gt; alter table student add column sgender varchar(2);<br>Query OK, 0 rows affected (0.03 sec)<br>Records: 0  Duplicates: 0  Warnings: 0</p>
+</blockquote>
+</li>
+<li><p>删除字段</p>
+<blockquote>
+<p>mysql&gt; alter table student drop column sgender;<br>Query OK, 0 rows affected (0.03 sec)<br>Records: 0  Duplicates: 0  Warnings: 0</p>
+</blockquote>
+</li>
+<li><p>修改字段类型</p>
+<blockquote>
+<p>mysql&gt; alter table student modify column remark varchar(100);<br>Query OK, 0 rows affected (0.07 sec)<br>Records: 0  Duplicates: 0  Warnings: 0</p>
+</blockquote>
+</li>
+<li><p>修改字段名称</p>
+<blockquote>
+<p>mysql&gt; alter table student change column sgender gender varchar(2);<br>Query OK, 0 rows affected (0.03 sec)<br>Records: 0  Duplicates: 0  Warnings: 0</p>
+</blockquote>
+</li>
+<li><p>修改表名称</p>
+<blockquote>
+<p>mysql&gt; alter table student rename to teacher;<br>Query OK, 0 rows affected (0.01 sec)</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="增删改数据">增删改数据</h3><ol>
+<li><p>增加数据<br>插入所有字段。一定依次按顺序插入<br><code>INSERT INTO student VALUES(1,&#39;张三&#39;,&#39;男&#39;,20);</code><br>注意不能少或多字段值<br><code>INSERT INTO student VALUES(2,&#39;李四&#39;,&#39;女&#39;);</code><br>插入部分字段<br><code>INSERT INTO student(id,NAME) VALUES(2,&#39;李四&#39;);</code></p>
+</li>
+<li><p>修改数据<br>修改所有数据（建议少用）<br><code>UPDATE student SET gender=&#39;女&#39;;</code><br>带条件的修改（推荐使用）<br><code>UPDATE student SET gender=&#39;男&#39; WHERE id=1;</code> 修改id为1的学生，修改性别为男<br>修改多个字段,注意:<br>SET 字段名=值,字段名=值,….<br><code>UPDATE student SET gender=&#39;男&#39;,age=30 WHERE id=2;</code></p>
+</li>
+<li><p>删除数据<br>删除所有数据（建议少用）<br><code>DELETE FROM student;</code><br>带条件的删除(推荐使用)<br><code>DELETE FROM student WHERE id=2;</code><br>另一种方式<br><code>delete from: 可以全表删除</code><br>1）可以带条件删除<br>2）只能删除表的数据，不能删除表的约束<br>3）使用delete from删除的数据可以回滚（事务）<br><code>truncate table: 可以全表删除</code><br>1）不能带条件删除<br>2）即可以删除表的数据，也可以删除表的约束<br>3）使用truncate table删除的数据不能回滚<br><code>TRUNCATE TABLE student;</code></p>
+</li>
+</ol>
+<h3 id="查询数据（重点）">查询数据（重点）</h3><h4 id="查询所有列">查询所有列</h4><p><code>SELECT * FROM student;</code></p>
+<h4 id="查询指定列">查询指定列</h4><p><code>SELECT id,NAME,gender FROM student;</code></p>
+<h4 id="查询时添加常量列">查询时添加常量列</h4><blockquote>
+<p>需求： 在查询student表时添加一个班级列，内容为“java就业班”<br><code>SELECT id,NAME,gender,age,&#39;java就业班&#39; AS &#39;年级&#39;  FROM student;</code></p>
+</blockquote>
+<h4 id="查询时合并列">查询时合并列</h4><blockquote>
+<p>需求： 查询每个学生的servlet和jsp的总成绩<br><code>SELECT id,NAME,(servlet+jsp) AS &#39;总成绩&#39; FROM student;</code><br>注意：合并列只能合并数值类型的字段<br><code>SELECT id,(NAME+servlet) FROM student;</code></p>
+</blockquote>
+<h4 id="查询时去除重复记录">查询时去除重复记录</h4><blockquote>
+<p>需求： 查询学生的性别     男 女<br><code>SELECT DISTINCT gender FROM student;</code><br>另一种语法<br><code>SELECT DISTINCT(gender) FROM student;</code><br>需求: 查询学生所在的地区<br><code>SELECT DISTINCT address FROM student;</code></p>
+</blockquote>
+<h4 id="条件查询">条件查询</h4><ol>
+<li><p>逻辑条件： and(与)     or(或)</p>
+<blockquote>
+<p>需求： 查询id为2，且姓名为李四的学生<br><code>SELECT * FROM student WHERE id=2 AND NAME=&#39;李四&#39;; -- 交集</code><br>需求： 查询id为2，或姓名为张三的学生<br><code>SELECT * FROM student WHERE id=2 OR NAME=&#39;张三&#39;; -- 并集</code></p>
+</blockquote>
+</li>
+<li><p>比较条件： &gt;   &lt;   &gt;=  &lt;=  =  &lt;&gt;(不等于)     between and (等价于&gt;= 且 &lt;=)</p>
+<blockquote>
+<p>需求： 查询servlet成绩大于70分的学生<br><code>SELECT * FROM student WHERE servlet&gt;70;</code><br>需求： 查询jsp成绩大于等于75，且小于等于90分的学生<br><code>SELECT * FROM student WHERE jsp&gt;=75 AND jsp&lt;=90;</code><br>另一个语法<br><code>SELECT * FROM student WHERE jsp BETWEEN 75 AND 90; -- (包前包后)</code><br><code>SELECT * FROM student WHERE gender&lt;&gt;&#39;男&#39;;</code></p>
+</blockquote>
+</li>
+<li><p>判空条件(null 空字符串)：  is null / is not null / =’’  / &lt;&gt;’’</p>
+<blockquote>
+<p>需求： 查询地址为空的学生（包括null和空字符串）<br>null vs  空字符串<br>null：表示没有值<br>空字符串：有值的！<br>判断null<br><code>SELECT * FROM student WHERE address IS NULL ;</code><br>判断空字符串<br><code>SELECT * FROM student WHERE address=&#39;&#39;;</code><br><code>SELECT * FROM student WHERE address IS NULL OR address=&#39;&#39;; -- （包括null和空字符串）</code><br>需求： 查询有地址的学生(不包括null和空字符串)<br><code>SELECT * FROM student WHERE address IS NOT NULL AND address&lt;&gt;&#39;&#39;;</code></p>
+</blockquote>
+</li>
+<li><p>模糊条件： like<br>通常使用以下替换标记：<br>% : 表示任意个字符<br>_ : 表示一个字符</p>
+<blockquote>
+<p>需求： 查询姓‘张’的学生<br><code>SELECT * FROM student WHERE NAME LIKE &#39;李%&#39;;</code><br>需求： 查询姓‘李’，且姓名只有两个字的学生<br><code>SELECT * FROM student WHERE NAME LIKE &#39;李_&#39;;</code></p>
+</blockquote>
+</li>
+</ol>
+<h4 id="聚合查询">聚合查询</h4><ol>
+<li>聚合查询（使用聚合函数的查询）<br>常用的聚合函数： sum()  avg()  max()  min()  count()<blockquote>
+<p>需求：查询学生的servlet的总成绩 (sum() :求和函数)<br><code>SELECT SUM(servlet) AS &#39;servlet的总成绩&#39; FROM student;</code><br>需求： 查询学生的servlet的平均分<br><code>SELECT AVG(servlet) AS &#39;servlet的平均分&#39; FROM student;</code><br>需求: 查询当前servlet最高分<br><code>SELECT MAX(servlet) AS &#39;最高分&#39; FROM student;</code><br>需求： 查询最低分<br><code>SELECT MIN(servlet) AS &#39;最低分&#39; FROM student;</code><br>需求： 统计当前有多少学生(count(字段))<br><code>SELECT COUNT(*) FROM student;</code><br><code>SELECT COUNT(id) FROM student;</code><br>注意：count（）函数统计的数量不包含null的数据<br>使用count统计表的记录数，要使用不包含null值的字段<br><code>SELECT COUNT(age) FROM student;</code></p>
+</blockquote>
+</li>
+</ol>
+<h4 id="分页查询">分页查询</h4><ol>
+<li>分页查询（limit 起始行,查询几行）<br>起始行从0开始<br>分页：当前页  每页显示多少条<br>分页查询当前页的数据的sql:<br><code>SELECT * FROM student LIMIT (当前页-1)*每页显示多少条,每页显示多少条;</code><blockquote>
+<p>需求： 查询第1,2条记录（第1页的数据）<br><code>SELECT * FROM student LIMIT 0,2;</code><br>查询第3,4条记录（第2页的数据）<br><code>SELECT * FROM student LIMIT 2,2;</code><br>查询第5,6条记录（第3页的数据）<br><code>SELECT * FROM student LIMIT 4,2;</code><br>查询第7,8条记录 (没有记录不显示)<br><code>SELECT * FROM student LIMIT 6,2;</code></p>
+</blockquote>
+</li>
+</ol>
+<h4 id="查询排序">查询排序</h4><ol>
+<li>查询排序（order by ）<br>语法 ：order by 字段 asc/desc<br>asc: 顺序，正序。数值：递增，字母：自然顺序（a-z）<br>desc: 倒序，反序。数值：递减，字母：自然反序(z-a)<br>默认情况下，按照插入记录顺序排序<br><code>SELECT * FROM student;</code><blockquote>
+<p>需求： 按照id顺序排序<br><code>SELECT * FROM student ORDER BY id ASC;</code><br><code>SELECT * FROM student ORDER BY id; -- 默认正序</code><br><code>SELECT * FROM student ORDER BY id DESC;-- 反序</code><br>注意：多个排序条件<br>需求： 按照servlet正序，按照jsp的倒序<br><code>SELECT * FROM student ORDER BY servlet ASC,jsp DESC;</code></p>
+</blockquote>
+</li>
+</ol>
+<h4 id="分组查询">分组查询</h4><ol>
+<li>分组查询(group by)<blockquote>
+<p>需求： 查询男女的人数<br>预期结果：<br>男   3<br>女   2</p>
+<ol>
+<li>把学生按照性别分组(GROUP BY gender)</li>
+<li>统计每组的人数(COUNT(<em>))<br>`SELECT gender,COUNT(</em>) FROM student GROUP BY gender;`</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<h4 id="分组查询后筛选">分组查询后筛选</h4><ol>
+<li>分组查询后筛选<blockquote>
+<p>需求： 查询总人数大于2的性别</p>
+<ol>
+<li>查询男女的人数</li>
+<li>筛选出人数大于2的记录(having)<br>注意： 分组之前条件使用where关键字，分组之前条件使用having关键字<br><code>SELECT gender,COUNT(*) FROM student WHERE GROUP BY gender HAVING COUNT(*)&gt;2;</code></li>
+</ol>
+</blockquote>
+</li>
+</ol>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习/">学习</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-自定义标签" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
