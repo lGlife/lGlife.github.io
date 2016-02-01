@@ -118,7 +118,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/随性/" style="font-size: 10px;">随性</a>
+						<a href="/tags/ѧϰ/" style="font-size: 10px;">ѧϰ</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/随性/" style="font-size: 10px;">随性</a>
 					</div>
 				</section>
 				
@@ -181,6 +181,249 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-mysql加强" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/02/01/mysql加强/" class="article-date">
+  	<time datetime="2016-02-01T01:32:24.000Z" itemprop="datePublished">2016-02-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/01/mysql加强/">mysql��ǿ</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="����Լ��">����Լ��</h3><p>���û������������ݽ���Լ��</p>
+<h4 id="Ĭ��ֵ">Ĭ��ֵ</h4><p>���ã� ���û���ʹ��Ĭ��ֵ���ֶβ�����ֵ��ʱ�򣬾�ʹ��Ĭ��ֵ��<br>ע�⣺</p>
+<font color="red">��Ĭ��ֵ�ֶβ���null�ǿ��Եġ�<br> ��Ĭ��ֵ�ֶο��Բ�����null</font>
+
+<blockquote>
+<p>– 1.1 Ĭ��ֵ<br>CREATE TABLE student(<br>    id INT,<br>    NAME VARCHAR(20),<br>    address VARCHAR(20) DEFAULT ‘��������’  – Ĭ��ֵ<br>)<br>DROP TABLE student;<br>– ���ֶ�û�в���ֵ��ʱ����mysql�Զ������ֶη���Ĭ��ֵ<br>INSERT INTO student(id,NAME) VALUES(1,’����’);<br>– ע�⣺Ĭ��ֵ���ֶ�����Ϊnull<br>INSERT INTO student(id,NAME,address) VALUE(2,’����’,NULL);<br>INSERT INTO student(id,NAME,address) VALUE(3,’����’,’���ݷ�خ’);</p>
+</blockquote>
+<h4 id="�ǿ�">�ǿ�</h4><p>���ã������ֶα��븳ֵ<br>ע�⣺</p>
+<font color="red">�ǿ��ַ����븳ֵ<br>�ǿ��ַ����ܸ�null</font>
+
+<blockquote>
+<p>– 1.2 �ǿ�<br>– ������ gender�ֶα�����ֵ����Ϊnull��<br>CREATE TABLE student(<br>    id INT,<br>    NAME VARCHAR(20),<br>    gender VARCHAR(2) NOT NULL – �ǿ�<br>)<br>– �ǿ��ֶα��븳ֵ<br>INSERT INTO student(id,NAME) VALUES(1,’����’);<br>– �ǿ��ַ����ܲ���null<br>INSERT INTO student(id,NAME,gender) VALUES(1,’����’,NULL);</p>
+</blockquote>
+<h4 id="Ψһ">Ψһ</h4><p>���ã����ֶε�ֵ�����ظ�<br>ע�⣺</p>
+<font color="red">Ψһ�ֶο��Բ���null<br>Ψһ�ֶο��Բ�������null</font>
+
+<blockquote>
+<p>– 1.3 Ψһ<br>CREATE TABLE student(<br>    id INT UNIQUE, – Ψһ<br>    NAME VARCHAR(20)<br>)<br>INSERT INTO student(id,NAME) VALUES(1,’zs’);<br>INSERT INTO student(id,NAME) VALUES(1,’lisi’); – ERROR 1062 (23000): Duplicate entry ‘1’ for key ‘id’<br>INSERT INTO student(id,NAME) VALUES(2,’lisi’);</p>
+</blockquote>
+<h4 id="����">����</h4><p>���ã� �ǿ�+Ψһ<br>ע�⣺            </p>
+<font color="red">ͨ�������£�ÿ�ű���������һ�������ֶΡ����ڱ��Ǳ��е�ÿ����¼��Ψһ�ԡ�<br>���鲻Ҫѡ�����İ���ҵ���������ֶ���Ϊ������������ÿ�ű���������һ����ҵ��������id�ֶΡ�</font>
+
+<blockquote>
+<ul>
+<li>1.4 �������ǿ�+Ψһ��<br>DROP TABLE student;<br>CREATE TABLE student(<br>  id INT PRIMARY KEY, – ����<br>  NAME VARCHAR(20)<br>)<br>INSERT INTO student(id,NAME) VALUES(1,’����’);<br>INSERT INTO student(id,NAME) VALUES(2,’����’);<br>– INSERT INTO student(id,NAME) VALUES(1,’����’); – Υ��ΨһԼ���� Duplicate entry ‘1’ for key ‘PRIMARY’<br>– insert into student(name) value(‘����’); – Υ���ǿ�Լ���� ERROR 1048 (23000): Column ‘id’ cannot be null</li>
+</ul>
+</blockquote>
+<h4 id="������">������</h4><p>���ã� �Զ�����</p>
+<blockquote>
+<p>– 1.5 ������<br>CREATE TABLE student(<br>    id INT(4) ZEROFILL PRIMARY KEY AUTO_INCREMENT, – ����������0��ʼ  ZEROFILL ������<br>    NAME VARCHAR(20)<br>)<br>– �������ֶο��Բ���ֵ���Զ�����<br>INSERT INTO student(NAME) VALUES(‘����’);<br>INSERT INTO student(NAME) VALUES(‘����’);<br>INSERT INTO student(NAME) VALUES(‘����’);<br>SELECT * FROM student;<br>– ����Ӱ��������Լ��<br>DELETE FROM student;<br>– ����Ӱ��������Լ��<br>TRUNCATE TABLE student;</p>
+</blockquote>
+<h4 id="����-1">����</h4><p>���ã�Լ�����ֱ�������<br>�������ֱ���������</p>
+<blockquote>
+<p>�����������������⣺ ������һ�ű�<br>���磺Ա�����Ͳ��ű�<br>�������֣��ڲ���Ա�������ݵ�ʱ����Ա�����Ĳ���ID�ֶο����������룡����<br>ʹ������Լ����Լ������Ա�����Ĳ���ID�ֶ�ֵ<br>�����취�� ��Ա�����Ĳ���ID�ֶ�����һ������Լ��<br>– ���ű���������<br>CREATE TABLE dept(<br>    id INT PRIMARY KEY,<br>    deptName VARCHAR(20)<br>)<br>– �޸�Ա����������/�ӱ���<br>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptId INT,– �Ѳ������Ƹ�Ϊ����ID<br>    – ����һ������Լ��<br>    CONSTRAINT emlyee_dept_fk FOREIGN KEY(deptId) REFERENCES dept(id)<br>    –��������  ���� �ο���(�ο��ֶ�)<br>)</p>
+</blockquote>
+<p>ע�⣺<font color="red"><br>1����Լ���ı���Ϊ������Լ�����˵ı���Ϊ���������������ڸ����ϵģ�����<br>2�������Ĳο��ֶ�ͨ��Ϊ������<br>3���������ݣ� �����������������Ӹ���<br>4���޸����ݣ� ���޸ĸ��������޸�����<br>5��ɾ�����ݣ� ��ɾ����������ɾ������<br></font></p>
+<blockquote>
+<p>– 1.6 ����Լ��<br>– Ա����<br>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptName VARCHAR(20) – ��������<br>)<br>INSERT INTO employee VALUES(1,’����’,’����������’);<br>INSERT INTO employee VALUES(2,’����’,’����������’);<br>INSERT INTO employee VALUES(3,’����’,’Ӧ��ά����’);</p>
+<p>SELECT * FROM employee;</p>
+<p>– ����Ա�����������Ƶ�����������<br>INSERT INTO employee VALUES(4,’����’,’����������’);</p>
+<p>– �������������ߵ����⣺���������ֶηŵ�һ�Ŷ�������<br>– ��������һ�Ų��ű�<br>CREATE TABLE dept(<br>    id INT PRIMARY KEY,<br>    deptName VARCHAR(20)<br>)</p>
+<p>DROP TABLE employee;</p>
+<p>– �޸�Ա����<br>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptId INT,– �Ѳ������Ƹ�Ϊ����ID<br>    – ����һ������Լ��<br>    CONSTRAINT emlyee_dept_fk FOREIGN KEY(deptId) REFERENCES dept(id) ON UPDATE CASCADE ON DELETE CASCADE  – ON CASCADE UPDATE �������޸�<br>    – ��������  ���� �ο���(�ο��ֶ�)<br>)</p>
+<p>INSERT INTO dept(id,deptName) VALUES(1,’����������’);<br>INSERT INTO dept(id,deptName) VALUES(2,’Ӧ��ά����’);<br>INSERT INTO dept(id,deptName) VALUES(3,’���鲿’);<br>INSERT INTO employee VALUES(1,’����’,1);<br>INSERT INTO employee VALUES(2,’����’,1);<br>INSERT INTO employee VALUES(3,’����’,2);<br>INSERT INTO employee VALUES(4,’����’,3);</p>
+<p>– ����: �ü�¼ҵ���ϲ��Ϸ���Ա��������һ�������ڵĲ�������<br>INSERT INTO employee VALUES(5,’����’,4); – Υ������Լ���� Cannot add or update a child row: a foreign key constraint fails (<code>day16</code>.<code>employee</code>, CONSTRAINT <code>emlyee_dept_fk</code> FOREIGN KEY (<code>deptId</code>) REFERENCES <code>dept</code> (<code>id</code>))</p>
+<p>– 1������������Լ�����������ݵ�˳���� �����������������Ӹ�������<br>– 2������������Լ�����޸����ݵ�˳���� ���޸ĸ��������޸���������<br>– 3������������Լ����ɾ�����ݵ�˳���� ��ɾ����������ɾ����������<br>– �޸Ĳ���(����ֱ���޸�����)<br>UPDATE dept SET id=4 WHERE id=3;<br>– ���޸�Ա����<br>UPDATE employee SET deptId=2 WHERE id=4;<br>– ɾ������<br>DELETE FROM dept WHERE id=2;<br>– ��ɾ��Ա����<br>DELETE FROM employee WHERE deptId=2;</p>
+<p>SELECT <em> FROM dept;<br>SELECT </em> FROM employee;</p>
+</blockquote>
+<h4 id="��������">��������</h4><p>���⣺ ����������Լ����ʱ�򣬱������޸Ļ�ɾ�������е����й������ݣ������޸Ļ�ɾ�����������ǣ�����ϣ��ֱ���޸Ļ�ɾ���������ݣ��Ӷ�Ӱ�츱�����ݡ�����ʹ�ü�������ʵ�֣�����</p>
+<font color="red">�����޸ģ� ON UPDATE CASCADE<br>����ɾ���� ON DELETE CASCADE</font>
+
+<blockquote>
+<p>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptId INT,– �Ѳ������Ƹ�Ϊ����ID<br>    – ����һ������Լ��<br>    CONSTRAINT emlyee_dept_fk FOREIGN KEY(deptId) REFERENCES dept(id) ON UPDATE CASCADE ON DELETE CASCADE  – ON CASCADE UPDATE �������޸�<br>    –  �������� ���� �ο���(�ο��ֶ�)<br>)<br>ע�⣺ ������������������������ʹ��<br>– �����޸ģ��޸ģ�<br>– ֱ���޸Ĳ���<br>UPDATE dept SET id=5 WHERE id=4;<br>– ����ɾ��<br>– ֱ��ɾ������<br>DELETE FROM dept WHERE id=1;</p>
+</blockquote>
+<h3 id="���ݿ�����">���ݿ�����</h3><h4 id="������ʽ">������ʽ</h4><p>����ԭ���� �������Ƶı���������������ʽ��</p>
+<ul>
+<li><p>��һ��ʽ��<font color="red">Ҫ������ÿ���ֶα����ǲ��ɷָ��Ķ�����Ԫ</font><br> student : name  – Υ����һ��ʽ<br> ��С��|����<br> sutdent ��name    old_name    –���ϵ�һ��ʽ<br> ��С��    ����</p>
+</li>
+<li><p>�ڶ���ʽ��<font color="red">�ڵ�һ��ʽ�Ļ����ϣ�Ҫ��ÿ�ű�ֻ����һ����˼������ÿ���ֶζ��ͱ���������������</font><br> employee��Ա����: Ա������  Ա������ ��������   ��������  –Υ���ڶ���ʽ<br> Ա������Ա������  Ա������ ��������<br> ��������  ��������  ��������             – ���ϵڶ���ʽ</p>
+</li>
+<li><p>������ʽ��<font color="red">�ڵڶ���ʽ������Ҫ��ÿ�ű�������֮���������ֶζ�ֻ�ܺ�������ֱ�Ӿ���������ϵ��</font><br> Ա������ Ա�����ţ������� Ա������  ���ű���  ������ –���ϵڶ���ʽ��Υ��������ʽ�����������ߣ�<br> Ա������Ա�����ţ������� Ա������  ���ű���–���ϵ�����ʽ�������������ࣩ<br> ���ű������ű���  ������</p>
+</li>
+</ul>
+<h3 id="������ѯ(������ѯ)">������ѯ(������ѯ)</h3><blockquote>
+<p>–  <strong><strong><strong>**</strong></strong></strong>����������ѯ��������ѯ��<strong><strong><strong><em>**</em></strong></strong></strong>—-<br>– ���󣺲�ѯԱ���������ڲ���(��ʾԱ����������������)</p>
+<p>– 2.1 �������Ӳ�ѯ�����Ƽ��������ѿ����˻�������4 * 4=16����Щ���ظ���¼��<br>SELECT empName,deptName FROM employee,dept;<br>– ���󣺲�ѯԱ���������ڲ���(��ʾԱ����������������)<br>– ������ѯ������<br>1��ȷ����ѯ��Щ��<br>2��ȷ����Щ��Щ�ֶ�<br>3��������֮���������� (���ɣ��������������Ǳ�����-1)</p>
+<p>– 2.2 �����Ӳ�ѯ��ֻ�����������Ľ����Ż���ʾ(ʹ����Ƶ��)<br>    SELECT empName,deptName       – 2��ȷ����Щ��Щ�ֶ�<br>    FROM employee,dept    – 1��ȷ����ѯ��Щ��<br>    WHERE employee.deptId=dept.id  – 3��������֮����������<br>– �����ӵ���һ���﷨<br>SELECT empName,deptName<br>    FROM employee<br>    INNER JOIN dept<br>    ON employee.deptId=dept.id;<br>– ʹ�ñ���<br>SELECT e.empName,d.deptName<br>    FROM employee e<br>    INNER JOIN dept d<br>    ON e.deptId=d.id;<br>– ������ ��ѯÿ�����ŵ�Ա��<br>– Ԥ�ڽ�����<br> –  ����������  ����<br> –  ����������  ����<br> –  Ӧ��ά����  ����<br> –  ���鲿      ����<br> –  �ܾ���      null </p>
+<p>– 2.3 ��[��]���Ӳ�ѯ�� ʹ�����߱�������ȥƥ���ұ߱������ݣ������������������Ľ�������ʾ������������������������ʾnull<br> – ��ע�⣺ �������ӣ�����������һ����������ʾ����<br>SELECT d.deptName,e.empName<br>    FROM dept d<br>    LEFT OUTER JOIN employee e<br>    ON d.id=e.deptId;</p>
+<p>– 2.4 ��[��]���Ӳ�ѯ: ʹ���ұ߱�������ȥƥ�����߱������ݣ������������������Ľ�������ʾ������������������������ʾnull<br> – ��ע�⣺ �������ӣ��ұ�������һ����������ʾ����<br>SELECT d.deptName,e.empName<br>    FROM employee e<br>    RIGHT OUTER JOIN dept d<br>    ON d.id=e.deptId;</p>
+<p>– 2.5 �����Ӳ�ѯ<br>– ���󣺲�ѯԱ��������˾<br>– Ԥ�ڽ�����<br>    – ����    null<br>    – ����    ����<br>    – ����    ����<br>    – ����    ����<br>SELECT e.empName,b.empName<br>    FROM employee e<br>    LEFT OUTER JOIN employee b<br>    ON e.bossId=b.id;</p>
+</blockquote>
+<h3 id="�洢����">�洢����</h3><p>�洢���̣������߼���sql����<br>֮ǰ��sqlû�������жϣ�û��ѭ���洢���̴������̿������䣨if  while��</p>
+<p>�ص㣺</p>
+<p><font color="red">1��ִ��Ч�ʷǳ��죡�洢�����������ݿ��ķ�������ִ�еģ�����<br>2����ֲ�Ժܲ��ͬ���ݿ��Ĵ洢�����ǲ�����ֲ��</font><br>�﷨:</p>
+<blockquote>
+<p>– �����洢����<br>DELIMITER <code>$</code>       – �����洢���̵Ľ�����<br>CREATE PROCEDURE pro_test()           –�洢��������(�����б�)<br>BEGIN             – ��ʼ<br>– ����д����sql����;          – sql����+���̿���<br>����SELECT <em> FROM employee;<br>END <code>$</code>             – ���� ������<br>– ִ�д洢����<br>CALL pro_test();          – CALL �洢��������(����);<br>������<br>IN��   ��ʾ��������������Я�����ݴ��洢������<br>OUT�� ��ʾ�������������ԴӴ洢�����з��ؽ���<br>INOUT�� ��ʾ���������������ȿ������빦�ܣ�Ҳ������������<br>– <strong><strong><strong>**</strong></strong></strong>�����洢����<strong><strong><strong><strong>**</strong></strong></strong></strong></em>-<br>– ����������<br>– �����洢����<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_test()<br>BEGIN<br>����– ����д����sql����;<br>����SELECT * FROM employee;<br>END $</p>
+<p>– ִ�д洢����<br>CALL pro_test();</p>
+<p>– 3.1 �������������Ĵ洢����<br>– ���󣺴���һ��Ա����id����ѯԱ����Ϣ<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_findById(IN eid INT)  – IN: ��������<br>BEGIN<br>����SELECT * FROM employee WHERE id=eid;<br>END $ </p>
+<p>– ����<br>CALL pro_findById(4);</p>
+<p>– 3.2 �������������Ĵ洢����<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testOut(OUT str VARCHAR(20))  – OUT����������<br>BEGIN<br>����– ��������ֵ<br>����SET str=’helljava’;<br>END $</p>
+<p>– ɾ���洢����<br>DROP PROCEDURE pro_testOut;<br>– ����<br>– ���ν��ܷ��ز�����ֵ����<br>– <strong><em>mysql�ı���<em>*</em></em></strong><br>–  ȫ�ֱ��������ñ�������mysql���ݿ����õı��� ���������Ӷ������ã�<br>����– �鿴����ȫ�ֱ����� show variables<br>����– �鿴ĳ��ȫ�ֱ����� select @@������<br>����– �޸�ȫ�ֱ����� set ������=��ֵ<br>����– character_set_client: mysql�������Ľ������ݵı���<br>����– character_set_results��mysql�������������ݵı���</p>
+<p>–  �Ự������ ֻ�����ڵ�ǰ�ͻ��������ݿ��������˵�һ�����ӵ��С��������ӶϿ�����ô�Ự����ȫ����ʧ��<br>����– �����Ự����: set @����=ֵ<br>����– �鿴�Ự������ select @����</p>
+<p>– �ֲ������� �ڴ洢������ʹ�õı����ͽоֲ�������ֻҪ�洢����ִ�����ϣ��ֲ������Ͷ�ʧ����</p>
+<p>– 1)����һ���Ự����name, 2)ʹ��name�Ự�������մ洢���̵ķ���ֵ<br>CALL pro_testOut(@NAME);<br>– �鿴����ֵ<br>SELECT @NAME;</p>
+<p>– 3.3 �����������������Ĵ洢����<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testInOut(INOUT n INT)  – INOUT�� ������������<br>BEGIN<br>����– �鿴����<br>����SELECT n;<br>����SET n =500;<br>END $</p>
+<p>– ����<br>SET @n=10;</p>
+<p>CALL pro_testInOut(@n);</p>
+<p>SELECT @n;</p>
+<p>– 3.4 ���������жϵĴ洢����<br>– ����������һ������������1���򷵻ء�����һ��,����2�����ء����ڶ���,����3�����ء������������������֣����ء��������롱;<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testIf(IN num INT,OUT str VARCHAR(20))<br>BEGIN<br>����F num=1 THEN<br>������SET str=’����һ’;<br>����ELSEIF num=2 THEN<br>������SET str=’���ڶ�’;<br>����ELSEIF num=3 THEN<br>������SET str=’������’;<br>����ELSE<br>������SET str=’��������’;<br>����END IF;<br>END $</p>
+<p>CALL pro_testIf(4,@str);</p>
+<p>SELECT @str;</p>
+<p>– 3.5 ����ѭ�����ܵĴ洢����<br>– ������ ����һ�����������͡����磬����100��ͳ��1-100�ĺ�<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testWhile(IN num INT,OUT result INT)<br>BEGIN<br>����– ����һ���ֲ�����<br>����DECLARE i INT DEFAULT 1;<br>����DECLARE vsum INT DEFAULT 0;<br>����WHILE i&lt;=num DO<br>��������SET vsum = vsum+i;<br>��������SET i=i+1;<br>����END WHILE;<br>����SET result=vsum;<br>END $</p>
+<p>DROP PROCEDURE pro_testWhile;</p>
+<p>CALL pro_testWhile(100,@result);</p>
+<p>SELECT @result;</p>
+<p>USE day16;</p>
+<p>– 3.6 ʹ�ò�ѯ�Ľ�����ֵ��������INTO��<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_findById2(IN eid INT,OUT vname VARCHAR(20) )<br>BEGIN<br>����SELECT empName INTO vname FROM employee WHERE id=eid;<br>END $</p>
+<p>CALL pro_findById2(1,@NAME);</p>
+<p>SELECT @NAME;</p>
+</blockquote>
+<h3 id="������-1">������</h3><p>����:<br>��������ĳ�ű�ʱ��ϣ��ͬʱ����һЩ����/��Ϊ������ʹ�ô��������ɣ���</p>
+<blockquote>
+<p>– ������ ����Ա��������һ����¼ʱ��ϣ��mysql�Զ�ͬʱ����־����������<br>– ����������(����)<br>CREATE TRIGGER tri_empAdd AFTER INSERT ON employee FOR EACH ROW    – ����Ա��������һ����¼ʱ<br>     INSERT INTO test_log(content) VALUES(‘Ա����������һ����¼’);</p>
+<p>– ��������<br>INSERT INTO employee(id,empName,deptId) VALUES(7,’����˹’,1);<br>INSERT INTO employee(id,empName,deptId) VALUES(8,’����˹2’,1);</p>
+<p>– ����������(�޸�)<br>CREATE TRIGGER tri_empUpd AFTER UPDATE ON employee FOR EACH ROW    – ����Ա�����޸�һ����¼ʱ<br>     INSERT INTO test_log(content) VALUES(‘Ա�����޸���һ����¼’);</p>
+<p>– �޸�<br> UPDATE employee SET empName=’eric’ WHERE id=7;</p>
+<p>– ����������(ɾ��)<br>CREATE TRIGGER tri_empDel AFTER DELETE ON employee FOR EACH ROW    – ����Ա����ɾ��һ����¼ʱ<br>     INSERT INTO test_log(content) VALUES(‘Ա����ɾ����һ����¼’);</p>
+<p>– ɾ��<br> DELETE FROM employee WHERE id=7;</p>
+</blockquote>
+<h3 id="mysqlȨ������">mysqlȨ������</h3><blockquote>
+<p>– <strong><strong><em>*</em></strong></strong>�塢mysqlȨ������<strong><strong><strong><em>**</em></strong></strong></strong><br> – mysql���ݿ�Ȩ�����⣺root ��ӵ������Ȩ�ޣ����Ը��κ����飩<br> – Ȩ���˻���ֻӵ�в���Ȩ�ޣ�CURD�����磬ֻ�ܲ���ĳ�����ݿ���ĳ�ű�<br> – �����޸�mysql���û����룿<br> – password: md5���ܺ���(��������)<br> SELECT PASSWORD(‘root’); – *81F5E21E35407D884A6CD4A731AEBFB6AF209E1B</p>
+<p>–  mysql���ݿ⣬�û����� : user��<br>USE mysql;</p>
+<p>SELECT * FROM USER;</p>
+<p>– �޸�����<br>UPDATE USER SET PASSWORD=PASSWORD(‘123456’) WHERE USER=’root’;</p>
+<p>– ����Ȩ���˻�<br>GRANT SELECT ON day16.employee TO ‘eric’@’localhost’ IDENTIFIED BY ‘123456’;<br>GRANT DELETE ON day16.employee TO ‘eric’@’localhost’ IDENTIFIED BY ‘123456’;</p>
+</blockquote>
+<h3 id="�ܽ�">�ܽ�</h3><p>mysql����</p>
+<ul>
+<li>mysql�洢�ṹ�� ���ݿ� -&gt; �� -&gt; ����   sql����</li>
+<li>�������ݿ⣺<ul>
+<li>���ӣ� create database ���ݿ� default character utf8;</li>
+<li>ɾ���� drop database ���ݿ�;</li>
+<li>�޸ģ� alter database ���ݿ� default character gbk;</li>
+<li>��ѯ�� show databases / show create database ���ݿ�;</li>
+</ul>
+</li>
+<li>��������<br>ѡ�����ݿ⣺use ���ݿ�;<ul>
+<li>���ӣ� create table ��(�ֶ���1 �ֶ�����,�ֶ���2 �ֶ�����……);</li>
+<li>ɾ���� drop table ��;</li>
+<li>�޸ģ�        </li>
+<li>�����ֶΣ� alter table �� add [column] �ֶ��� �ֶ�����;         </li>
+<li>ɾ���ֶ�:   alter table �� drop [column] �ֶ���;</li>
+<li>�޸��ֶ����ͣ� alter table �� modify �ֶ��� �µ��ֶ�����;</li>
+<li>�޸��ֶ����� �� alter table �� change ���ֶ��� ���ֶ��� �ֶ�����;</li>
+<li>�޸ı����ƣ�   alter table �� rename [to] �±���;<br>��ѯ��<br>show tables  /  desc student;</li>
+</ul>
+</li>
+<li>��������:<ul>
+<li>���ӣ� insert into ��(�ֶ�1���ֶ�2,������) -values(ֵ1��ֵ2.��������);</li>
+<li>ɾ���� delete from �� where ����;</li>
+<li>�޸ģ� update �� set �ֶ�1=ֵ1���ֶ�2=ֵ2…… where ����;<br>��ѯ�� </li>
+<li>�����ֶΣ� select * from ��;</li>
+<li>ָ���ֶΣ� select �ֶ�1,�ֶ�2…. from ��;</li>
+<li>ָ�������� select �ֶ�1 as ���� from ��;</li>
+<li>�ϲ��У� select (�ֶ�1+�ֶ�2) from ��;</li>
+<li>ȥ�أ� select distinct �ֶ� from ��;</li>
+<li>������ѯ��</li>
+<li>�߼����� ��and(��)     or������<br>select * from �� where ����1 and/or ����2</li>
+<li>�Ƚ������� &gt;  &lt;  &gt;=  &lt;=  =  &lt;&gt;   between and(�ڡ�����֮��)<br>select * from �� where servlet&gt;=90;</li>
+<li>�п�������<br>�ж�null�� is null   /  is not null<br>�жϿ��ַ����� =’’    /  &lt;&gt;’’</li>
+<li>ģ�������� like<br>%:  �滻�������ַ�<br>_:   �滻һ���ַ�            </li>
+<li>��ҳ��ѯ��limit ��ʼ��,��ѯ����<br>��ʼ�д�0��ʼ</li>
+<li>������ order by �ֶ� asc/desc<br>asc: ������˳��<br>desc�����򣬵���</li>
+<li>������ѯ��group by �ֶ�</li>
+<li>������ɸѡ�� having ����</li>
+</ul>
+</li>
+</ul>
+<p>SQL�����ķ��ࣺ    </p>
+<ul>
+<li>DDL�� ���ݶ�������<br>create / drop / alter     </li>
+<li>DML�����ݲ�������<br>insert / delete /update / truncate     </li>
+<li>DQL�� ���ݲ�ѯ���ԣ�<br>select / show     </li>
+</ul>
+<p>mysql��ǿ</p>
+<ul>
+<li>����Լ������Լ����<ul>
+<li>Ĭ��ֵ�� default Ĭ��ֵ</li>
+<li>�ǿգ�   not null</li>
+<li>Ψһ�� unique</li>
+<li>������ primary key ���ǿ�+Ψһ��</li>
+<li>�������� auto_increment</li>
+<li>������ foreign key   Լ�����ֱ�</li>
+</ul>
+</li>
+<li>������ѯ��������ѯ��<ul>
+<li>�������ӣ������ѿ�������ԭ���������������㹻��  ������-1</li>
+<li>�����Ӳ�ѯ�� inner join<br>ֻ�������������������ݲŻ���ʾ������</li>
+<li>�����⡿���Ӳ�ѯ��left [outer] join<br>���������ݱ���ȫ����ʾ��������ȥƥ���ұ������ݣ������ұ��з�����������������ʾ��                    �����������ݣ���������������������ʾnull��</li>
+<li>�ҡ��⡿���Ӳ�ѯ�� right [outer] join<br>�ұ������ݱ���ȫ����ʾ�����ұ�ȥƥ�����������ݣ����������з�����������������ʾ��                    �����������ݣ���������������������ʾnull��</li>
+<li>�����Ӳ�ѯ    </li>
+</ul>
+</li>
+<li>�洢����<ul>
+<li>�����洢�����﷨<br>delimeter ��������<br>create procedure ����(IN/OUT/INOUT  �������� ��������)<br>begin<br>���߼���sql����<br>end ��������</li>
+<li>���ô洢����<br>CALL �洢��������(ʵ�ʲ���);</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ѧϰ/">ѧϰ</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-mysql基础" class="article article-type-post" itemscope itemprop="blogPost">
   
