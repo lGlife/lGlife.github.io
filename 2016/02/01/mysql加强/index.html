@@ -32,7 +32,7 @@
 
 
 – 1.1 默认值CREATE TABLE student(    id INT,    NAME VARCHAR(20),    address VARCHAR(20) DEFAULT ‘广州天河’  – 默认值)">
-<meta property="og:updated_time" content="2016-02-01T04:29:44.136Z">
+<meta property="og:updated_time" content="2016-02-01T04:33:07.237Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql加强">
 <meta name="twitter:description" content="数据约束对用户操作表的数据进行约束
@@ -308,7 +308,7 @@
 <p>特点：</p>
 <p><font color="red">1）执行效率非常快！存储过程是在数据库的服务器端执行的！！！<br>2）移植性很差！不同数据库的存储过程是不能移植。</font><br>语法:</p>
 <blockquote>
-<p>– 创建存储过程<br>DELIMITER <code>$</code>       – 声明存储过程的结束符<br>CREATE PROCEDURE pro_test()           –存储过程名称(参数列表)<br>BEGIN             – 开始<br>– 可以写多个sql语句;          – sql语句+流程控制<br>　　SELECT <em> FROM employee;<br>END <code>$</code>             – 结束 结束符<br>– 执行存储过程<br>CALL pro_test();          – CALL 存储过程名称(参数);<br>参数：<br>IN：   表示输入参数，可以携带数据带存储过程中<br>OUT： 表示输出参数，可以从存储过程中返回结果<br>INOUT： 表示输入输出参数，既可以输入功能，也可以输出功能<br>– <strong><strong><strong>**</strong></strong></strong>三、存储过程<strong><strong><strong><strong>**</strong></strong></strong></strong></em>-<br>– 声明结束符<br>– 创建存储过程<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_test()<br>BEGIN<br>　　– 可以写多个sql语句;<br>　　SELECT * FROM employee;<br>END $</p>
+<p>– 创建存储过程<br>DELIMITER <code>$</code>       – 声明存储过程的结束符<br>CREATE PROCEDURE pro_test()           –存储过程名称(参数列表)<br>BEGIN             – 开始<br>– 可以写多个sql语句;          – sql语句+流程控制<br>　　SELECT <code>*</code> FROM employee;<br>END <code>$</code>             – 结束 结束符<br>– 执行存储过程<br>CALL pro_test();          – CALL 存储过程名称(参数);<br>参数：<br>IN：   表示输入参数，可以携带数据带存储过程中<br>OUT： 表示输出参数，可以从存储过程中返回结果<br>INOUT： 表示输入输出参数，既可以输入功能，也可以输出功能<br>– <strong><strong><strong>**</strong></strong></strong>三、存储过程<strong><strong><strong><strong><em>*</em></strong></strong></strong></strong>-<br>– 声明结束符<br>– 创建存储过程<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_test()<br>BEGIN<br>　　– 可以写多个sql语句;<br>　　SELECT <code>*</code> FROM employee;<br>END $</p>
 <p>– 执行存储过程<br>CALL pro_test();</p>
 <p>– 3.1 带有输入参数的存储过程<br>– 需求：传入一个员工的id，查询员工信息<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_findById(IN eid INT)  – IN: 输入参数<br>BEGIN<br>　　SELECT * FROM employee WHERE id=eid;<br>END $ </p>
 <p>– 调用<br>CALL pro_findById(4);</p>
