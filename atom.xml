@@ -4,7 +4,7 @@
   <subtitle><![CDATA[远离闹市才是真正的自我]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2016-02-01T03:22:35.839Z</updated>
+  <updated>2016-02-01T04:29:44.136Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,207 +15,208 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[mysql��ǿ]]></title>
+    <title><![CDATA[mysql加强]]></title>
     <link href="http://yoursite.com/2016/02/01/mysql%E5%8A%A0%E5%BC%BA/"/>
     <id>http://yoursite.com/2016/02/01/mysql加强/</id>
     <published>2016-02-01T01:32:24.000Z</published>
-    <updated>2016-02-01T03:22:35.839Z</updated>
-    <content type="html"><![CDATA[<h3 id="����Լ��">����Լ��</h3><p>���û������������ݽ���Լ��</p>
-<h4 id="Ĭ��ֵ">Ĭ��ֵ</h4><p>���ã� ���û���ʹ��Ĭ��ֵ���ֶβ�����ֵ��ʱ�򣬾�ʹ��Ĭ��ֵ��<br>ע�⣺</p>
-<font color="red">��Ĭ��ֵ�ֶβ���null�ǿ��Եġ�<br> ��Ĭ��ֵ�ֶο��Բ�����null</font>
+    <updated>2016-02-01T04:29:44.136Z</updated>
+    <content type="html"><![CDATA[<h3 id="数据约束">数据约束</h3><p>对用户操作表的数据进行约束</p>
+<h4 id="默认值">默认值</h4><p>作用： 当用户对使用默认值的字段不插入值的时候，就使用默认值。<br>注意：</p>
+<font color="red">对默认值字段插入null是可以的。<br> 对默认值字段可以插入非null</font>
 
 <blockquote>
-<p>– 1.1 Ĭ��ֵ<br>CREATE TABLE student(<br>    id INT,<br>    NAME VARCHAR(20),<br>    address VARCHAR(20) DEFAULT ‘��������’  – Ĭ��ֵ<br>)<br>DROP TABLE student;<br>– ���ֶ�û�в���ֵ��ʱ����mysql�Զ������ֶη���Ĭ��ֵ<br>INSERT INTO student(id,NAME) VALUES(1,’����’);<br>– ע�⣺Ĭ��ֵ���ֶ�����Ϊnull<br>INSERT INTO student(id,NAME,address) VALUE(2,’����’,NULL);<br>INSERT INTO student(id,NAME,address) VALUE(3,’����’,’���ݷ�خ’);</p>
+<p>– 1.1 默认值<br>CREATE TABLE student(<br>    id INT,<br>    NAME VARCHAR(20),<br>    address VARCHAR(20) DEFAULT ‘广州天河’  – 默认值<br>)<br>DROP TABLE student;<br>– 当字段没有插入值的时候，mysql自动给该字段分配默认值<br>INSERT INTO student(id,NAME) VALUES(1,’张三’);<br>– 注意：默认值的字段允许为null<br>INSERT INTO student(id,NAME,address) VALUE(2,’李四’,NULL);<br>INSERT INTO student(id,NAME,address) VALUE(3,’王五’,’广州番禺’);</p>
 </blockquote>
-<h4 id="�ǿ�">�ǿ�</h4><p>���ã������ֶα��븳ֵ<br>ע�⣺</p>
-<font color="red">�ǿ��ַ����븳ֵ<br>�ǿ��ַ����ܸ�null</font>
+<h4 id="非空">非空</h4><p>作用：限制字段必须赋值<br>注意：</p>
+<font color="red">非空字符必须赋值<br>非空字符不能赋null</font>
 
 <blockquote>
-<p>– 1.2 �ǿ�<br>– ������ gender�ֶα�����ֵ����Ϊnull��<br>CREATE TABLE student(<br>    id INT,<br>    NAME VARCHAR(20),<br>    gender VARCHAR(2) NOT NULL – �ǿ�<br>)<br>– �ǿ��ֶα��븳ֵ<br>INSERT INTO student(id,NAME) VALUES(1,’����’);<br>– �ǿ��ַ����ܲ���null<br>INSERT INTO student(id,NAME,gender) VALUES(1,’����’,NULL);</p>
+<p>– 1.2 非空<br>– 需求： gender字段必须有值（不为null）<br>CREATE TABLE student(<br>    id INT,<br>    NAME VARCHAR(20),<br>    gender VARCHAR(2) NOT NULL – 非空<br>)<br>– 非空字段必须赋值<br>INSERT INTO student(id,NAME) VALUES(1,’李四’);<br>– 非空字符不能插入null<br>INSERT INTO student(id,NAME,gender) VALUES(1,’李四’,NULL);</p>
 </blockquote>
-<h4 id="Ψһ">Ψһ</h4><p>���ã����ֶε�ֵ�����ظ�<br>ע�⣺</p>
-<font color="red">Ψһ�ֶο��Բ���null<br>Ψһ�ֶο��Բ�������null</font>
+<h4 id="唯一">唯一</h4><p>作用：对字段的值不能重复<br>注意：</p>
+<font color="red">唯一字段可以插入null<br>唯一字段可以插入多个null</font>
 
 <blockquote>
-<p>– 1.3 Ψһ<br>CREATE TABLE student(<br>    id INT UNIQUE, – Ψһ<br>    NAME VARCHAR(20)<br>)<br>INSERT INTO student(id,NAME) VALUES(1,’zs’);<br>INSERT INTO student(id,NAME) VALUES(1,’lisi’); – ERROR 1062 (23000): Duplicate entry ‘1’ for key ‘id’<br>INSERT INTO student(id,NAME) VALUES(2,’lisi’);</p>
+<p>– 1.3 唯一<br>CREATE TABLE student(<br>    id INT UNIQUE, – 唯一<br>    NAME VARCHAR(20)<br>)<br>INSERT INTO student(id,NAME) VALUES(1,’zs’);<br>INSERT INTO student(id,NAME) VALUES(1,’lisi’); – ERROR 1062 (23000): Duplicate entry ‘1’ for key ‘id’<br>INSERT INTO student(id,NAME) VALUES(2,’lisi’);</p>
 </blockquote>
-<h4 id="����">����</h4><p>���ã� �ǿ�+Ψһ<br>ע�⣺            </p>
-<font color="red">ͨ�������£�ÿ�ű���������һ�������ֶΡ����ڱ��Ǳ��е�ÿ����¼��Ψһ�ԡ�<br>���鲻Ҫѡ�����İ���ҵ���������ֶ���Ϊ������������ÿ�ű���������һ����ҵ��������id�ֶΡ�</font>
+<h4 id="主键">主键</h4><p>作用： 非空+唯一<br>注意：            </p>
+<font color="red">通常情况下，每张表都会设置一个主键字段。用于标记表中的每条记录的唯一性。<br>建议不要选择表的包含业务含义的字段作为主键，建议给每张表独立设计一个非业务含义的id字段。</font>
 
 <blockquote>
 <ul>
-<li>1.4 �������ǿ�+Ψһ��<br>DROP TABLE student;<br>CREATE TABLE student(<br>  id INT PRIMARY KEY, – ����<br>  NAME VARCHAR(20)<br>)<br>INSERT INTO student(id,NAME) VALUES(1,’����’);<br>INSERT INTO student(id,NAME) VALUES(2,’����’);<br>– INSERT INTO student(id,NAME) VALUES(1,’����’); – Υ��ΨһԼ���� Duplicate entry ‘1’ for key ‘PRIMARY’<br>– insert into student(name) value(‘����’); – Υ���ǿ�Լ���� ERROR 1048 (23000): Column ‘id’ cannot be null</li>
+<li>1.4 主键（非空+唯一）<br>DROP TABLE student;<br>CREATE TABLE student(<br>  id INT PRIMARY KEY, – 主键<br>  NAME VARCHAR(20)<br>)<br>INSERT INTO student(id,NAME) VALUES(1,’张三’);<br>INSERT INTO student(id,NAME) VALUES(2,’张三’);<br>– INSERT INTO student(id,NAME) VALUES(1,’李四’); – 违反唯一约束： Duplicate entry ‘1’ for key ‘PRIMARY’<br>– insert into student(name) value(‘李四’); – 违反非空约束： ERROR 1048 (23000): Column ‘id’ cannot be null</li>
 </ul>
 </blockquote>
-<h4 id="������">������</h4><p>���ã� �Զ�����</p>
+<h4 id="自增长">自增长</h4><p>作用： 自动递增</p>
 <blockquote>
-<p>– 1.5 ������<br>CREATE TABLE student(<br>    id INT(4) ZEROFILL PRIMARY KEY AUTO_INCREMENT, – ����������0��ʼ  ZEROFILL ������<br>    NAME VARCHAR(20)<br>)<br>– �������ֶο��Բ���ֵ���Զ�����<br>INSERT INTO student(NAME) VALUES(‘����’);<br>INSERT INTO student(NAME) VALUES(‘����’);<br>INSERT INTO student(NAME) VALUES(‘����’);<br>SELECT * FROM student;<br>– ����Ӱ��������Լ��<br>DELETE FROM student;<br>– ����Ӱ��������Լ��<br>TRUNCATE TABLE student;</p>
+<p>– 1.5 自增长<br>CREATE TABLE student(<br>    id INT(4) ZEROFILL PRIMARY KEY AUTO_INCREMENT, – 自增长，从0开始  ZEROFILL 零填充<br>    NAME VARCHAR(20)<br>)<br>– 自增长字段可以不赋值，自动递增<br>INSERT INTO student(NAME) VALUES(‘张三’);<br>INSERT INTO student(NAME) VALUES(‘李四’);<br>INSERT INTO student(NAME) VALUES(‘王五’);<br>SELECT * FROM student;<br>– 不能影响自增长约束<br>DELETE FROM student;<br>– 可以影响自增长约束<br>TRUNCATE TABLE student;</p>
 </blockquote>
-<h4 id="����-1">����</h4><p>���ã�Լ�����ֱ�������<br>�������ֱ���������</p>
+<h4 id="外键">外键</h4><p>作用：约束两种表的数据<br>出现两种表的情况：</p>
 <blockquote>
-<p>�����������������⣺ ������һ�ű�<br>���磺Ա�����Ͳ��ű�<br>�������֣��ڲ���Ա�������ݵ�ʱ����Ա�����Ĳ���ID�ֶο����������룡����<br>ʹ������Լ����Լ������Ա�����Ĳ���ID�ֶ�ֵ<br>�����취�� ��Ա�����Ĳ���ID�ֶ�����һ������Լ��<br>– ���ű���������<br>CREATE TABLE dept(<br>    id INT PRIMARY KEY,<br>    deptName VARCHAR(20)<br>)<br>– �޸�Ա����������/�ӱ���<br>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptId INT,– �Ѳ������Ƹ�Ϊ����ID<br>    – ����һ������Լ��<br>    CONSTRAINT emlyee_dept_fk FOREIGN KEY(deptId) REFERENCES dept(id)<br>    –��������  ���� �ο���(�ο��ֶ�)<br>)</p>
+<p>解决数据冗余高问题： 独立出一张表<br>例如：员工表和部门表<br>问题出现：在插入员工表数据的时候，员工表的部门ID字段可以随便插入！！！<br>使用外键约束：约束插入员工表的部门ID字段值<br>解决办法： 在员工表的部门ID字段添加一个外键约束<br>– 部门表（主表）<br>CREATE TABLE dept(<br>    id INT PRIMARY KEY,<br>    deptName VARCHAR(20)<br>)<br>– 修改员工表（副表/从表）<br>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptId INT,– 把部门名称改为部门ID<br>    – 声明一个外键约束<br>    CONSTRAINT emlyee_dept_fk FOREIGN KEY(deptId) REFERENCES dept(id)<br>    –外键名称  外键 参考表(参考字段)<br>)</p>
 </blockquote>
-<p>ע�⣺<font color="red"><br>1����Լ���ı���Ϊ������Լ�����˵ı���Ϊ���������������ڸ����ϵģ�����<br>2�������Ĳο��ֶ�ͨ��Ϊ������<br>3���������ݣ� �����������������Ӹ���<br>4���޸����ݣ� ���޸ĸ��������޸�����<br>5��ɾ�����ݣ� ��ɾ����������ɾ������<br></font></p>
+<p>注意：<font color="red"><br>1）被约束的表称为副表，约束别人的表称为主表，外键设置在副表上的！！！<br>2）主表的参考字段通用为主键！<br>3）添加数据： 先添加主表，再添加副表<br>4）修改数据： 先修改副表，再修改主表<br>5）删除数据： 先删除副表，再删除主表<br></font></p>
 <blockquote>
-<p>– 1.6 ����Լ��<br>– Ա����<br>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptName VARCHAR(20) – ��������<br>)<br>INSERT INTO employee VALUES(1,’����’,’����������’);<br>INSERT INTO employee VALUES(2,’����’,’����������’);<br>INSERT INTO employee VALUES(3,’����’,’Ӧ��ά����’);</p>
+<p>– 1.6 外键约束<br>– 员工表<br>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptName VARCHAR(20) – 部门名称<br>)<br>INSERT INTO employee VALUES(1,’张三’,’软件开发部’);<br>INSERT INTO employee VALUES(2,’李四’,’软件开发部’);<br>INSERT INTO employee VALUES(3,’王五’,’应用维护部’);</p>
 <p>SELECT * FROM employee;</p>
-<p>– ����Ա�����������Ƶ�����������<br>INSERT INTO employee VALUES(4,’����’,’����������’);</p>
-<p>– �������������ߵ����⣺���������ֶηŵ�һ�Ŷ�������<br>– ��������һ�Ų��ű�<br>CREATE TABLE dept(<br>    id INT PRIMARY KEY,<br>    deptName VARCHAR(20)<br>)</p>
+<p>– 添加员工，部门名称的数据冗余高<br>INSERT INTO employee VALUES(4,’陈六’,’软件开发部’);</p>
+<p>– 解决数据冗余高的问题：给冗余的字段放到一张独立表中<br>– 独立设计一张部门表<br>CREATE TABLE dept(<br>    id INT PRIMARY KEY,<br>    deptName VARCHAR(20)<br>)</p>
 <p>DROP TABLE employee;</p>
-<p>– �޸�Ա����<br>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptId INT,– �Ѳ������Ƹ�Ϊ����ID<br>    – ����һ������Լ��<br>    CONSTRAINT emlyee_dept_fk FOREIGN KEY(deptId) REFERENCES dept(id) ON UPDATE CASCADE ON DELETE CASCADE  – ON CASCADE UPDATE �������޸�<br>    – ��������  ���� �ο���(�ο��ֶ�)<br>)</p>
-<p>INSERT INTO dept(id,deptName) VALUES(1,’����������’);<br>INSERT INTO dept(id,deptName) VALUES(2,’Ӧ��ά����’);<br>INSERT INTO dept(id,deptName) VALUES(3,’���鲿’);<br>INSERT INTO employee VALUES(1,’����’,1);<br>INSERT INTO employee VALUES(2,’����’,1);<br>INSERT INTO employee VALUES(3,’����’,2);<br>INSERT INTO employee VALUES(4,’����’,3);</p>
-<p>– ����: �ü�¼ҵ���ϲ��Ϸ���Ա��������һ�������ڵĲ�������<br>INSERT INTO employee VALUES(5,’����’,4); – Υ������Լ���� Cannot add or update a child row: a foreign key constraint fails (<code>day16</code>.<code>employee</code>, CONSTRAINT <code>emlyee_dept_fk</code> FOREIGN KEY (<code>deptId</code>) REFERENCES <code>dept</code> (<code>id</code>))</p>
-<p>– 1������������Լ�����������ݵ�˳���� �����������������Ӹ�������<br>– 2������������Լ�����޸����ݵ�˳���� ���޸ĸ��������޸���������<br>– 3������������Լ����ɾ�����ݵ�˳���� ��ɾ����������ɾ����������<br>– �޸Ĳ���(����ֱ���޸�����)<br>UPDATE dept SET id=4 WHERE id=3;<br>– ���޸�Ա����<br>UPDATE employee SET deptId=2 WHERE id=4;<br>– ɾ������<br>DELETE FROM dept WHERE id=2;<br>– ��ɾ��Ա����<br>DELETE FROM employee WHERE deptId=2;</p>
+<p>– 修改员工表<br>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptId INT,– 把部门名称改为部门ID<br>    – 声明一个外键约束<br>    CONSTRAINT emlyee_dept_fk FOREIGN KEY(deptId) REFERENCES dept(id) ON UPDATE CASCADE ON DELETE CASCADE  – ON CASCADE UPDATE ：级联修改<br>    – 外键名称  外键 参考表(参考字段)<br>)</p>
+<p>INSERT INTO dept(id,deptName) VALUES(1,’软件开发部’);<br>INSERT INTO dept(id,deptName) VALUES(2,’应用维护部’);<br>INSERT INTO dept(id,deptName) VALUES(3,’秘书部’);<br>INSERT INTO employee VALUES(1,’张三’,1);<br>INSERT INTO employee VALUES(2,’李四’,1);<br>INSERT INTO employee VALUES(3,’王五’,2);<br>INSERT INTO employee VALUES(4,’陈六’,3);</p>
+<p>– 问题: 该记录业务上不合法，员工插入了一个不存在的部门数据<br>INSERT INTO employee VALUES(5,’陈六’,4); – 违反外键约束： Cannot add or update a child row: a foreign key constraint fails (<code>day16</code>.<code>employee</code>, CONSTRAINT <code>emlyee_dept_fk</code> FOREIGN KEY (<code>deptId</code>) REFERENCES <code>dept</code> (<code>id</code>))</p>
+<p>– 1）当有了外键约束，添加数据的顺序： 先添加主表，再添加副表数据<br>– 2）当有了外键约束，修改数据的顺序： 先修改副表，再修改主表数据<br>– 3）当有了外键约束，删除数据的顺序： 先删除副表，再删除主表数据<br>– 修改部门(不能直接修改主表)<br>UPDATE dept SET id=4 WHERE id=3;<br>– 先修改员工表<br>UPDATE employee SET deptId=2 WHERE id=4;<br>– 删除部门<br>DELETE FROM dept WHERE id=2;<br>– 先删除员工表<br>DELETE FROM employee WHERE deptId=2;</p>
 <p>SELECT <em> FROM dept;<br>SELECT </em> FROM employee;</p>
 </blockquote>
-<h4 id="��������">��������</h4><p>���⣺ ����������Լ����ʱ�򣬱������޸Ļ�ɾ�������е����й������ݣ������޸Ļ�ɾ�����������ǣ�����ϣ��ֱ���޸Ļ�ɾ���������ݣ��Ӷ�Ӱ�츱�����ݡ�����ʹ�ü�������ʵ�֣�����</p>
-<font color="red">�����޸ģ� ON UPDATE CASCADE<br>����ɾ���� ON DELETE CASCADE</font>
+<h4 id="级联操作">级联操作</h4><p>问题： 当有了外键约束的时候，必须先修改或删除副表中的所有关联数据，才能修改或删除主表！但是，我们希望直接修改或删除主表数据，从而影响副表数据。可以使用级联操作实现！！！</p>
+<font color="red">级联修改： ON UPDATE CASCADE<br>级联删除： ON DELETE CASCADE</font>
 
 <blockquote>
-<p>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptId INT,– �Ѳ������Ƹ�Ϊ����ID<br>    – ����һ������Լ��<br>    CONSTRAINT emlyee_dept_fk FOREIGN KEY(deptId) REFERENCES dept(id) ON UPDATE CASCADE ON DELETE CASCADE  – ON CASCADE UPDATE �������޸�<br>    –  �������� ���� �ο���(�ο��ֶ�)<br>)<br>ע�⣺ ������������������������ʹ��<br>– �����޸ģ��޸ģ�<br>– ֱ���޸Ĳ���<br>UPDATE dept SET id=5 WHERE id=4;<br>– ����ɾ��<br>– ֱ��ɾ������<br>DELETE FROM dept WHERE id=1;</p>
+<p>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptId INT,– 把部门名称改为部门ID<br>    – 声明一个外键约束<br>    CONSTRAINT emlyee_dept_fk FOREIGN KEY(deptId) REFERENCES dept(id) ON UPDATE CASCADE ON DELETE CASCADE  – ON CASCADE UPDATE ：级联修改<br>    –  外键名称 外键 参考表(参考字段)<br>)<br>注意： 级联操作必须在外键基础上使用<br>– 级联修改（修改）<br>– 直接修改部门<br>UPDATE dept SET id=5 WHERE id=4;<br>– 级联删除<br>– 直接删除部门<br>DELETE FROM dept WHERE id=1;</p>
 </blockquote>
-<h3 id="���ݿ�����">���ݿ�����</h3><h4 id="������ʽ">������ʽ</h4><p>����ԭ���� �������Ƶı���������������ʽ��</p>
+<h3 id="数据库设计">数据库设计</h3><h4 id="三大范式">三大范式</h4><p>设计原则： 建议设计的表尽量遵守三大范式。</p>
 <ul>
-<li><p>��һ��ʽ��<font color="red">Ҫ������ÿ���ֶα����ǲ��ɷָ��Ķ�����Ԫ</font><br> student : name  – Υ����һ��ʽ<br> ��С��|����<br> sutdent ��name    old_name    –���ϵ�һ��ʽ<br> ��С��    ����</p>
+<li><p>第一范式：<font color="red">要求表的每个字段必须是不可分割的独立单元</font><br> student : name  – 违反第一范式<br> 张小名|狗娃<br> sutdent ：name    old_name    –符合第一范式<br> 张小名    狗娃</p>
 </li>
-<li><p>�ڶ���ʽ��<font color="red">�ڵ�һ��ʽ�Ļ����ϣ�Ҫ��ÿ�ű�ֻ����һ����˼������ÿ���ֶζ��ͱ���������������</font><br> employee��Ա����: Ա������  Ա������ ��������   ��������  –Υ���ڶ���ʽ<br> Ա������Ա������  Ա������ ��������<br> ��������  ��������  ��������             – ���ϵڶ���ʽ</p>
+<li><p>第二范式：<font color="red">在第一范式的基础上，要求每张表只表达一个意思。表的每个字段都和表的主键有依赖。</font><br> employee（员工）: 员工编号  员工姓名 部门名称   订单名称  –违反第二范式<br> 员工表：员工编号  员工姓名 部门名称<br> 订单表：  订单编号  订单名称             – 符合第二范式</p>
 </li>
-<li><p>������ʽ��<font color="red">�ڵڶ���ʽ������Ҫ��ÿ�ű�������֮���������ֶζ�ֻ�ܺ�������ֱ�Ӿ���������ϵ��</font><br> Ա������ Ա�����ţ������� Ա������  ���ű���  ������ –���ϵڶ���ʽ��Υ��������ʽ�����������ߣ�<br> Ա������Ա�����ţ������� Ա������  ���ű���–���ϵ�����ʽ�������������ࣩ<br> ���ű������ű���  ������</p>
+<li><p>第三范式：<font color="red">在第二范式基础，要求每张表的主键之外的其他字段都只能和主键有直接决定依赖关系。</font><br> 员工表： 员工编号（主键） 员工姓名  部门编号  部门名 –符合第二范式，违反第三范式（数据冗余高）<br> 员工表：员工编号（主键） 员工姓名  部门编号–符合第三范式（降低数据冗余）<br> 部门表：部门编号  部门名</p>
 </li>
 </ul>
-<h3 id="������ѯ(������ѯ)">������ѯ(������ѯ)</h3><blockquote>
-<p>–  <strong><strong><strong>**</strong></strong></strong>����������ѯ��������ѯ��<strong><strong><strong><em>**</em></strong></strong></strong>—-<br>– ���󣺲�ѯԱ���������ڲ���(��ʾԱ����������������)</p>
-<p>– 2.1 �������Ӳ�ѯ�����Ƽ��������ѿ����˻�������4 * 4=16����Щ���ظ���¼��<br>SELECT empName,deptName FROM employee,dept;<br>– ���󣺲�ѯԱ���������ڲ���(��ʾԱ����������������)<br>– ������ѯ������<br>1��ȷ����ѯ��Щ��<br>2��ȷ����Щ��Щ�ֶ�<br>3��������֮���������� (���ɣ��������������Ǳ�����-1)</p>
-<p>– 2.2 �����Ӳ�ѯ��ֻ�����������Ľ����Ż���ʾ(ʹ����Ƶ��)<br>    SELECT empName,deptName       – 2��ȷ����Щ��Щ�ֶ�<br>    FROM employee,dept    – 1��ȷ����ѯ��Щ��<br>    WHERE employee.deptId=dept.id  – 3��������֮����������<br>– �����ӵ���һ���﷨<br>SELECT empName,deptName<br>    FROM employee<br>    INNER JOIN dept<br>    ON employee.deptId=dept.id;<br>– ʹ�ñ���<br>SELECT e.empName,d.deptName<br>    FROM employee e<br>    INNER JOIN dept d<br>    ON e.deptId=d.id;<br>– ������ ��ѯÿ�����ŵ�Ա��<br>– Ԥ�ڽ�����<br> –  ����������  ����<br> –  ����������  ����<br> –  Ӧ��ά����  ����<br> –  ���鲿      ����<br> –  �ܾ���      null </p>
-<p>– 2.3 ��[��]���Ӳ�ѯ�� ʹ�����߱�������ȥƥ���ұ߱������ݣ������������������Ľ�������ʾ������������������������ʾnull<br> – ��ע�⣺ �������ӣ�����������һ����������ʾ����<br>SELECT d.deptName,e.empName<br>    FROM dept d<br>    LEFT OUTER JOIN employee e<br>    ON d.id=e.deptId;</p>
-<p>– 2.4 ��[��]���Ӳ�ѯ: ʹ���ұ߱�������ȥƥ�����߱������ݣ������������������Ľ�������ʾ������������������������ʾnull<br> – ��ע�⣺ �������ӣ��ұ�������һ����������ʾ����<br>SELECT d.deptName,e.empName<br>    FROM employee e<br>    RIGHT OUTER JOIN dept d<br>    ON d.id=e.deptId;</p>
-<p>– 2.5 �����Ӳ�ѯ<br>– ���󣺲�ѯԱ��������˾<br>– Ԥ�ڽ�����<br>    – ����    null<br>    – ����    ����<br>    – ����    ����<br>    – ����    ����<br>SELECT e.empName,b.empName<br>    FROM employee e<br>    LEFT OUTER JOIN employee b<br>    ON e.bossId=b.id;</p>
+<h3 id="关联查询(多表查询)">关联查询(多表查询)</h3><blockquote>
+<p>–  <strong><strong><strong>**</strong></strong></strong>二、关联查询（多表查询）<strong><strong><strong><em>**</em></strong></strong></strong>—-<br>– 需求：查询员工及其所在部门(显示员工姓名，部门名称)</p>
+<p>– 2.1 交叉连接查询（不推荐。产生笛卡尔乘积现象：4 * 4=16，有些是重复记录）<br>SELECT empName,deptName FROM employee,dept;<br>– 需求：查询员工及其所在部门(显示员工姓名，部门名称)<br>– 多表查询规则：<br>1）确定查询哪些表<br>2）确定哪些哪些字段<br>3）表与表之间连接条件 (规律：连接条件数量是表数量-1)</p>
+<p>– 2.2 内连接查询：只有满足条件的结果才会显示(使用最频繁)<br>    SELECT empName,deptName       – 2）确定哪些哪些字段<br>    FROM employee,dept    – 1）确定查询哪些表<br>    WHERE employee.deptId=dept.id  – 3）表与表之间连接条件<br>– 内连接的另一种语法<br>SELECT empName,deptName<br>    FROM employee<br>    INNER JOIN dept<br>    ON employee.deptId=dept.id;<br>– 使用别名<br>SELECT e.empName,d.deptName<br>    FROM employee e<br>    INNER JOIN dept d<br>    ON e.deptId=d.id;<br>– 需求： 查询每个部门的员工<br>– 预期结果：<br> –  软件开发部  张三<br> –  软件开发部  李四<br> –  应用维护部  王五<br> –  秘书部      陈六<br> –  总经办      null </p>
+<p>– 2.3 左[外]连接查询： 使用左边表的数据去匹配右边表的数据，如果符合连接条件的结果则显示，如果不符合连接条件则显示null<br> – （注意： 左外连接：左表的数据一定会完成显示！）<br>SELECT d.deptName,e.empName<br>    FROM dept d<br>    LEFT OUTER JOIN employee e<br>    ON d.id=e.deptId;</p>
+<p>– 2.4 右[外]连接查询: 使用右边表的数据去匹配左边表的数据，如果符合连接条件的结果则显示，如果不符合连接条件则显示null<br> – （注意： 右外连接：右表的数据一定会完成显示！）<br>SELECT d.deptName,e.empName<br>    FROM employee e<br>    RIGHT OUTER JOIN dept d<br>    ON d.id=e.deptId;</p>
+<p>– 2.5 自连接查询<br>– 需求：查询员工及其上司<br>– 预期结果：<br>    – 张三    null<br>    – 李四    张三<br>    – 王五    李四<br>    – 陈六    王五<br>SELECT e.empName,b.empName<br>    FROM employee e<br>    LEFT OUTER JOIN employee b<br>    ON e.bossId=b.id;</p>
 </blockquote>
-<h3 id="�洢����">�洢����</h3><p>�洢���̣������߼���sql����<br>֮ǰ��sqlû�������жϣ�û��ѭ���洢���̴������̿������䣨if  while��</p>
-<p>�ص㣺</p>
-<p><font color="red">1��ִ��Ч�ʷǳ��죡�洢�����������ݿ��ķ�������ִ�еģ�����<br>2����ֲ�Ժܲ��ͬ���ݿ��Ĵ洢�����ǲ�����ֲ��</font><br>�﷨:</p>
+<h3 id="存储过程">存储过程</h3><p>存储过程，带有逻辑的sql语句<br>之前的sql没有条件判断，没有循环存储过程带上流程控制语句（if  while）</p>
+<p>特点：</p>
+<p><font color="red">1）执行效率非常快！存储过程是在数据库的服务器端执行的！！！<br>2）移植性很差！不同数据库的存储过程是不能移植。</font><br>语法:</p>
 <blockquote>
-<p>– �����洢����<br>DELIMITER <code>$</code>       – �����洢���̵Ľ�����<br>CREATE PROCEDURE pro_test()           –�洢��������(�����б�)<br>BEGIN             – ��ʼ<br>– ����д����sql����;          – sql����+���̿���<br>����SELECT <em> FROM employee;<br>END <code>$</code>             – ���� ������<br>– ִ�д洢����<br>CALL pro_test();          – CALL �洢��������(����);<br>������<br>IN��   ��ʾ��������������Я�����ݴ��洢������<br>OUT�� ��ʾ�������������ԴӴ洢�����з��ؽ���<br>INOUT�� ��ʾ���������������ȿ������빦�ܣ�Ҳ������������<br>– <strong><strong><strong>**</strong></strong></strong>�����洢����<strong><strong><strong><strong>**</strong></strong></strong></strong></em>-<br>– ����������<br>– �����洢����<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_test()<br>BEGIN<br>����– ����д����sql����;<br>����SELECT * FROM employee;<br>END $</p>
-<p>– ִ�д洢����<br>CALL pro_test();</p>
-<p>– 3.1 �������������Ĵ洢����<br>– ���󣺴���һ��Ա����id����ѯԱ����Ϣ<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_findById(IN eid INT)  – IN: ��������<br>BEGIN<br>����SELECT * FROM employee WHERE id=eid;<br>END $ </p>
-<p>– ����<br>CALL pro_findById(4);</p>
-<p>– 3.2 �������������Ĵ洢����<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testOut(OUT str VARCHAR(20))  – OUT����������<br>BEGIN<br>����– ��������ֵ<br>����SET str=’helljava’;<br>END $</p>
-<p>– ɾ���洢����<br>DROP PROCEDURE pro_testOut;<br>– ����<br>– ���ν��ܷ��ز�����ֵ����<br>– <strong><em>mysql�ı���<em>*</em></em></strong><br>–  ȫ�ֱ��������ñ�������mysql���ݿ����õı��� ���������Ӷ������ã�<br>����– �鿴����ȫ�ֱ����� show variables<br>����– �鿴ĳ��ȫ�ֱ����� select @@������<br>����– �޸�ȫ�ֱ����� set ������=��ֵ<br>����– character_set_client: mysql�������Ľ������ݵı���<br>����– character_set_results��mysql�������������ݵı���</p>
-<p>–  �Ự������ ֻ�����ڵ�ǰ�ͻ��������ݿ��������˵�һ�����ӵ��С��������ӶϿ�����ô�Ự����ȫ����ʧ��<br>����– �����Ự����: set @����=ֵ<br>����– �鿴�Ự������ select @����</p>
-<p>– �ֲ������� �ڴ洢������ʹ�õı����ͽоֲ�������ֻҪ�洢����ִ�����ϣ��ֲ������Ͷ�ʧ����</p>
-<p>– 1)����һ���Ự����name, 2)ʹ��name�Ự�������մ洢���̵ķ���ֵ<br>CALL pro_testOut(@NAME);<br>– �鿴����ֵ<br>SELECT @NAME;</p>
-<p>– 3.3 �����������������Ĵ洢����<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testInOut(INOUT n INT)  – INOUT�� ������������<br>BEGIN<br>����– �鿴����<br>����SELECT n;<br>����SET n =500;<br>END $</p>
-<p>– ����<br>SET @n=10;</p>
+<p>– 创建存储过程<br>DELIMITER <code>$</code>       – 声明存储过程的结束符<br>CREATE PROCEDURE pro_test()           –存储过程名称(参数列表)<br>BEGIN             – 开始<br>– 可以写多个sql语句;          – sql语句+流程控制<br>　　SELECT <em> FROM employee;<br>END <code>$</code>             – 结束 结束符<br>– 执行存储过程<br>CALL pro_test();          – CALL 存储过程名称(参数);<br>参数：<br>IN：   表示输入参数，可以携带数据带存储过程中<br>OUT： 表示输出参数，可以从存储过程中返回结果<br>INOUT： 表示输入输出参数，既可以输入功能，也可以输出功能<br>– <strong><strong><strong>**</strong></strong></strong>三、存储过程<strong><strong><strong><strong>**</strong></strong></strong></strong></em>-<br>– 声明结束符<br>– 创建存储过程<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_test()<br>BEGIN<br>　　– 可以写多个sql语句;<br>　　SELECT * FROM employee;<br>END $</p>
+<p>– 执行存储过程<br>CALL pro_test();</p>
+<p>– 3.1 带有输入参数的存储过程<br>– 需求：传入一个员工的id，查询员工信息<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_findById(IN eid INT)  – IN: 输入参数<br>BEGIN<br>　　SELECT * FROM employee WHERE id=eid;<br>END $ </p>
+<p>– 调用<br>CALL pro_findById(4);</p>
+<p>– 3.2 带有输出参数的存储过程<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testOut(OUT str VARCHAR(20))  – OUT：输出参数<br>BEGIN<br>　　– 给参数赋值<br>　　SET str=’helljava’;<br>END $</p>
+<p>– 删除存储过程<br>DROP PROCEDURE pro_testOut;<br>– 调用<br>– 如何接受返回参数的值？？<br>– <strong><em>mysql的变量<em>*</em></em></strong><br>–  全局变量（内置变量）：mysql数据库内置的变量 （所有连接都起作用）<br>　　– 查看所有全局变量： show variables<br>　　– 查看某个全局变量： select @@变量名<br>　　– 修改全局变量： set 变量名=新值<br>　　– character_set_client: mysql服务器的接收数据的编码<br>　　– character_set_results：mysql服务器输出数据的编码</p>
+<p>–  会话变量： 只存在于当前客户端与数据库服务器端的一次连接当中。如果连接断开，那么会话变量全部丢失！<br>　　– 定义会话变量: set @变量=值<br>　　– 查看会话变量： select @变量</p>
+<p>– 局部变量： 在存储过程中使用的变量就叫局部变量。只要存储过程执行完毕，局部变量就丢失！！</p>
+<p>– 1)定义一个会话变量name, 2)使用name会话变量接收存储过程的返回值<br>CALL pro_testOut(@NAME);<br>– 查看变量值<br>SELECT @NAME;</p>
+<p>– 3.3 带有输入输出参数的存储过程<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testInOut(INOUT n INT)  – INOUT： 输入输出参数<br>BEGIN<br>　　– 查看变量<br>　　SELECT n;<br>　　SET n =500;<br>END $</p>
+<p>– 调用<br>SET @n=10;</p>
 <p>CALL pro_testInOut(@n);</p>
 <p>SELECT @n;</p>
-<p>– 3.4 ���������жϵĴ洢����<br>– ����������һ������������1���򷵻ء�����һ��,����2�����ء����ڶ���,����3�����ء������������������֣����ء��������롱;<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testIf(IN num INT,OUT str VARCHAR(20))<br>BEGIN<br>����F num=1 THEN<br>������SET str=’����һ’;<br>����ELSEIF num=2 THEN<br>������SET str=’���ڶ�’;<br>����ELSEIF num=3 THEN<br>������SET str=’������’;<br>����ELSE<br>������SET str=’��������’;<br>����END IF;<br>END $</p>
+<p>– 3.4 带有条件判断的存储过程<br>– 需求：输入一个整数，如果1，则返回“星期一”,如果2，返回“星期二”,如果3，返回“星期三”。其他数字，返回“错误输入”;<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testIf(IN num INT,OUT str VARCHAR(20))<br>BEGIN<br>　　F num=1 THEN<br>　　　SET str=’星期一’;<br>　　ELSEIF num=2 THEN<br>　　　SET str=’星期二’;<br>　　ELSEIF num=3 THEN<br>　　　SET str=’星期三’;<br>　　ELSE<br>　　　SET str=’输入错误’;<br>　　END IF;<br>END $</p>
 <p>CALL pro_testIf(4,@str);</p>
 <p>SELECT @str;</p>
-<p>– 3.5 ����ѭ�����ܵĴ洢����<br>– ������ ����һ�����������͡����磬����100��ͳ��1-100�ĺ�<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testWhile(IN num INT,OUT result INT)<br>BEGIN<br>����– ����һ���ֲ�����<br>����DECLARE i INT DEFAULT 1;<br>����DECLARE vsum INT DEFAULT 0;<br>����WHILE i&lt;=num DO<br>��������SET vsum = vsum+i;<br>��������SET i=i+1;<br>����END WHILE;<br>����SET result=vsum;<br>END $</p>
+<p>– 3.5 带有循环功能的存储过程<br>– 需求： 输入一个整数，求和。例如，输入100，统计1-100的和<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testWhile(IN num INT,OUT result INT)<br>BEGIN<br>　　– 定义一个局部变量<br>　　DECLARE i INT DEFAULT 1;<br>　　DECLARE vsum INT DEFAULT 0;<br>　　WHILE i&lt;=num DO<br>　　　　SET vsum = vsum+i;<br>　　　　SET i=i+1;<br>　　END WHILE;<br>　　SET result=vsum;<br>END $</p>
 <p>DROP PROCEDURE pro_testWhile;</p>
 <p>CALL pro_testWhile(100,@result);</p>
 <p>SELECT @result;</p>
 <p>USE day16;</p>
-<p>– 3.6 ʹ�ò�ѯ�Ľ�����ֵ��������INTO��<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_findById2(IN eid INT,OUT vname VARCHAR(20) )<br>BEGIN<br>����SELECT empName INTO vname FROM employee WHERE id=eid;<br>END $</p>
+<p>– 3.6 使用查询的结果赋值给变量（INTO）<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_findById2(IN eid INT,OUT vname VARCHAR(20) )<br>BEGIN<br>　　SELECT empName INTO vname FROM employee WHERE id=eid;<br>END $</p>
 <p>CALL pro_findById2(1,@NAME);</p>
 <p>SELECT @NAME;</p>
 </blockquote>
-<h3 id="������-1">������</h3><p>����:<br>��������ĳ�ű�ʱ��ϣ��ͬʱ����һЩ����/��Ϊ������ʹ�ô��������ɣ���</p>
+<h3 id="触发器">触发器</h3><p>作用:<br>当操作了某张表时，希望同时触发一些动作/行为，可以使用触发器完成！！</p>
 <blockquote>
-<p>– ������ ����Ա��������һ����¼ʱ��ϣ��mysql�Զ�ͬʱ����־����������<br>– ����������(����)<br>CREATE TRIGGER tri_empAdd AFTER INSERT ON employee FOR EACH ROW    – ����Ա��������һ����¼ʱ<br>     INSERT INTO test_log(content) VALUES(‘Ա����������һ����¼’);</p>
-<p>– ��������<br>INSERT INTO employee(id,empName,deptId) VALUES(7,’����˹’,1);<br>INSERT INTO employee(id,empName,deptId) VALUES(8,’����˹2’,1);</p>
-<p>– ����������(�޸�)<br>CREATE TRIGGER tri_empUpd AFTER UPDATE ON employee FOR EACH ROW    – ����Ա�����޸�һ����¼ʱ<br>     INSERT INTO test_log(content) VALUES(‘Ա�����޸���һ����¼’);</p>
-<p>– �޸�<br> UPDATE employee SET empName=’eric’ WHERE id=7;</p>
-<p>– ����������(ɾ��)<br>CREATE TRIGGER tri_empDel AFTER DELETE ON employee FOR EACH ROW    – ����Ա����ɾ��һ����¼ʱ<br>     INSERT INTO test_log(content) VALUES(‘Ա����ɾ����һ����¼’);</p>
-<p>– ɾ��<br> DELETE FROM employee WHERE id=7;</p>
+<p>– 需求： 当向员工表插入一条记录时，希望mysql自动同时往日志表插入数据<br>– 创建触发器(添加)<br>CREATE TRIGGER tri_empAdd AFTER INSERT ON employee FOR EACH ROW    – 当往员工表插入一条记录时<br>     INSERT INTO test_log(content) VALUES(‘员工表插入了一条记录’);</p>
+<p>– 插入数据<br>INSERT INTO employee(id,empName,deptId) VALUES(7,’扎古斯’,1);<br>INSERT INTO employee(id,empName,deptId) VALUES(8,’扎古斯2’,1);</p>
+<p>– 创建触发器(修改)<br>CREATE TRIGGER tri_empUpd AFTER UPDATE ON employee FOR EACH ROW    – 当往员工表修改一条记录时<br>     INSERT INTO test_log(content) VALUES(‘员工表修改了一条记录’);</p>
+<p>– 修改<br> UPDATE employee SET empName=’eric’ WHERE id=7;</p>
+<p>– 创建触发器(删除)<br>CREATE TRIGGER tri_empDel AFTER DELETE ON employee FOR EACH ROW    – 当往员工表删除一条记录时<br>     INSERT INTO test_log(content) VALUES(‘员工表删除了一条记录’);</p>
+<p>– 删除<br> DELETE FROM employee WHERE id=7;</p>
 </blockquote>
-<h3 id="mysqlȨ������">mysqlȨ������</h3><blockquote>
-<p>– <strong><strong><em>*</em></strong></strong>�塢mysqlȨ������<strong><strong><strong><em>**</em></strong></strong></strong><br> – mysql���ݿ�Ȩ�����⣺root ��ӵ������Ȩ�ޣ����Ը��κ����飩<br> – Ȩ���˻���ֻӵ�в���Ȩ�ޣ�CURD�����磬ֻ�ܲ���ĳ�����ݿ���ĳ�ű�<br> – �����޸�mysql���û����룿<br> – password: md5���ܺ���(��������)<br> SELECT PASSWORD(‘root’); – *81F5E21E35407D884A6CD4A731AEBFB6AF209E1B</p>
-<p>–  mysql���ݿ⣬�û����� : user��<br>USE mysql;</p>
+<h3 id="mysql权限问题">mysql权限问题</h3><blockquote>
+<p>– <strong><strong><em>*</em></strong></strong>五、mysql权限问题<strong><strong><strong><em>**</em></strong></strong></strong><br> – mysql数据库权限问题：root ：拥有所有权限（可以干任何事情）<br> – 权限账户，只拥有部分权限（CURD）例如，只能操作某个数据库的某张表<br> – 如何修改mysql的用户密码？<br> – password: md5加密函数(单向加密)<br> SELECT PASSWORD(‘root’); – *81F5E21E35407D884A6CD4A731AEBFB6AF209E1B</p>
+<p>–  mysql数据库，用户配置 : user表<br>USE mysql;</p>
 <p>SELECT * FROM USER;</p>
-<p>– �޸�����<br>UPDATE USER SET PASSWORD=PASSWORD(‘123456’) WHERE USER=’root’;</p>
-<p>– ����Ȩ���˻�<br>GRANT SELECT ON day16.employee TO ‘eric’@’localhost’ IDENTIFIED BY ‘123456’;<br>GRANT DELETE ON day16.employee TO ‘eric’@’localhost’ IDENTIFIED BY ‘123456’;</p>
+<p>– 修改密码<br>UPDATE USER SET PASSWORD=PASSWORD(‘123456’) WHERE USER=’root’;</p>
+<p>– 分配权限账户<br>GRANT SELECT ON day16.employee TO ‘eric’@’localhost’ IDENTIFIED BY ‘123456’;<br>GRANT DELETE ON day16.employee TO ‘eric’@’localhost’ IDENTIFIED BY ‘123456’;</p>
 </blockquote>
-<h3 id="�ܽ�">�ܽ�</h3><p>mysql����</p>
+<h3 id="总结">总结</h3><p>mysql基础</p>
 <ul>
-<li>mysql�洢�ṹ�� ���ݿ� -&gt; �� -&gt; ����   sql����</li>
-<li>�������ݿ⣺<ul>
-<li>���ӣ� create database ���ݿ� default character utf8;</li>
-<li>ɾ���� drop database ���ݿ�;</li>
-<li>�޸ģ� alter database ���ݿ� default character gbk;</li>
-<li>��ѯ�� show databases / show create database ���ݿ�;</li>
+<li>mysql存储结构： 数据库 -&gt; 表 -&gt; 数据   sql语句</li>
+<li>管理数据库：<ul>
+<li>增加： create database 数据库 default character utf8;</li>
+<li>删除： drop database 数据库;</li>
+<li>修改： alter database 数据库 default character gbk;</li>
+<li>查询： show databases / show create database 数据库;</li>
 </ul>
 </li>
-<li>��������<br>ѡ�����ݿ⣺use ���ݿ�;<ul>
-<li>���ӣ� create table ��(�ֶ���1 �ֶ�����,�ֶ���2 �ֶ�����……);</li>
-<li>ɾ���� drop table ��;</li>
-<li>�޸ģ�        </li>
-<li>�����ֶΣ� alter table �� add [column] �ֶ��� �ֶ�����;         </li>
-<li>ɾ���ֶ�:   alter table �� drop [column] �ֶ���;</li>
-<li>�޸��ֶ����ͣ� alter table �� modify �ֶ��� �µ��ֶ�����;</li>
-<li>�޸��ֶ����� �� alter table �� change ���ֶ��� ���ֶ��� �ֶ�����;</li>
-<li>�޸ı����ƣ�   alter table �� rename [to] �±���;<br>��ѯ��<br>show tables  /  desc student;</li>
+<li>管理表：<br>选择数据库：use 数据库;<ul>
+<li>增加： create table 表(字段名1 字段类型,字段名2 字段类型……);</li>
+<li>删除： drop table 表;</li>
+<li>修改：        </li>
+<li>添加字段： alter table 表 add [column] 字段名 字段类型;         </li>
+<li>删除字段:   alter table 表 drop [column] 字段名;</li>
+<li>修改字段类型： alter table 表 modify 字段名 新的字段类型;</li>
+<li>修改字段名称 ： alter table 表 change 旧字段名 新字段名 字段类型;</li>
+<li>修改表名称：   alter table 表 rename [to] 新表名;<br>查询：<br>show tables  /  desc student;</li>
 </ul>
 </li>
-<li>��������:<ul>
-<li>���ӣ� insert into ��(�ֶ�1���ֶ�2,������) -values(ֵ1��ֵ2.��������);</li>
-<li>ɾ���� delete from �� where ����;</li>
-<li>�޸ģ� update �� set �ֶ�1=ֵ1���ֶ�2=ֵ2…… where ����;<br>��ѯ�� </li>
-<li>�����ֶΣ� select * from ��;</li>
-<li>ָ���ֶΣ� select �ֶ�1,�ֶ�2…. from ��;</li>
-<li>ָ�������� select �ֶ�1 as ���� from ��;</li>
-<li>�ϲ��У� select (�ֶ�1+�ֶ�2) from ��;</li>
-<li>ȥ�أ� select distinct �ֶ� from ��;</li>
-<li>������ѯ��</li>
-<li>�߼����� ��and(��)     or������<br>select * from �� where ����1 and/or ����2</li>
-<li>�Ƚ������� &gt;  &lt;  &gt;=  &lt;=  =  &lt;&gt;   between and(�ڡ�����֮��)<br>select * from �� where servlet&gt;=90;</li>
-<li>�п�������<br>�ж�null�� is null   /  is not null<br>�жϿ��ַ����� =’’    /  &lt;&gt;’’</li>
-<li>ģ�������� like<br>%:  �滻�������ַ�<br>_:   �滻һ���ַ�            </li>
-<li>��ҳ��ѯ��limit ��ʼ��,��ѯ����<br>��ʼ�д�0��ʼ</li>
-<li>������ order by �ֶ� asc/desc<br>asc: ������˳��<br>desc�����򣬵���</li>
-<li>������ѯ��group by �ֶ�</li>
-<li>������ɸѡ�� having ����</li>
+<li>管理数据:<ul>
+<li>增加： insert into 表(字段1，字段2,。。。) -values(值1，值2.。。。。);</li>
+<li>删除： delete from 表 where 条件;</li>
+<li>修改： update 表 set 字段1=值1，字段2=值2…… where 条件;<br>查询： </li>
+<li>所有字段： select * from 表;</li>
+<li>指定字段： select 字段1,字段2…. from 表;</li>
+<li>指定别名： select 字段1 as 别名 from 表;</li>
+<li>合并列： select (字段1+字段2) from 表;</li>
+<li>去重： select distinct 字段 from 表;</li>
+<li>条件查询：</li>
+<li>逻辑条件 ：and(与)     or（或）<br>select * from 表 where 条件1 and/or 条件2</li>
+<li>比较条件： &gt;  &lt;  &gt;=  &lt;=  =  &lt;&gt;   between and(在。。。之间)<br>select * from 表 where servlet&gt;=90;</li>
+<li>判空条件：<br>判断null： is null   /  is not null<br>判断空字符串： =’’    /  &lt;&gt;’’</li>
+<li>模糊条件： like<br>%:  替换任意个字符<br>_:   替换一个字符            </li>
+<li>分页查询：limit 起始行,查询行数<br>起始行从0开始</li>
+<li>排序： order by 字段 asc/desc<br>asc: 正序，顺序<br>desc：反序，倒序</li>
+<li>分组查询：group by 字段</li>
+<li>分组后筛选： having 条件</li>
 </ul>
 </li>
 </ul>
-<p>SQL�����ķ��ࣺ    </p>
+<p>SQL语句的分类：    </p>
 <ul>
-<li>DDL�� ���ݶ�������<br>create / drop / alter     </li>
-<li>DML�����ݲ�������<br>insert / delete /update / truncate     </li>
-<li>DQL�� ���ݲ�ѯ���ԣ�<br>select / show     </li>
+<li>DDL： 数据定义语言<br>create / drop / alter     </li>
+<li>DML：数据操作语句<br>insert / delete /update / truncate     </li>
+<li>DQL： 数据查询语言：<br>select / show     </li>
 </ul>
-<p>mysql��ǿ</p>
+<p>mysql加强</p>
 <ul>
-<li>����Լ������Լ����<ul>
-<li>Ĭ��ֵ�� default Ĭ��ֵ</li>
-<li>�ǿգ�   not null</li>
-<li>Ψһ�� unique</li>
-<li>������ primary key ���ǿ�+Ψһ��</li>
-<li>�������� auto_increment</li>
-<li>������ foreign key   Լ�����ֱ�</li>
+<li>数据约束（表约束）<ul>
+<li>默认值： default 默认值</li>
+<li>非空：   not null</li>
+<li>唯一： unique</li>
+<li>主键： primary key （非空+唯一）</li>
+<li>自增长： auto_increment</li>
+<li>外键： foreign key   约束两种表</li>
 </ul>
 </li>
-<li>������ѯ��������ѯ��<ul>
-<li>�������ӣ������ѿ�������ԭ���������������㹻��  ������-1</li>
-<li>�����Ӳ�ѯ�� inner join<br>ֻ�������������������ݲŻ���ʾ������</li>
-<li>�����⡿���Ӳ�ѯ��left [outer] join<br>���������ݱ���ȫ����ʾ��������ȥƥ���ұ������ݣ������ұ��з�����������������ʾ��                    �����������ݣ���������������������ʾnull��</li>
-<li>�ҡ��⡿���Ӳ�ѯ�� right [outer] join<br>�ұ������ݱ���ȫ����ʾ�����ұ�ȥƥ�����������ݣ����������з�����������������ʾ��                    �����������ݣ���������������������ʾnull��</li>
-<li>�����Ӳ�ѯ    </li>
+<li>关联查询（多表查询）<ul>
+<li>交叉连接（产生笛卡尔积：原因：连接条件不足够）  表数量-1</li>
+<li>内连接查询： inner join<br>只有满足连接条件的数据才会显示！！！</li>
+<li>左【外】连接查询：left [outer] join<br>左表的数据必须全部显示，用左表去匹配右表的数据，如果右表有符号条件的数据则显示符                    合条件的数据；如果不符合条件，则显示null。</li>
+<li>右【外】连接查询： right [outer] join<br>右表的数据必须全部显示，用右表去匹配左表的数据，如果左表有符号条件的数据则显示符                    合条件的数据；如果不符合条件，则显示null。</li>
+<li>自连接查询    </li>
 </ul>
 </li>
-<li>�洢����<ul>
-<li>�����洢�����﷨<br>delimeter ��������<br>create procedure ����(IN/OUT/INOUT  �������� ��������)<br>begin<br>���߼���sql����<br>end ��������</li>
-<li>���ô洢����<br>CALL �洢��������(ʵ�ʲ���);</li>
+<li>存储过程<ul>
+<li>创建存储过程语法<br>delimeter 结束符号<br>create procedure 名称(IN/OUT/INOUT  参数名称 参数类型)<br>begin<br>带逻辑的sql语句<br>end 结束符号</li>
+<li>调用存储过程<br>CALL 存储过程名称(实际参数);</li>
 </ul>
 </li>
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h3 id="����Լ��">����Լ��</h3><p>���û������������ݽ���Լ��</p>
-<h4 id="Ĭ��ֵ">Ĭ��ֵ</h4><p>���ã� ���û���ʹ��Ĭ��ֵ���ֶβ�����ֵ��ʱ�򣬾�ʹ��Ĭ��ֵ��<br>ע�⣺]]>
+    <![CDATA[<h3 id="数据约束">数据约束</h3><p>对用户操作表的数据进行约束</p>
+<h4 id="默认值">默认值</h4><p>作用： 当用户对使用默认值的字段不插入值的时候，就使用默认值。<br>注意：</p>
+<font color="red">对默认值字段插入nul]]>
     </summary>
     
-      <category term="ѧϰ" scheme="http://yoursite.com/tags/%D1%A7%CF%B0/"/>
+      <category term="学习" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
