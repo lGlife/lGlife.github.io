@@ -236,14 +236,6 @@ a {
   height: auto;
   margin: 10px;
 }
-#container #mobile-nav #header .header-tag ul {
-  text-align: center;
-  cursor: default;
-}
-#container #mobile-nav #header .header-tag li {
-  display: inline-block;
-  margin: 3px;
-}
 #container .left-col {
   background: #fff;
   width: 270px;
@@ -566,17 +558,7 @@ a {
   min-width: 270px;
 }
 #header .header-tag {
-  float: none;
   height: 180px;
-  margin-top: -25px;
-  *margin-left: -12px;
-  display: -webkit-box;
-  -webkit-box-orient: horizontal;
-  -webkit-box-pack: center;
-  -webkit-box-align: center;
-}
-#header .header-tag li {
-  cursor: default;
 }
 #header .switch-area {
   position: relative;
