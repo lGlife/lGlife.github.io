@@ -138,7 +138,7 @@ body,
 }
 body {
   font-family: "微软雅黑", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   background: #fff;
   color: rgba(0,0,0,0.6);
   -webkit-overflow-scrolling: touch;
@@ -229,6 +229,18 @@ a {
   cursor: default;
 }
 #container #mobile-nav #header .header-menu li {
+  display: inline-block;
+  margin: 3px;
+}
+#container #mobile-nav #header .header-tag {
+  height: auto;
+  margin: 10px;
+}
+#container #mobile-nav #header .header-tag ul {
+  text-align: center;
+  cursor: default;
+}
+#container #mobile-nav #header .header-tag li {
   display: inline-block;
   margin: 3px;
 }
@@ -550,6 +562,28 @@ a {
   cursor: default;
 }
 #header .header-menu li a {
+  font-size: 13px;
+  min-width: 270px;
+}
+#header .header-tag {
+  font-weight: 270;
+  line-height: 25px;
+  cursor: pointer;
+  text-transform: uppercase;
+  float: none;
+  text-align: center;
+  height: 180px;
+  margin-top: -25px;
+  *margin-left: -12px;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+}
+#header .header-tag li {
+  cursor: default;
+}
+#header .header-tag li a {
   font-size: 13px;
   min-width: 270px;
 }
@@ -927,7 +961,7 @@ a {
   display: inline-block;
   content: "“";
   font-family: serif;
-  font-size: 30px;
+  font-size: 24px;
   float: left;
   margin: 4px 4px 0 -12px;
   color: #c8c8c8;
@@ -938,7 +972,7 @@ a {
   font-weight: 300;
   line-height: 35px;
   margin-bottom: 20px;
-  font-size: 26px;
+  font-size: 20px;
   -webkit-transition: color 0.3s;
   -moz-transition: color 0.3s;
   -o-transition: color 0.3s;
