@@ -16,16 +16,31 @@
   
   <title>JDBC优化 | 时间旅程 | 矛盾体</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="学习历程，知识管理，时间管理，自我管理，阅读">
+  <meta name="description" content="BeanUtils组件1.1    简介程序中对javabean的操作很频繁， 所以apache提供了一套开源的api，方便对javabean的操作！即BeanUtils组件。BeanUtils组件，  作用是简化javabean的操作！
+
+用户可以从www.apache.org下载BeanUtils组件，然后再在项目中引入jar文件！
+使用BenUtils组件：
+
+引入commons-beanu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JDBC优化">
 <meta property="og:url" content="http://yoursite.com/2016/02/26/jdbc优化/index.html">
 <meta property="og:site_name" content="时间旅程 | 矛盾体">
-<meta property="og:description" content="学习历程，知识管理，时间管理，自我管理，阅读">
-<meta property="og:updated_time" content="2016-02-26T02:40:36.689Z">
+<meta property="og:description" content="BeanUtils组件1.1    简介程序中对javabean的操作很频繁， 所以apache提供了一套开源的api，方便对javabean的操作！即BeanUtils组件。BeanUtils组件，  作用是简化javabean的操作！
+
+用户可以从www.apache.org下载BeanUtils组件，然后再在项目中引入jar文件！
+使用BenUtils组件：
+
+引入commons-beanu">
+<meta property="og:updated_time" content="2016-02-26T09:22:56.378Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDBC优化">
-<meta name="twitter:description" content="学习历程，知识管理，时间管理，自我管理，阅读">
+<meta name="twitter:description" content="BeanUtils组件1.1    简介程序中对javabean的操作很频繁， 所以apache提供了一套开源的api，方便对javabean的操作！即BeanUtils组件。BeanUtils组件，  作用是简化javabean的操作！
+
+用户可以从www.apache.org下载BeanUtils组件，然后再在项目中引入jar文件！
+使用BenUtils组件：
+
+引入commons-beanu">
   
     <link rel="alternative" href="/atom.xml" title="时间旅程 | 矛盾体" type="application/atom+xml">
   
@@ -205,7 +220,415 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <ol>
+<li>BeanUtils组件<br>1.1    简介<br>程序中对javabean的操作很频繁， 所以apache提供了一套开源的api，方便对javabean的操作！即BeanUtils组件。<br>BeanUtils组件，  作用是简化javabean的操作！</li>
+</ol>
+<p>用户可以从www.apache.org下载BeanUtils组件，然后再在项目中引入jar文件！</p>
+<p>使用BenUtils组件：</p>
+<ol>
+<li>引入commons-beanutils-1.8.3.jar核心包</li>
+<li>引入日志支持包: commons-logging-1.1.3.jar</li>
+</ol>
+<p>如果缺少日志jar文件，报错：<br>java.lang.NoClassDefFoundError: org/apache/commons/logging/LogFactory<br>    at org.apache.commons.beanutils.ConvertUtilsBean.<init>(ConvertUtilsBean.java:157)<br>    at org.apache.commons.beanutils.BeanUtilsBean.<init>(BeanUtilsBean.java:117)<br>    at org.apache.commons.beanutils.BeanUtilsBean$1.initialValue(BeanUtilsBean.java:68)<br>    at </init></init></p>
+<a id="more"></a>
+<p>1.2    实例, 基本用法<br>方法1： 对象属性的拷贝<br>BeanUtils.copyProperty(admin, “userName”, “jack”);<br>BeanUtils.setProperty(admin, “age”, 18);<br>方法2： 对象的拷贝<br>BeanUtils.copyProperties(newAdmin, admin);<br>方法3： map数据拷贝到javabean中<br>【注意：map中的key要与javabean的属性名称一致】<br>BeanUtils.populate(adminMap, map);</p>
+<pre><code><span class="comment">//1. 对javabean的基本操作</span>
+<span class="annotation">@Test</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>{
+
+    <span class="comment">// a. 基本操作</span>
+    Admin admin = <span class="keyword">new</span> Admin();
+</code></pre><p>//        admin.setUserName(“Jack”);<br>//        admin.setPwd(“999”);</p>
+<pre><code>    <span class="comment">// b. BeanUtils组件实现对象属性的拷贝</span>
+    BeanUtils.copyProperty(admin, <span class="string">"userName"</span>, <span class="string">"jack"</span>);
+    BeanUtils.setProperty(admin, <span class="string">"age"</span>, <span class="number">18</span>);
+
+    <span class="comment">// 总结1： 对于基本数据类型，会自动进行类型转换!</span>
+
+
+    <span class="comment">// c. 对象的拷贝</span>
+    Admin newAdmin = <span class="keyword">new</span> Admin();
+    BeanUtils.copyProperties(newAdmin, admin);
+
+    <span class="comment">// d. map数据，拷贝到对象中</span>
+    Admin adminMap = <span class="keyword">new</span> Admin();
+    Map&lt;<span class="keyword">String</span>,<span class="keyword">Object</span>&gt; <span class="built_in">map</span> = <span class="keyword">new</span> <span class="keyword">HashMap</span>&lt;<span class="keyword">String</span>,<span class="keyword">Object</span>&gt;();
+    <span class="built_in">map</span>.put(<span class="string">"userName"</span>, <span class="string">"Jerry"</span>);
+    <span class="built_in">map</span>.put(<span class="string">"age"</span>, <span class="number">29</span>);
+    <span class="comment">// 注意：map中的key要与javabean的属性名称一致</span>
+    BeanUtils.populate(adminMap, <span class="built_in">map</span>);
+
+    <span class="comment">// 测试</span>
+    System.out.<span class="built_in">println</span>(adminMap.getUserName());
+    System.out.<span class="built_in">println</span>(adminMap.getAge());
+}
+</code></pre><p>1.3    实例, 日期类型的拷贝<br>需要注册日期类型转换器，2种方式参见下面代码：</p>
+<p>public class App {</p>
+<pre><code><span class="comment">//1. 对javabean的基本操作</span>
+<span class="annotation">@Test</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>{
+
+    <span class="comment">// a. 基本操作</span>
+    Admin admin = <span class="keyword">new</span> Admin();
+</code></pre><p>//        admin.setUserName(“Jack”);<br>//        admin.setPwd(“999”);</p>
+<pre><code>    <span class="comment">// b. BeanUtils组件实现对象属性的拷贝</span>
+    BeanUtils.copyProperty(admin, <span class="string">"userName"</span>, <span class="string">"jack"</span>);
+    BeanUtils.setProperty(admin, <span class="string">"age"</span>, <span class="number">18</span>);
+
+    <span class="comment">// 总结1： 对于基本数据类型，会自动进行类型转换!</span>
+
+
+    <span class="comment">// c. 对象的拷贝</span>
+    Admin newAdmin = <span class="keyword">new</span> Admin();
+    BeanUtils.copyProperties(newAdmin, admin);
+
+    <span class="comment">// d. map数据，拷贝到对象中</span>
+    Admin adminMap = <span class="keyword">new</span> Admin();
+    Map&lt;<span class="keyword">String</span>,<span class="keyword">Object</span>&gt; <span class="built_in">map</span> = <span class="keyword">new</span> <span class="keyword">HashMap</span>&lt;<span class="keyword">String</span>,<span class="keyword">Object</span>&gt;();
+    <span class="built_in">map</span>.put(<span class="string">"userName"</span>, <span class="string">"Jerry"</span>);
+    <span class="built_in">map</span>.put(<span class="string">"age"</span>, <span class="number">29</span>);
+    <span class="comment">// 注意：map中的key要与javabean的属性名称一致</span>
+    BeanUtils.populate(adminMap, <span class="built_in">map</span>);
+
+    <span class="comment">// 测试</span>
+    System.out.<span class="built_in">println</span>(adminMap.getUserName());
+    System.out.<span class="built_in">println</span>(adminMap.getAge());
+}
+
+
+<span class="comment">//2. 自定义日期类型转换器</span>
+@Test
+<span class="keyword">public</span> <span class="keyword">void</span> test2() <span class="keyword">throws</span> Exception {
+    <span class="comment">// 模拟表单数据</span>
+    <span class="keyword">String</span> name = <span class="string">"jack"</span>;
+    <span class="keyword">String</span> age = <span class="string">"20"</span>;
+    <span class="keyword">String</span> birth = <span class="string">"   "</span>;
+
+    <span class="comment">// 对象</span>
+    Admin admin = <span class="keyword">new</span> Admin();
+
+    <span class="comment">// 注册日期类型转换器：1， 自定义的方式</span>
+    ConvertUtils.register(<span class="keyword">new</span> Converter() {
+        <span class="comment">// 转换的内部实现方法，需要重写</span>
+        @Override
+        <span class="keyword">public</span> <span class="keyword">Object</span> convert(Class type, <span class="keyword">Object</span> value) {
+
+            <span class="comment">// 判断</span>
+            <span class="keyword">if</span> (type != Date.class) {
+                <span class="keyword">return</span> <span class="keyword">null</span>;
+            }
+            <span class="keyword">if</span> (value == <span class="keyword">null</span> || <span class="string">""</span>.equals(value.toString().<span class="built_in">trim</span>())) {
+                <span class="keyword">return</span> <span class="keyword">null</span>;
+            }
+
+
+            <span class="keyword">try</span> {
+                <span class="comment">// 字符串转换为日期</span>
+                SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd"</span>);
+                <span class="keyword">return</span> sdf.parse(value.toString());
+            } <span class="keyword">catch</span> (ParseException e) {
+                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);
+            }
+        }
+    },Date.class);
+
+
+
+    <span class="comment">// 把表单提交的数据，封装到对象中</span>
+    BeanUtils.copyProperty(admin, <span class="string">"userName"</span>, name);
+    BeanUtils.copyProperty(admin, <span class="string">"age"</span>, age);
+    BeanUtils.copyProperty(admin, <span class="string">"birth"</span>, birth);
+
+    <span class="comment">//------ 测试------</span>
+    System.out.<span class="built_in">println</span>(admin);
+}
+
+<span class="comment">//2. 使用提供的日期类型转换器工具类</span>
+@Test
+<span class="keyword">public</span> <span class="keyword">void</span> test3() <span class="keyword">throws</span> Exception {
+    <span class="comment">// 模拟表单数据</span>
+    <span class="keyword">String</span> name = <span class="string">"jack"</span>;
+    <span class="keyword">String</span> age = <span class="string">"20"</span>;
+    <span class="keyword">String</span> birth = <span class="keyword">null</span>;
+
+    <span class="comment">// 对象</span>
+    Admin admin = <span class="keyword">new</span> Admin();
+
+    <span class="comment">// 注册日期类型转换器：2， 使用组件提供的转换器工具类</span>
+    ConvertUtils.register(<span class="keyword">new</span> DateLocaleConverter(), Date.class);
+
+    <span class="comment">// 把表单提交的数据，封装到对象中</span>
+    BeanUtils.copyProperty(admin, <span class="string">"userName"</span>, name);
+    BeanUtils.copyProperty(admin, <span class="string">"age"</span>, age);
+    BeanUtils.copyProperty(admin, <span class="string">"birth"</span>, birth);
+
+    <span class="comment">//------ 测试------</span>
+    System.out.<span class="built_in">println</span>(admin);
+}
+</code></pre><p>}</p>
+<p>1.4    应用<br>public class WebUtils {</p>
+<pre><code>@Deprecated
+<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; T copyToBean_old(HttpServletRequest request, <span class="class"><span class="keyword">Class</span>&lt;<span class="title">T</span>&gt; <span class="title">clazz</span>) </span>{
+    <span class="keyword">try</span> {
+        <span class="comment">// 创建对象</span>
+        T t = clazz.newInstance();
+
+        <span class="comment">// 获取所有的表单元素的名称</span>
+        Enumeration&lt;String&gt; enums = request.getParameterNames();
+        <span class="comment">// 遍历</span>
+        <span class="keyword">while</span> (enums.hasMoreElements()) {
+            <span class="comment">// 获取表单元素的名称:&lt;input type="password" name="pwd"/&gt;</span>
+            String name = enums.nextElement();  <span class="comment">// pwd</span>
+            <span class="comment">// 获取名称对应的值</span>
+            String value = request.getParameter(name);
+            <span class="comment">// 把指定属性名称对应的值进行拷贝</span>
+            BeanUtils.copyProperty(t, name, value);
+        }
+
+        <span class="keyword">return</span> t;
+    } <span class="keyword">catch</span> (<span class="keyword">Exception</span> e) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);
+    }
+}
+
+<span class="comment">/**
+ * 处理请求数据的封装
+ */</span>
+<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; T copyToBean(HttpServletRequest request, <span class="class"><span class="keyword">Class</span>&lt;<span class="title">T</span>&gt; <span class="title">clazz</span>) </span>{
+    <span class="keyword">try</span> {
+        <span class="comment">// （注册日期类型转换器）</span>
+        <span class="comment">// 创建对象</span>
+        T t = clazz.newInstance();
+        BeanUtils.populate(t, request.getParameterMap());
+        <span class="keyword">return</span> t;
+    } <span class="keyword">catch</span> (<span class="keyword">Exception</span> e) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);
+    }
+}
+</code></pre><p>}</p>
+<ol>
+<li>元数据<br>    在jdbc中获取数据库的定义，例如：数据库、表、列的定义信息。就用到元数据。<br>    在jdbc中可以使用： 数据库元数据、参数元数据、结果集元数据<br>    (元数据定义相关api，  ..MetaData)</li>
+</ol>
+<p>public class App {</p>
+<pre><code><span class="comment">//1. 数据库元数据</span>
+@Test
+<span class="keyword">public</span> <span class="keyword">void</span> testDB() <span class="keyword">throws</span> Exception {
+    <span class="comment">// 获取连接</span>
+    Connection conn = JdbcUtil.getConnection();
+    <span class="comment">// 获取数据库元数据</span>
+    DatabaseMetaData metaData = conn.getMetaData();<span class="comment">// alt + shift + L  快速获取方法返回值</span>
+
+    System.out.<span class="keyword">println</span>(metaData.getUserName());
+    System.out.<span class="keyword">println</span>(metaData.getURL());
+    System.out.<span class="keyword">println</span>(metaData.getDatabaseProductName());
+}
+
+<span class="comment">//2. 参数元数据</span>
+@Test
+<span class="keyword">public</span> <span class="keyword">void</span> testParams() <span class="keyword">throws</span> Exception {
+    <span class="comment">// 获取连接</span>
+    Connection conn = JdbcUtil.getConnection();
+    <span class="comment">// SQL</span>
+    String sql = <span class="string">"select * from dept where deptid=? and deptName=?"</span>;
+    <span class="comment">// Object[] values = {"tom","888"};</span>
+
+    PreparedStatement pstmt = conn.prepareStatement(sql);
+    <span class="comment">// 参数元数据</span>
+    ParameterMetaData p_metaDate = pstmt.getParameterMetaData();
+    <span class="comment">// 获取参数的个数</span>
+    <span class="keyword">int</span> <span class="keyword">count</span> = p_metaDate.getParameterCount();
+
+
+    <span class="comment">// 测试</span>
+    System.out.<span class="keyword">println</span>(<span class="keyword">count</span>);
+}
+
+<span class="comment">// 3. 结果集元数据</span>
+@Test
+<span class="keyword">public</span> <span class="keyword">void</span> testRs() <span class="keyword">throws</span> Exception {
+    String sql = <span class="string">"select * from dept "</span>;
+
+    <span class="comment">// 获取连接</span>
+    Connection conn = JdbcUtil.getConnection();
+    PreparedStatement pstmt = conn.prepareStatement(sql);
+    ResultSet rs = pstmt.executeQuery();
+    <span class="comment">// 得到结果集元数据(目标：通过结果集元数据，得到列的名称)</span>
+    ResultSetMetaData rs_metaData = rs.getMetaData();
+
+    <span class="comment">// 迭代每一行结果</span>
+    <span class="keyword">while</span> (rs.<span class="keyword">next</span>()) {
+        <span class="comment">// 1. 获取列的个数</span>
+        <span class="keyword">int</span> <span class="keyword">count</span> = rs_metaData.getColumnCount();
+        <span class="comment">// 2. 遍历，获取每一列的列的名称</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="keyword">count</span>; i++) {
+            <span class="comment">// 得到列的名称</span>
+            String columnName = rs_metaData.getColumnName(i + <span class="number">1</span>);
+            <span class="comment">// 获取每一行的每一列的值</span>
+            Object columnValue = rs.getObject(columnName);
+            <span class="comment">// 测试</span>
+            System.out.<span class="keyword">print</span>(columnName + <span class="string">"="</span> + columnValue + <span class="string">","</span>);
+        }
+        System.out.<span class="keyword">println</span>();
+    }
+
+}
+</code></pre><p>}</p>
+<ol>
+<li>Dao操作的抽取,  BaseDao<br>Dao操作通用的步骤：</li>
+<li>写SQL语句</li>
+<li>获取连接</li>
+<li>创建stmt</li>
+<li>执行sql<br>a)    更新<br>b)    查询</li>
+<li>关闭/异常</li>
+</ol>
+<p>通过的dao,</p>
+<ol>
+<li><p>更新<br>String sql = “select <em> from admin”;<br>String sql = “select </em> from admin  where  id=?  And pwd =?”;<br>public void update(String sql, Object[]  paramValues);</p>
+</li>
+<li><p>查询<br>String sql = “select <em> from admin”;<br>String sql = “select </em> from admin  where  id=?  And pwd =?”;<br>// 传入的什么类型的对象，就封装为什么类型<br>// 要求： 列的名称，要与指定类型的对象的属性名称一样<br>Public    List<t>    query  (String sql , Object[] paramValues ,  Class<t> clazz);<br>T  t;  // 对象赋值</t></t></p>
+</li>
+</ol>
+<p>/**</p>
+<ul>
+<li>通用的dao，自己写的所有的dao都继承此类;</li>
+<li>此类定义了2个通用的方法：</li>
+<li><ol>
+<li>更新</li>
+</ol>
+</li>
+<li><ol>
+<li>查询</li>
+</ol>
+</li>
+<li><p>@author Jie.Yuan<br><em>
+</em>/<br>public class BaseDao {</p>
+<p> // 初始化参数<br> private Connection con;<br> private PreparedStatement pstmt;<br> private ResultSet rs;</p>
+<p> /**</p>
+<ul>
+<li>更新的通用方法</li>
+<li>@param sql   更新的sql语句(update/insert/delete)</li>
+<li><p>@param paramsValue  sql语句中占位符对应的值(如果没有占位符，传入null)<br>*/<br>public void update(String sql,Object[] paramsValue){</p>
+<p> try {</p>
+<pre><code><span class="comment">// 获取连接</span>
+con = JdbcUtil.getConnection();
+<span class="comment">// 创建执行命令的stmt对象</span>
+pstmt = con.prepareStatement(sql);
+<span class="comment">// 参数元数据： 得到占位符参数的个数</span>
+<span class="keyword">int</span> <span class="keyword">count</span> = pstmt.getParameterMetaData().getParameterCount();
+
+<span class="comment">// 设置占位符参数的值</span>
+<span class="keyword">if</span> (paramsValue != <span class="keyword">null</span> &amp;&amp; paramsValue.length &gt; <span class="number">0</span>) {
+    <span class="comment">// 循环给参数赋值</span>
+    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="keyword">count</span>;i++) {
+        pstmt.setObject(i+<span class="number">1</span>, paramsValue[i]);
+    }
+}
+<span class="comment">// 执行更新</span>
+pstmt.executeUpdate();
+</code></pre><p> } catch (Exception e) {</p>
+<pre><code><span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);
+</code></pre><p> } finally {</p>
+<pre><code>JdbcUtil.closeAll(con, pstmt, <span class="literal">null</span>);
+</code></pre><p> }<br>}</p>
+<p>/**</p>
+</li>
+<li>查询的通用方法</li>
+<li>@param sql</li>
+<li><p>@param paramsValue<br>*/<br>public <t> List<t> query(String sql, Object[] paramsValue,Class<t> clazz){</t></t></t></p>
+<p> try {</p>
+<pre><code><span class="comment">// 返回的集合</span>
+List&lt;T&gt; <span class="built_in">list</span> = <span class="keyword">new</span> ArrayList&lt;T&gt;();
+<span class="comment">// 对象</span>
+T t = null;
+
+<span class="comment">// 1. 获取连接</span>
+con = JdbcUtil.getConnection();
+<span class="comment">// 2. 创建stmt对象</span>
+pstmt = con.prepareStatement(sql);
+<span class="comment">// 3. 获取占位符参数的个数， 并设置每个参数的值</span>
+<span class="keyword">int</span> count = pstmt.getParameterMetaData().getParameterCount();
+<span class="keyword">if</span> (paramsValue != null &amp;&amp; paramsValue.length &gt; <span class="number">0</span>) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;paramsValue.length; i++) {
+        pstmt.setObject(i+<span class="number">1</span>, paramsValue[i]);
+    }
+}
+<span class="comment">// 4. 执行查询</span>
+rs = pstmt.executeQuery();
+<span class="comment">// 5. 获取结果集元数据</span>
+ResultSetMetaData rsmd = rs.getMetaData();
+<span class="comment">// ---&gt; 获取列的个数</span>
+<span class="keyword">int</span> columnCount = rsmd.getColumnCount();
+
+<span class="comment">// 6. 遍历rs</span>
+<span class="keyword">while</span> (rs.next()) {
+    <span class="comment">// 要封装的对象</span>
+    t = clazz.newInstance();
+
+    <span class="comment">// 7. 遍历每一行的每一列, 封装数据</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;columnCount; i++) {
+        <span class="comment">// 获取每一列的列名称</span>
+        String columnName = rsmd.getColumnName(i + <span class="number">1</span>);
+        <span class="comment">// 获取每一列的列名称, 对应的值</span>
+        Object value = rs.getObject(columnName);
+        <span class="comment">// 封装： 设置到t对象的属性中  【BeanUtils组件】</span>
+        BeanUtils.copyProperty(t, columnName, value);                
+    }
+
+    <span class="comment">// 把封装完毕的对象，添加到list集合中</span>
+    <span class="built_in">list</span>.add(t);
+}
+
+<span class="keyword">return</span> <span class="built_in">list</span>;
+</code></pre><p> } catch (Exception e) {</p>
+<pre><code><span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);
+</code></pre><p> } finally {</p>
+<pre><code><span class="tag">JdbcUtil</span><span class="class">.closeAll</span>(<span class="tag">con</span>, <span class="tag">pstmt</span>, <span class="tag">rs</span>);
+</code></pre><p> }<br>}<br>}</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>public class AdminDao extends BaseDao {</p>
+<pre><code><span class="comment">// 删除</span>
+<span class="keyword">public</span> <span class="keyword">void</span> delete(<span class="built_in">int</span> id) {
+    <span class="keyword">String</span> sql = <span class="string">"delete from admin where id=?"</span>;
+    <span class="keyword">Object</span>[] paramsValue = {id};
+    <span class="keyword">super</span>.update(sql, paramsValue);
+}
+
+<span class="comment">// 插入</span>
+<span class="keyword">public</span> <span class="keyword">void</span> <span class="built_in">save</span>(Admin admin) {
+    <span class="keyword">String</span> sql = <span class="string">"insert into admin (userName,pwd) values (?,?)"</span>;
+    <span class="keyword">Object</span>[] paramsValue = {admin.getUserName(),admin.getPwd()};
+    <span class="keyword">super</span>.update(sql, paramsValue);
+}
+
+<span class="comment">// 查询全部</span>
+<span class="keyword">public</span> List&lt;Admin&gt; getAll(){
+    <span class="keyword">String</span> sql = <span class="string">"select * from admin"</span>;
+    List&lt;Admin&gt; list = <span class="keyword">super</span>.query(sql, <span class="keyword">null</span>, Admin.class);
+    <span class="keyword">return</span> list;
+}
+
+<span class="comment">// 根据条件查询(主键)</span>
+<span class="keyword">public</span> Admin findById(<span class="built_in">int</span> id){
+    <span class="keyword">String</span> sql = <span class="string">"select * from admin where id=?"</span>;
+    List&lt;Admin&gt; list = <span class="keyword">super</span>.query(sql, <span class="keyword">new</span> <span class="keyword">Object</span>[]{id}, Admin.class);
+    <span class="keyword">return</span>  (list!=<span class="keyword">null</span>&amp;&amp;list.<span class="built_in">size</span>()&gt;<span class="number">0</span>) ? list.<span class="built_in">get</span>(<span class="number">0</span>) : <span class="keyword">null</span>;
+}
+</code></pre><p>}</p>
+<ol>
+<li>DbUtils组件<br>    commons-dbutils 是 Apache 组织提供的一个开源 JDBC工具类库，它是对JDBC的简单封装，学习成本极低，并且使用dbutils能极大简化jdbc编码的工作量，同时也不会影响程序的性能。因此dbutils成为很多不喜欢hibernate的公司的首选。</li>
+</ol>
+<p>DbUtils组件，</p>
+<ol>
+<li>简化jdbc操作</li>
+<li>下载组件，引入jar文件 : commons-dbutils-1.6.jar</li>
+</ol>
+<p>实例<br>|– DbUtils   关闭资源、加载驱动<br>|– QueryRunner   组件的核心工具类：定义了所有的与数据库操作的方法(查询、更新)<br>    Int  update(Connection conn, String sql, Object param);   执行更新带一个占位符的sql<br>Int  update(Connection conn, String sql, Object…  param); 执行更新带多个占位符的sql<br>Int[]  batch(Connection conn, String sql, Object[][] params)        批处理<br>T  query(Connection conn ,String sql, ResultSetHandler<t> rsh, Object… params)   查询方法</t></p>
+<p>Int  update( String sql, Object param);<br>Int  update( String sql, Object…  param);<br>Int[]  batch( String sql, Object[][] params)<br>注意： 如果调用DbUtils组件的操作数据库方法，没有传入连接对象，那么在实例化QueryRunner对象的时候需要传入数据源对象： QueryRunner qr = new QueryRunner(ds);</p>
+<p>DbUtils提供的封装结果的一些对象：<br>1）    BeanHandler: 查询返回单个对象<br>2）    BeanListHandler: 查询返回list集合，集合元素是指定的对象<br>3)  ArrayHandler, 查询返回结果记录的第一行，封装对对象数组, 即返回：Object[]<br>    4)  ArrayListHandler, 把查询的每一行都封装为对象数组，再添加到list集合中<br>    5)  ScalarHandler 查询返回结果记录的第一行的第一列  (在聚合函数统计的时候用)<br>    6)  MapHandler  查询返回结果的第一条记录封装为map</p>
+
       
     </div>
     
