@@ -89,7 +89,7 @@
     <link href="http://yoursite.com/2016/02/01/mysql%E5%8A%A0%E5%BC%BA/"/>
     <id>http://yoursite.com/2016/02/01/mysql加强/</id>
     <published>2016-02-01T01:32:24.000Z</published>
-    <updated>2016-02-26T02:39:41.672Z</updated>
+    <updated>2016-02-26T06:49:12.909Z</updated>
     <content type="html"><![CDATA[<h3 id="数据约束">数据约束</h3><p>对用户操作表的数据进行约束</p>
 <h4 id="默认值">默认值</h4><p>作用： 当用户对使用默认值的字段不插入值的时候，就使用默认值。<br>注意：</p>
 <font color="red">对默认值字段插入null是可以的。<br> 对默认值字段可以插入非null</font>
@@ -103,6 +103,7 @@
 <blockquote>
 <p>– 1.2 非空<br>– 需求： gender字段必须有值（不为null）<br>CREATE TABLE student(<br>    id INT,<br>    NAME VARCHAR(20),<br>    gender VARCHAR(2) NOT NULL – 非空<br>)<br>– 非空字段必须赋值<br>INSERT INTO student(id,NAME) VALUES(1,’李四’);<br>– 非空字符不能插入null<br>INSERT INTO student(id,NAME,gender) VALUES(1,’李四’,NULL);</p>
 </blockquote>
+<a id="more"></a>
 <h4 id="唯一">唯一</h4><p>作用：对字段的值不能重复<br>注意：</p>
 <font color="red">唯一字段可以插入null<br>唯一字段可以插入多个null</font>
 
@@ -283,7 +284,18 @@
     <summary type="html">
     <![CDATA[<h3 id="数据约束">数据约束</h3><p>对用户操作表的数据进行约束</p>
 <h4 id="默认值">默认值</h4><p>作用： 当用户对使用默认值的字段不插入值的时候，就使用默认值。<br>注意：</p>
-<font color="red">对默认值字段插入nul]]>
+<font color="red">对默认值字段插入null是可以的。<br> 对默认值字段可以插入非null</font>
+
+<blockquote>
+<p>– 1.1 默认值<br>CREATE TABLE student(<br>    id INT,<br>    NAME VARCHAR(20),<br>    address VARCHAR(20) DEFAULT ‘广州天河’  – 默认值<br>)<br>DROP TABLE student;<br>– 当字段没有插入值的时候，mysql自动给该字段分配默认值<br>INSERT INTO student(id,NAME) VALUES(1,’张三’);<br>– 注意：默认值的字段允许为null<br>INSERT INTO student(id,NAME,address) VALUE(2,’李四’,NULL);<br>INSERT INTO student(id,NAME,address) VALUE(3,’王五’,’广州番禺’);</p>
+</blockquote>
+<h4 id="非空">非空</h4><p>作用：限制字段必须赋值<br>注意：</p>
+<font color="red">非空字符必须赋值<br>非空字符不能赋null</font>
+
+<blockquote>
+<p>– 1.2 非空<br>– 需求： gender字段必须有值（不为null）<br>CREATE TABLE student(<br>    id INT,<br>    NAME VARCHAR(20),<br>    gender VARCHAR(2) NOT NULL – 非空<br>)<br>– 非空字段必须赋值<br>INSERT INTO student(id,NAME) VALUES(1,’李四’);<br>– 非空字符不能插入null<br>INSERT INTO student(id,NAME,gender) VALUES(1,’李四’,NULL);</p>
+</blockquote>]]>
+    
     </summary>
     
       <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
@@ -295,7 +307,7 @@
     <link href="http://yoursite.com/2016/01/18/mysql%E5%9F%BA%E7%A1%80/"/>
     <id>http://yoursite.com/2016/01/18/mysql基础/</id>
     <published>2016-01-18T00:47:02.000Z</published>
-    <updated>2016-02-26T02:39:35.717Z</updated>
+    <updated>2016-02-26T06:48:58.497Z</updated>
     <content type="html"><![CDATA[<h3 id="数据库入门">数据库入门</h3><h4 id="引入">引入</h4><p>数据保存到内存：<br>优点：</p>
 <ol>
 <li>读写非常快<br>缺点：</li>
@@ -322,6 +334,7 @@
 <p>关系型数据库。</p>
 <p>MongoDB： 非关系型数据库。</p>
 <p>先学mysql，后面再学oracle</p>
+<a id="more"></a>
 <h4 id="MySQL入门">MySQL入门</h4><ol>
 <li>到mysql官网下载。</li>
 <li>安装mysql软件</li>
@@ -472,7 +485,28 @@
 <li>读写非常快<br>缺点：</li>
 <li>程序关闭导致数据丢失</li>
 </ol>
-<p>数据保存到文件：<br>优点：</]]>
+<p>数据保存到文件：<br>优点：</p>
+<ol>
+<li>数据可以永久保存<br>缺点：</li>
+<li>频繁地IO操作，效率不高！</li>
+<li>数据管理不方便。例如查询某个数据需要全部读取出来，再匹配。</li>
+</ol>
+<p>数据保存到数据库软件：<br>优点：</p>
+<ol>
+<li>数据永久保存下来</li>
+<li>数据管理非常方便。（例如查询非常快速和方便）</li>
+</ol>
+<font color='red'>数据可以说是企业的灵魂！！</font>
+
+<h4 id="什么是数据库软件">什么是数据库软件</h4><p>数据库，俗称数据的仓库。方便管理数据的软件（或程序）。</p>
+<h4 id="市面上数据库软件">市面上数据库软件</h4><p>Oracle，甲骨文公司的产品。 当前最流行应用最广泛的数据库软件。和java语言兼容非常好。适合中大型，中大应用。</p>
+<p>SQL Server: 是微软公司的产品。window平台应用非常广泛。和c#，net平台兼容非常好。</p>
+<p>DB2： IBM公司的产品。IBM服务器–&gt; UNIX -&gt; DB2- &gt; Websphere</p>
+<p>MySQL: 开源组织的产品。甲骨文公司的产品。免费！！！和java语言兼容非常好！适合中小企业，中小应用</p>
+<p>关系型数据库。</p>
+<p>MongoDB： 非关系型数据库。</p>
+<p>先学mysql，后面再学oracle</p>]]>
+    
     </summary>
     
       <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
@@ -484,7 +518,7 @@
     <link href="http://yoursite.com/2016/01/14/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE/"/>
     <id>http://yoursite.com/2016/01/14/自定义标签/</id>
     <published>2016-01-14T01:20:17.000Z</published>
-    <updated>2016-02-26T02:39:21.669Z</updated>
+    <updated>2016-02-26T06:49:48.909Z</updated>
     <content type="html"><![CDATA[<h3 id="自定义标签">自定义标签</h3><h4 id="引入">引入</h4><p>需求： 向浏览器输出当前客户的IP地址 （只能使用jsp标签）</p>
 <h4 id="第一个自定义标签开发步骤">第一个自定义标签开发步骤</h4><ul>
 <li>编写一个普通的java类，继承SimpleTagSupport类，叫标签处理器类</li>
@@ -498,6 +532,7 @@
 <li>在jsp页面的头部导入自定义标签库<br><code>&lt;%@taglib uri=&quot;http://gz.itcast.cn&quot; prefix=&quot;itcast&quot;%&gt;</code></li>
 <li>在jsp中使用自定义标签<br><code>&lt;itcast:showIp&gt;&lt;/itcast:showIp&gt;</code></li>
 </ul>
+<a id="more"></a>
 <h4 id="自定义标签的执行过程">自定义标签的执行过程</h4><p>问题： <a href="http://localhost:8080/day14/01.hellotag.jsp" target="_blank" rel="external">http://localhost:8080/day14/01.hellotag.jsp</a>  如何访问到自定义标签？</p>
 <p>前提： tomcat服务器启动时，加载到每个web应用，加载每个web应用的WEB-INF目录下的所有文件！！！例如。web.xml, tld文件！！！</p>
 <blockquote>
@@ -579,7 +614,18 @@
     <summary type="html">
     <![CDATA[<h3 id="自定义标签">自定义标签</h3><h4 id="引入">引入</h4><p>需求： 向浏览器输出当前客户的IP地址 （只能使用jsp标签）</p>
 <h4 id="第一个自定义标签开发步骤">第一个自定义标签开发步骤</h4><ul>
-<li>编写一个普通的ja]]>
+<li>编写一个普通的java类，继承SimpleTagSupport类，叫标签处理器类</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span><br><span class="line"> * 标签处理器类</span><br><span class="line"> * <span class="doctag">@author</span> APPle</span><br><span class="line"> * 1）继承SimpleTagSupport</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShowIpTag</span> <span class="keyword">extends</span> <span class="title">SimpleTagSupport</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> JspContext context;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 传入pageContext</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setJspContext</span><span class="params">(JspContext pc)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.context = pc;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 2）覆盖doTag方法</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doTag</span><span class="params">()</span> <span class="keyword">throws</span> JspException, IOException </span>&#123;</span><br><span class="line">		<span class="comment">//向浏览器输出客户的ip地址</span></span><br><span class="line">		PageContext pageContext = (PageContext)context;</span><br><span class="line">		HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();</span><br><span class="line">		String ip = request.getRemoteHost();</span><br><span class="line">		JspWriter out = pageContext.getOut();</span><br><span class="line">		out.write(<span class="string">"使用自定义标签输出客户的IP地址："</span>+ip);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在web项目的WEB-INF目录下建立itcast.tld文件，这个tld叫标签库的声明文件。（参考核心标签库的tld文件）</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">taglib</span> <span class="attribute">xmlns</span>=<span class="value">"http://java.sun.com/xml/ns/javaee"</span></span><br><span class="line">    <span class="attribute">xmlns:xsi</span>=<span class="value">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">    <span class="attribute">xsi:schemaLocation</span>=<span class="value">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"</span></span><br><span class="line">    <span class="attribute">version</span>=<span class="value">"2.1"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 标签库的版本 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">tlib-version</span>&gt;</span>1.1<span class="tag">&lt;/<span class="title">tlib-version</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 标签库前缀 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">short-name</span>&gt;</span>itcast<span class="tag">&lt;/<span class="title">short-name</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- tld文件的唯一标记 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">uri</span>&gt;</span>http://gz.itcast.cn<span class="tag">&lt;/<span class="title">uri</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- 一个标签的声明 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">tag</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 标签名称 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">name</span>&gt;</span>showIp<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 标签处理器类的全名 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">tag-class</span>&gt;</span>gz.itcast.a_tag.ShowIpTag<span class="tag">&lt;/<span class="title">tag-class</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 输出标签体内容格式 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">body-content</span>&gt;</span>scriptless<span class="tag">&lt;/<span class="title">body-content</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">tag</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">taglib</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在jsp页面的头部导入自定义标签库<br><code>&lt;%@taglib uri=&quot;http://gz.itcast.cn&quot; prefix=&quot;itcast&quot;%&gt;</code></li>
+<li>在jsp中使用自定义标签<br><code>&lt;itcast:showIp&gt;&lt;/itcast:showIp&gt;</code></li>
+</ul>]]>
+    
     </summary>
     
       <category term="Jsp" scheme="http://yoursite.com/tags/Jsp/"/>
@@ -591,7 +637,7 @@
     <link href="http://yoursite.com/2015/12/31/Jsp%E5%8A%A0%E5%BC%BA/"/>
     <id>http://yoursite.com/2015/12/31/Jsp加强/</id>
     <published>2015-12-31T07:42:30.000Z</published>
-    <updated>2016-02-26T02:39:04.516Z</updated>
+    <updated>2016-02-26T06:48:28.784Z</updated>
     <content type="html"><![CDATA[<h3 id="Jsp的内置对象">Jsp的内置对象</h3><h4 id="什么是内置对象？">什么是内置对象？</h4><p>在jsp开发中，会频繁使用到一些对象。<br>　　例如HttpSession,ServletContext,ServletContext,HttpServletRequet。如果我们每次要使用这些对象都去创建这些对象就显示非常麻烦。所以Sun公司设计Jsp时，在jsp页面加载完毕之后就会自动帮开发者创建好这些对象，而开发者只需要直接使用这些对象调用方法即可！，这些创建好的对象就叫<font color="red">内置对象！！！！</font><br><strong>举例：</strong></p>
 <blockquote>
 <p>servlet:<br><code>HttpSession session = request.getSession(true); （需要开发者做）</code><br>jsp:<br><code>tomcat服务器：HttpSession session =request.getSession(true);(不需要开发者做)</code><br><code>开发者做的： session.getId();</code></p>
@@ -642,6 +688,7 @@
 </tr>
 </tbody>
 </table>
+<a id="more"></a>
 <h4 id="Out对象">Out对象</h4><p>out对象类型，JspWriter类，相当于带缓存的PrintWriter</p>
 <blockquote>
 <p>PrintWriter<br>wrier(内容)： 直接向浏览器写出内容。<br>JspWriter<br>writer(内容): 向jsp缓冲区写出内容</p>
@@ -775,7 +822,57 @@
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h3 id="Jsp的内置对象">Jsp的内置对象</h3><h4 id="什么是内置对象？">什么是内置对象？</h4><p>在jsp开发中，会频繁使用到一些对象。<br>　　例如HttpSession,ServletContext,ServletContext,HttpSe]]>
+    <![CDATA[<h3 id="Jsp的内置对象">Jsp的内置对象</h3><h4 id="什么是内置对象？">什么是内置对象？</h4><p>在jsp开发中，会频繁使用到一些对象。<br>　　例如HttpSession,ServletContext,ServletContext,HttpServletRequet。如果我们每次要使用这些对象都去创建这些对象就显示非常麻烦。所以Sun公司设计Jsp时，在jsp页面加载完毕之后就会自动帮开发者创建好这些对象，而开发者只需要直接使用这些对象调用方法即可！，这些创建好的对象就叫<font color='red'>内置对象！！！！</font><br><strong>举例：</strong></p>
+<blockquote>
+<p>servlet:<br><code>HttpSession session = request.getSession(true); （需要开发者做）</code><br>jsp:<br><code>tomcat服务器：HttpSession session =request.getSession(true);(不需要开发者做)</code><br><code>开发者做的： session.getId();</code></p>
+</blockquote>
+<h4 id="九大内置对象">九大内置对象</h4><table>
+<thead>
+<tr>
+<th>内置对象名</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>request</td>
+<td>HttpServletRequest</td>
+</tr>
+<tr>
+<td>response</td>
+<td>HttpServletResponse</td>
+</tr>
+<tr>
+<td>config</td>
+<td>ServletConfig</td>
+</tr>
+<tr>
+<td>application</td>
+<td>ServletContext</td>
+</tr>
+<tr>
+<td>session</td>
+<td>HttpSession</td>
+</tr>
+<tr>
+<td>exception</td>
+<td>Throwable</td>
+</tr>
+<tr>
+<td>page</td>
+<td>Object(this)</td>
+</tr>
+<tr>
+<td>out</td>
+<td>JspWriter</td>
+</tr>
+<tr>
+<td>pageContext</td>
+<td>PageContext</td>
+</tr>
+</tbody>
+</table>]]>
+    
     </summary>
     
       <category term="Jsp" scheme="http://yoursite.com/tags/Jsp/"/>
@@ -787,7 +884,7 @@
     <link href="http://yoursite.com/2015/12/30/Jsp%E5%9F%BA%E7%A1%80/"/>
     <id>http://yoursite.com/2015/12/30/Jsp基础/</id>
     <published>2015-12-30T06:30:25.000Z</published>
-    <updated>2016-02-26T02:38:55.776Z</updated>
+    <updated>2016-02-26T06:47:57.475Z</updated>
     <content type="html"><![CDATA[<h3 id="Jsp基础">Jsp基础</h3><ul>
 <li><strong>引入</strong><br>Servlet的作用： 用java语言开发动态资源的技术！！！<br>Jsp的作用：用java语言（+html语言）开发动态资源的技术！！！<br>Jsp就是servlet！！！</li>
 <li><p><strong>Jsp的特点</strong></p>
@@ -828,6 +925,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">jsp翻译的java文件：</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">_01_hello_jsp</span> <span class="keyword">extends</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">HttpJspBase</span></span><br><span class="line">    <span class="keyword">implements</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">JspSourceDependent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">HttpJspBase类：</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">HttpJspBase</span> <span class="keyword">extends</span> <span class="title">javax</span>.<span class="title">servlet</span>.<span class="title">http</span>.<span class="title">HttpServlet</span> <span class="keyword">implements</span> <span class="title">javax</span>.<span class="title">servlet</span>.<span class="title">jsp</span>.<span class="title">HttpJspPage</span> </span>&#123;</span><br></pre></td></tr></table></figure>
 <font color="red">结论：Jsp就是一个servlet程序！！！<br>　　　servlet的技术可以用在jsp程序中<br>　　　jsp的技术并不是全部适用于servlet程序！</font>
 
+<a id="more"></a>
 <p>Servlet的生命周期：</p>
 <blockquote>
 <p>构造方法（第1次访问）<br>init方法（第1次访问）<br>service方法<br>destroy方法</p>
@@ -875,7 +973,45 @@
 ]]></content>
     <summary type="html">
     <![CDATA[<h3 id="Jsp基础">Jsp基础</h3><ul>
-<li><strong>引入</strong><br>Servlet的作用： 用java语言开发动态资源的技术！！！<br>Jsp的作用：用java语言（+html语言）开发动态资源的技术！！！<br>Jsp就是serv]]>
+<li><strong>引入</strong><br>Servlet的作用： 用java语言开发动态资源的技术！！！<br>Jsp的作用：用java语言（+html语言）开发动态资源的技术！！！<br>Jsp就是servlet！！！</li>
+<li><p><strong>Jsp的特点</strong></p>
+<ul>
+<li><p>jsp的运行必须交给tomcat服务器！！！！</p>
+<blockquote>
+<p>tomcat的work目录： tomcat服务器存放jsp运行时的临时文件</p>
+</blockquote>
+</li>
+<li><p>jsp页面既可以写html代码，也可以写java代码。</p>
+<blockquote>
+<p>html页面不能写java代码。而jsp页面可以写java代码</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><strong>Jsp的执行过程</strong><br>问题： 访问<a href="http://localhost:8080/day12/01.hello.jsp">http://localhost:8080/day12/01.hello.jsp</a>  如何显示效果？</p>
+<ul>
+<li><p>访问到01.hello.jsp页面，tomcat扫描到jsp文件，在%tomcat%/work把jsp文件翻译成java源文件</p>
+<blockquote>
+<p>路径与自己配置的tomcat有关联，<br><code>\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\work\Catalina\localhost\</code><br>(01.hello.jsp   -&gt;   _01_hello_jsp.java) （翻译）</p>
+</blockquote>
+</li>
+<li><p>tomcat服务器把java源文件编译成class字节码文件 （编译）</p>
+<blockquote>
+<p>（_01_hello_jsp.java  -&gt;  _01_hello_jsp.class）</p>
+</blockquote>
+</li>
+<li><p>tomcat服务器构造_01_hello_jsp类对象</p>
+</li>
+<li>tomcat服务器调用_01_hello_jsp类里面方法，返回内容显示到浏览器。</li>
+</ul>
+<font color='red'> 第一次访问jsp：    走（1）（2）（3）（4）<br>第n次访问jsp：    走（4）<br>注意：jsp文件修改了或jsp的临时文件被删除了，要重新走翻译（1）和编译  （2）的过程</font>
+</li>
+<li><p><strong>疑问</strong><br>问题： 为什么Jsp就是servlet！！！</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">jsp翻译的java文件：</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">_01_hello_jsp</span> <span class="keyword">extends</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">HttpJspBase</span></span><br><span class="line">    <span class="keyword">implements</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">JspSourceDependent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">HttpJspBase类：</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">HttpJspBase</span> <span class="keyword">extends</span> <span class="title">javax</span>.<span class="title">servlet</span>.<span class="title">http</span>.<span class="title">HttpServlet</span> <span class="keyword">implements</span> <span class="title">javax</span>.<span class="title">servlet</span>.<span class="title">jsp</span>.<span class="title">HttpJspPage</span> </span>&#123;</span><br></pre></td></tr></table></figure>
+<font color='red'>结论：Jsp就是一个servlet程序！！！<br>　　　servlet的技术可以用在jsp程序中<br>　　　jsp的技术并不是全部适用于servlet程序！</font>]]>
+    
     </summary>
     
       <category term="Jsp" scheme="http://yoursite.com/tags/Jsp/"/>
@@ -887,7 +1023,7 @@
     <link href="http://yoursite.com/2015/12/29/%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86/"/>
     <id>http://yoursite.com/2015/12/29/会话管理/</id>
     <published>2015-12-29T06:02:12.000Z</published>
-    <updated>2016-02-26T02:45:10.716Z</updated>
+    <updated>2016-02-26T06:47:17.904Z</updated>
     <content type="html"><![CDATA[<p>会话管理： 管理浏览器客户端 和 服务器端之间会话过程中产生的会话数据。</p>
 <h3 id="Cookie技术">Cookie技术</h3><font color="red">Cookie特点：会话数据保存在浏览器客户端。</font>
 
@@ -913,6 +1049,7 @@
 </li>
 <li>Cookie数据类型只能保存非中文字符串类型的。可以保存多个cookie，但是浏览器一般只允许存放300个Cookie，每个站点最多存放20个Cookie，每个Cookie的大小限制为4KB。</li>
 </ul>
+<a id="more"></a>
 <h3 id="Session技术">Session技术</h3><h4 id="引入"><strong>引入</strong></h4><p>Cookie的局限：</p>
 <blockquote>
 <p>Cookie只能存字符串类型。不能保存对象<br>只能存非中文。<br>1个Cookie的容量不超过4KB。</p>
@@ -1009,9 +1146,31 @@ Map&lt;String,HttpSession&gt;
 ]]></content>
     <summary type="html">
     <![CDATA[<p>会话管理： 管理浏览器客户端 和 服务器端之间会话过程中产生的会话数据。</p>
-<h3 id="Cookie技术">Cookie技术</h3><font color="red">Cookie特点：会话数据保存在浏览器客户端。</font>
+<h3 id="Cookie技术">Cookie技术</h3><font color='red'>Cookie特点：会话数据保存在浏览器客户端。</font>
 
-<h4 id="Cookie技]]>
+<h4 id="Cookie技术核心"><strong>Cookie技术核心</strong></h4><p>Cookie类：用于存储会话数据</p>
+<ul>
+<li>构造Cookie对象<br><code>Cookie(java.lang.String name, java.lang.String value)</code></li>
+<li>设置cookie<br><code>void setPath(java.lang.String uri) 设置cookie的有效访问路径</code><br><code>void setMaxAge(int expiry) ： 设置cookie的有效时间</code><br><code>void setValue(java.lang.String newValue) ：设置cookie的值</code></li>
+<li>发送cookie到浏览器端保存<br><code>void response.addCookie(Cookie cookie)  : 发送cookie</code></li>
+<li>服务器接收cookie<br><code>Cookie[] request.getCookies()  : 接收cookie</code></li>
+</ul>
+<h4 id="Cookie原理"><strong>Cookie原理</strong></h4><ul>
+<li>服务器创建cookie对象，把会话数据存储到cookie对象中。<br><code>new Cookie(&quot;name&quot;,&quot;value&quot;);</code></li>
+<li>服务器发送cookie信息到浏览器<br><code>response.addCookie(cookie);</code><br><code>举例： set-cookie: name=eric  (隐藏发送了一个set-cookie名称的响应头)</code></li>
+<li>浏览器得到服务器发送的cookie，然后保存在浏览器端。</li>
+<li>浏览器在下次访问服务器时，会带着cookie信息<br><code>举例： cookie: name=eric  (隐藏带着一个叫cookie名称的请求头)</code></li>
+<li>服务器接收到浏览器带来的cookie信息<br><code>request.getCookies();</code></li>
+</ul>
+<h4 id="Cookie的细节"><strong>Cookie的细节</strong></h4><ul>
+<li><code>void setPath(java.lang.String uri)</code>   ：设置cookie的有效访问路径。有效路径指的是cookie的有效路径保存在哪里，那么浏览器在有效路径下访问服务器时就会带着cookie信息，否则不带cookie信息。</li>
+<li><code>void setMaxAge(int expiry)</code> ： 设置cookie的有效时间。<blockquote>
+<p>正整数：表示cookie数据保存浏览器的缓存目录（硬盘中），数值表示保存的时间。<br>负整数：表示cookie数据保存浏览器的内存中。浏览器关闭cookie就丢失了！！<br>零：表示删除同名的cookie数据 </p>
+</blockquote>
+</li>
+<li>Cookie数据类型只能保存非中文字符串类型的。可以保存多个cookie，但是浏览器一般只允许存放300个Cookie，每个站点最多存放20个Cookie，每个Cookie的大小限制为4KB。</li>
+</ul>]]>
+    
     </summary>
     
       <category term="servlet" scheme="http://yoursite.com/tags/servlet/"/>
@@ -1023,7 +1182,7 @@ Map&lt;String,HttpSession&gt;
     <link href="http://yoursite.com/2015/12/28/servlet%E7%BC%96%E7%A8%8B/"/>
     <id>http://yoursite.com/2015/12/28/servlet编程/</id>
     <published>2015-12-28T01:24:51.000Z</published>
-    <updated>2016-02-26T02:41:07.061Z</updated>
+    <updated>2016-02-26T06:47:00.697Z</updated>
     <content type="html"><![CDATA[<h3 id="如何开发一个Servlet">如何开发一个Servlet</h3><p>步骤</p>
 <ol>
 <li>编写java类，继承HttpServlet类</li>
@@ -1036,6 +1195,7 @@ Map&lt;String,HttpSession&gt;
 <blockquote>
 <p>在day10的web.xml中查找是否有匹配的url-pattern的内容（/first）<br> 如果匹配，则取出对应的servlet-name的名称，查看是否有对应的servlet配置<br> 如果匹配，则取出对应的servlet配置信息中的class内容：<br> <font color="red">通过反射:构造FirstServlet的对象，然后调用FirstServlet里面的方法</font></p>
 </blockquote>
+<a id="more"></a>
 <h3 id="Servlet的映射文件">Servlet的映射文件</h3><p>精确匹配：</p>
 <table>
 <thead>
@@ -1223,7 +1383,14 @@ Map&lt;String,HttpSession&gt;
 <li>编写java类，继承HttpServlet类</li>
 <li>重新doGet和doPost方法</li>
 <li>在wed.xml文件中进行配置</li>
-<]]>
+<li>Servlet程序交给tomcat服务器运行<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置一个servlet --&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- servlet的配置 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- servlet的内部名称，自定义。尽量有意义 --&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>FirstServlet<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">    	<span class="comment">&lt;!-- servlet的类全名： 包名+简单类名 --&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>gz.itcast.a_servlet.FirstServlet<span class="tag">&lt;/<span class="title">servlet-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">servlet</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">&lt;!-- servlet的映射配置 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">servlet-mapping</span>&gt;</span></span><br><span class="line">    	<span class="comment">&lt;!-- servlet的内部名称，一定要和上面的内部名称保持一致！！ --&gt;</span></span><br><span class="line">  	    <span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>FirstServlet<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">  	    <span class="comment">&lt;!-- servlet的映射路径（访问servlet的名称） --&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="title">url-pattern</span>&gt;</span>/first<span class="tag">&lt;/<span class="title">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>前提</strong>：<br>tomcat服务器启动时，首先加载webapps中的每个web应用的web.xml配置文件<br>http:// :http协议<br>localhost：在本地host文件中查找对应的IP地址（127.0.0.1）<br>8080：找到tomcat服务器(对应的端口)<br>/day10：在tomcat的webapps目录下找day10的目录<br>/first：资源名称</p>
+<blockquote>
+<p>在day10的web.xml中查找是否有匹配的url-pattern的内容（/first）<br> 如果匹配，则取出对应的servlet-name的名称，查看是否有对应的servlet配置<br> 如果匹配，则取出对应的servlet配置信息中的class内容：<br> <font color='red'>通过反射:构造FirstServlet的对象，然后调用FirstServlet里面的方法</font></p>
+</blockquote>]]>
+    
     </summary>
     
       <category term="servlet" scheme="http://yoursite.com/tags/servlet/"/>
@@ -1235,7 +1402,7 @@ Map&lt;String,HttpSession&gt;
     <link href="http://yoursite.com/2015/12/24/Http%E5%8D%8F%E8%AE%AE/"/>
     <id>http://yoursite.com/2015/12/24/Http协议/</id>
     <published>2015-12-24T03:21:02.000Z</published>
-    <updated>2016-02-26T02:46:36.222Z</updated>
+    <updated>2016-02-26T06:46:41.364Z</updated>
     <content type="html"><![CDATA[<h3 id="什么是http协议">什么是http协议</h3><p>http协议：对浏览器客户端和服务端之间数据传输的格式规范<font color="red">数据传输的格式规范</font></p>
 <h3 id="查看http协议的工具">查看http协议的工具</h3><ol>
 <li>使用火狐的firebug插件（右键-&gt;firebug-&gt;网络）</li>
@@ -1256,6 +1423,7 @@ Map&lt;String,HttpSession&gt;
 <p>GET /day09/hello HTTP/1.1  -请求行<br>Host: localhost:8080                    –请求头（多个key-value对象）<br>User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0<br>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,<em>/</em>;q=0.8<br>Accept-Language: zh-cn,en-us;q=0.8,zh;q=0.5,en;q=0.3<br>Accept-Encoding: gzip, deflate<br>Connection: keep-alive            –一个空行<br>name=eric&amp;password=123456             –（可选）实体内容</p>
 </blockquote>
 <h3 id="请求资源与方式">请求资源与方式</h3><p>URL:统一资源定位符，只能定位互联网资源，是URI的子集。<br>URI:统一资源标记符，用于标记任何资源，可以是本地文件系统，局域网资源，互联网资源。<br>常见的请求方式：<font color="red">GET、POST</font>、HEAD、TRACE、PUT、CONNECT、DELETE</p>
+<a id="more"></a>
 <ul>
 <li>GET方式提交<ul>
 <li>地址栏（URI）会跟上参数数据。以？开头，多个参数之间以&amp;分割。</li>
@@ -1321,8 +1489,27 @@ Map&lt;String,HttpSession&gt;
 </code></pre><p>此文章知识点来源传智博客发布的学习教程里面。以后会定期的更新，记录自己的学习历程，总结所学的知识点。</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h3 id="什么是http协议">什么是http协议</h3><p>http协议：对浏览器客户端和服务端之间数据传输的格式规范<font color="red">数据传输的格式规范</font></p>
-<h3 id="查看http协议的工具">查看http协议的工具</h3]]>
+    <![CDATA[<h3 id="什么是http协议">什么是http协议</h3><p>http协议：对浏览器客户端和服务端之间数据传输的格式规范<font color='red'>数据传输的格式规范</font></p>
+<h3 id="查看http协议的工具">查看http协议的工具</h3><ol>
+<li>使用火狐的firebug插件（右键-&gt;firebug-&gt;网络）</li>
+<li>使用谷歌的“审查元素”</li>
+<li>使用系统自带的telnet工具（远程访问工具）</li>
+</ol>
+<ul>
+<li><code>telnet localhost 8080</code>    访问tomcat服务器</li>
+<li><kbd>ctrl</kbd>   回车    可以看到回显</li>
+<li>输入请求内容</li>
+<li>回车，即可查看到服务器响应信息。</li>
+</ul>
+<h3 id="http协议版本">http协议版本</h3><ul>
+<li>http1.0：当前浏览器客户端与服务器端建立连接之后，只能发送一次请求，一次请求之后连接关闭。</li>
+<li>http1.1：当前浏览器客户端与服务器端建立连接之后，可以在一次连接中发送多次请求。（基本都使用1.1）</li>
+</ul>
+<h2 id="http请求">http请求</h2><blockquote>
+<p>GET /day09/hello HTTP/1.1  -请求行<br>Host: localhost:8080                    –请求头（多个key-value对象）<br>User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0<br>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,<em>/</em>;q=0.8<br>Accept-Language: zh-cn,en-us;q=0.8,zh;q=0.5,en;q=0.3<br>Accept-Encoding: gzip, deflate<br>Connection: keep-alive            –一个空行<br>name=eric&amp;password=123456             –（可选）实体内容</p>
+</blockquote>
+<h3 id="请求资源与方式">请求资源与方式</h3><p>URL:统一资源定位符，只能定位互联网资源，是URI的子集。<br>URI:统一资源标记符，用于标记任何资源，可以是本地文件系统，局域网资源，互联网资源。<br>常见的请求方式：<font color = "red" >GET、POST</font>、HEAD、TRACE、PUT、CONNECT、DELETE</p>]]>
+    
     </summary>
     
       <category term="http" scheme="http://yoursite.com/tags/http/"/>

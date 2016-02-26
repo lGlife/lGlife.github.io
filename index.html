@@ -375,183 +375,6 @@
 <blockquote>
 <p>– 1.2 非空<br>– 需求： gender字段必须有值（不为null）<br>CREATE TABLE student(<br>    id INT,<br>    NAME VARCHAR(20),<br>    gender VARCHAR(2) NOT NULL – 非空<br>)<br>– 非空字段必须赋值<br>INSERT INTO student(id,NAME) VALUES(1,’李四’);<br>– 非空字符不能插入null<br>INSERT INTO student(id,NAME,gender) VALUES(1,’李四’,NULL);</p>
 </blockquote>
-<h4 id="唯一">唯一</h4><p>作用：对字段的值不能重复<br>注意：</p>
-<font color="red">唯一字段可以插入null<br>唯一字段可以插入多个null</font>
-
-<blockquote>
-<p>– 1.3 唯一<br>CREATE TABLE student(<br>    id INT UNIQUE, – 唯一<br>    NAME VARCHAR(20)<br>)<br>INSERT INTO student(id,NAME) VALUES(1,’zs’);<br>INSERT INTO student(id,NAME) VALUES(1,’lisi’); – ERROR 1062 (23000): Duplicate entry ‘1’ for key ‘id’<br>INSERT INTO student(id,NAME) VALUES(2,’lisi’);</p>
-</blockquote>
-<h4 id="主键">主键</h4><p>作用： 非空+唯一<br>注意：            </p>
-<font color="red">通常情况下，每张表都会设置一个主键字段。用于标记表中的每条记录的唯一性。<br>建议不要选择表的包含业务含义的字段作为主键，建议给每张表独立设计一个非业务含义的id字段。</font>
-
-<blockquote>
-<ul>
-<li>1.4 主键（非空+唯一）<br>DROP TABLE student;<br>CREATE TABLE student(<br>  id INT PRIMARY KEY, – 主键<br>  NAME VARCHAR(20)<br>)<br>INSERT INTO student(id,NAME) VALUES(1,’张三’);<br>INSERT INTO student(id,NAME) VALUES(2,’张三’);<br>– INSERT INTO student(id,NAME) VALUES(1,’李四’); – 违反唯一约束： Duplicate entry ‘1’ for key ‘PRIMARY’<br>– insert into student(name) value(‘李四’); – 违反非空约束： ERROR 1048 (23000): Column ‘id’ cannot be null</li>
-</ul>
-</blockquote>
-<h4 id="自增长">自增长</h4><p>作用： 自动递增</p>
-<blockquote>
-<p>– 1.5 自增长<br>CREATE TABLE student(<br>    id INT(4) ZEROFILL PRIMARY KEY AUTO_INCREMENT, – 自增长，从0开始  ZEROFILL 零填充<br>    NAME VARCHAR(20)<br>)<br>– 自增长字段可以不赋值，自动递增<br>INSERT INTO student(NAME) VALUES(‘张三’);<br>INSERT INTO student(NAME) VALUES(‘李四’);<br>INSERT INTO student(NAME) VALUES(‘王五’);<br>SELECT * FROM student;<br>– 不能影响自增长约束<br>DELETE FROM student;<br>– 可以影响自增长约束<br>TRUNCATE TABLE student;</p>
-</blockquote>
-<h4 id="外键">外键</h4><p>作用：约束两种表的数据<br>出现两种表的情况：</p>
-<blockquote>
-<p>解决数据冗余高问题： 独立出一张表<br>例如：员工表和部门表<br>问题出现：在插入员工表数据的时候，员工表的部门ID字段可以随便插入！！！<br>使用外键约束：约束插入员工表的部门ID字段值<br>解决办法： 在员工表的部门ID字段添加一个外键约束<br>– 部门表（主表）<br>CREATE TABLE dept(<br>    id INT PRIMARY KEY,<br>    deptName VARCHAR(20)<br>)<br>– 修改员工表（副表/从表）<br>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptId INT,– 把部门名称改为部门ID<br>    – 声明一个外键约束<br>    CONSTRAINT emlyee_dept_fk FOREIGN KEY(deptId) REFERENCES dept(id)<br>    –外键名称  外键 参考表(参考字段)<br>)</p>
-</blockquote>
-<p>注意：<font color="red"><br>1）被约束的表称为副表，约束别人的表称为主表，外键设置在副表上的！！！<br>2）主表的参考字段通用为主键！<br>3）添加数据： 先添加主表，再添加副表<br>4）修改数据： 先修改副表，再修改主表<br>5）删除数据： 先删除副表，再删除主表<br></font></p>
-<blockquote>
-<p>– 1.6 外键约束<br>– 员工表<br>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptName VARCHAR(20) – 部门名称<br>)<br>INSERT INTO employee VALUES(1,’张三’,’软件开发部’);<br>INSERT INTO employee VALUES(2,’李四’,’软件开发部’);<br>INSERT INTO employee VALUES(3,’王五’,’应用维护部’);</p>
-<p>SELECT * FROM employee;</p>
-<p>– 添加员工，部门名称的数据冗余高<br>INSERT INTO employee VALUES(4,’陈六’,’软件开发部’);</p>
-<p>– 解决数据冗余高的问题：给冗余的字段放到一张独立表中<br>– 独立设计一张部门表<br>CREATE TABLE dept(<br>    id INT PRIMARY KEY,<br>    deptName VARCHAR(20)<br>)</p>
-<p>DROP TABLE employee;</p>
-<p>– 修改员工表<br>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptId INT,– 把部门名称改为部门ID<br>    – 声明一个外键约束<br>    CONSTRAINT emlyee_dept_fk FOREIGN KEY(deptId) REFERENCES dept(id) ON UPDATE CASCADE ON DELETE CASCADE  – ON CASCADE UPDATE ：级联修改<br>    – 外键名称  外键 参考表(参考字段)<br>)</p>
-<p>INSERT INTO dept(id,deptName) VALUES(1,’软件开发部’);<br>INSERT INTO dept(id,deptName) VALUES(2,’应用维护部’);<br>INSERT INTO dept(id,deptName) VALUES(3,’秘书部’);<br>INSERT INTO employee VALUES(1,’张三’,1);<br>INSERT INTO employee VALUES(2,’李四’,1);<br>INSERT INTO employee VALUES(3,’王五’,2);<br>INSERT INTO employee VALUES(4,’陈六’,3);</p>
-<p>– 问题: 该记录业务上不合法，员工插入了一个不存在的部门数据<br>INSERT INTO employee VALUES(5,’陈六’,4); – 违反外键约束： Cannot add or update a child row: a foreign key constraint fails (<code>day16</code>.<code>employee</code>, CONSTRAINT <code>emlyee_dept_fk</code> FOREIGN KEY (<code>deptId</code>) REFERENCES <code>dept</code> (<code>id</code>))</p>
-<p>– 1）当有了外键约束，添加数据的顺序： 先添加主表，再添加副表数据<br>– 2）当有了外键约束，修改数据的顺序： 先修改副表，再修改主表数据<br>– 3）当有了外键约束，删除数据的顺序： 先删除副表，再删除主表数据<br>– 修改部门(不能直接修改主表)<br>UPDATE dept SET id=4 WHERE id=3;<br>– 先修改员工表<br>UPDATE employee SET deptId=2 WHERE id=4;<br>– 删除部门<br>DELETE FROM dept WHERE id=2;<br>– 先删除员工表<br>DELETE FROM employee WHERE deptId=2;</p>
-<p>SELECT <em> FROM dept;<br>SELECT </em> FROM employee;</p>
-</blockquote>
-<h4 id="级联操作">级联操作</h4><p>问题： 当有了外键约束的时候，必须先修改或删除副表中的所有关联数据，才能修改或删除主表！但是，我们希望直接修改或删除主表数据，从而影响副表数据。可以使用级联操作实现！！！</p>
-<font color="red">级联修改： ON UPDATE CASCADE<br>级联删除： ON DELETE CASCADE</font>
-
-<blockquote>
-<p>CREATE TABLE employee(<br>    id INT PRIMARY KEY,<br>    empName VARCHAR(20),<br>    deptId INT,– 把部门名称改为部门ID<br>    – 声明一个外键约束<br>    CONSTRAINT emlyee_dept_fk FOREIGN KEY(deptId) REFERENCES dept(id) ON UPDATE CASCADE ON DELETE CASCADE  – ON CASCADE UPDATE ：级联修改<br>    –  外键名称 外键 参考表(参考字段)<br>)<br>注意： 级联操作必须在外键基础上使用<br>– 级联修改（修改）<br>– 直接修改部门<br>UPDATE dept SET id=5 WHERE id=4;<br>– 级联删除<br>– 直接删除部门<br>DELETE FROM dept WHERE id=1;</p>
-</blockquote>
-<h3 id="数据库设计">数据库设计</h3><h4 id="三大范式">三大范式</h4><p>设计原则： 建议设计的表尽量遵守三大范式。</p>
-<ul>
-<li><p>第一范式：<font color="red">要求表的每个字段必须是不可分割的独立单元</font><br> student : name  – 违反第一范式<br> 张小名|狗娃<br> sutdent ：name    old_name    –符合第一范式<br> 张小名    狗娃</p>
-</li>
-<li><p>第二范式：<font color="red">在第一范式的基础上，要求每张表只表达一个意思。表的每个字段都和表的主键有依赖。</font><br> employee（员工）: 员工编号  员工姓名 部门名称   订单名称  –违反第二范式<br> 员工表：员工编号  员工姓名 部门名称<br> 订单表：  订单编号  订单名称             – 符合第二范式</p>
-</li>
-<li><p>第三范式：<font color="red">在第二范式基础，要求每张表的主键之外的其他字段都只能和主键有直接决定依赖关系。</font><br> 员工表： 员工编号（主键） 员工姓名  部门编号  部门名 –符合第二范式，违反第三范式（数据冗余高）<br> 员工表：员工编号（主键） 员工姓名  部门编号–符合第三范式（降低数据冗余）<br> 部门表：部门编号  部门名</p>
-</li>
-</ul>
-<h3 id="关联查询(多表查询)">关联查询(多表查询)</h3><blockquote>
-<p>–  <strong><strong><strong>**</strong></strong></strong>二、关联查询（多表查询）<strong><strong><strong><em>**</em></strong></strong></strong>—-<br>– 需求：查询员工及其所在部门(显示员工姓名，部门名称)</p>
-<p>– 2.1 交叉连接查询（不推荐。产生笛卡尔乘积现象：4 * 4=16，有些是重复记录）<br>SELECT empName,deptName FROM employee,dept;<br>– 需求：查询员工及其所在部门(显示员工姓名，部门名称)<br>– 多表查询规则：<br>1）确定查询哪些表<br>2）确定哪些哪些字段<br>3）表与表之间连接条件 (规律：连接条件数量是表数量-1)</p>
-<p>– 2.2 内连接查询：只有满足条件的结果才会显示(使用最频繁)<br>    SELECT empName,deptName       – 2）确定哪些哪些字段<br>    FROM employee,dept    – 1）确定查询哪些表<br>    WHERE employee.deptId=dept.id  – 3）表与表之间连接条件<br>– 内连接的另一种语法<br>SELECT empName,deptName<br>    FROM employee<br>    INNER JOIN dept<br>    ON employee.deptId=dept.id;<br>– 使用别名<br>SELECT e.empName,d.deptName<br>    FROM employee e<br>    INNER JOIN dept d<br>    ON e.deptId=d.id;<br>– 需求： 查询每个部门的员工<br>– 预期结果：<br> –  软件开发部  张三<br> –  软件开发部  李四<br> –  应用维护部  王五<br> –  秘书部      陈六<br> –  总经办      null </p>
-<p>– 2.3 左[外]连接查询： 使用左边表的数据去匹配右边表的数据，如果符合连接条件的结果则显示，如果不符合连接条件则显示null<br> – （注意： 左外连接：左表的数据一定会完成显示！）<br>SELECT d.deptName,e.empName<br>    FROM dept d<br>    LEFT OUTER JOIN employee e<br>    ON d.id=e.deptId;</p>
-<p>– 2.4 右[外]连接查询: 使用右边表的数据去匹配左边表的数据，如果符合连接条件的结果则显示，如果不符合连接条件则显示null<br> – （注意： 右外连接：右表的数据一定会完成显示！）<br>SELECT d.deptName,e.empName<br>    FROM employee e<br>    RIGHT OUTER JOIN dept d<br>    ON d.id=e.deptId;</p>
-<p>– 2.5 自连接查询<br>– 需求：查询员工及其上司<br>– 预期结果：<br>    – 张三    null<br>    – 李四    张三<br>    – 王五    李四<br>    – 陈六    王五<br>SELECT e.empName,b.empName<br>    FROM employee e<br>    LEFT OUTER JOIN employee b<br>    ON e.bossId=b.id;</p>
-</blockquote>
-<h3 id="存储过程">存储过程</h3><p>存储过程，带有逻辑的sql语句<br>之前的sql没有条件判断，没有循环存储过程带上流程控制语句（if  while）</p>
-<p>特点：</p>
-<p><font color="red">1）执行效率非常快！存储过程是在数据库的服务器端执行的！！！<br>2）移植性很差！不同数据库的存储过程是不能移植。</font><br>语法:</p>
-<blockquote>
-<p>– 创建存储过程<br>DELIMITER <code>$</code>       – 声明存储过程的结束符<br>CREATE PROCEDURE pro_test()           –存储过程名称(参数列表)<br>BEGIN             – 开始<br>– 可以写多个sql语句;          – sql语句+流程控制<br>　　SELECT <code>*</code> FROM employee;<br>END <code>$</code>             – 结束 结束符<br>– 执行存储过程<br>CALL pro_test();          – CALL 存储过程名称(参数);<br>参数：<br>IN：   表示输入参数，可以携带数据带存储过程中<br>OUT： 表示输出参数，可以从存储过程中返回结果<br>INOUT： 表示输入输出参数，既可以输入功能，也可以输出功能<br>– <strong><strong><strong>**</strong></strong></strong>三、存储过程<strong><strong><strong><strong><em>*</em></strong></strong></strong></strong>-<br>– 声明结束符<br>– 创建存储过程<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_test()<br>BEGIN<br>　　– 可以写多个sql语句;<br>　　SELECT <code>*</code> FROM employee;<br>END $</p>
-<p>– 执行存储过程<br>CALL pro_test();</p>
-<p>– 3.1 带有输入参数的存储过程<br>– 需求：传入一个员工的id，查询员工信息<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_findById(IN eid INT)  – IN: 输入参数<br>BEGIN<br>　　SELECT * FROM employee WHERE id=eid;<br>END $ </p>
-<p>– 调用<br>CALL pro_findById(4);</p>
-<p>– 3.2 带有输出参数的存储过程<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testOut(OUT str VARCHAR(20))  – OUT：输出参数<br>BEGIN<br>　　– 给参数赋值<br>　　SET str=’helljava’;<br>END $</p>
-<p>– 删除存储过程<br>DROP PROCEDURE pro_testOut;<br>– 调用<br>– 如何接受返回参数的值？？<br>– <strong><em>mysql的变量<em>*</em></em></strong><br>–  全局变量（内置变量）：mysql数据库内置的变量 （所有连接都起作用）<br>　　– 查看所有全局变量： show variables<br>　　– 查看某个全局变量： select @@变量名<br>　　– 修改全局变量： set 变量名=新值<br>　　– character_set_client: mysql服务器的接收数据的编码<br>　　– character_set_results：mysql服务器输出数据的编码</p>
-<p>–  会话变量： 只存在于当前客户端与数据库服务器端的一次连接当中。如果连接断开，那么会话变量全部丢失！<br>　　– 定义会话变量: set @变量=值<br>　　– 查看会话变量： select @变量</p>
-<p>– 局部变量： 在存储过程中使用的变量就叫局部变量。只要存储过程执行完毕，局部变量就丢失！！</p>
-<p>– 1)定义一个会话变量name, 2)使用name会话变量接收存储过程的返回值<br>CALL pro_testOut(@NAME);<br>– 查看变量值<br>SELECT @NAME;</p>
-<p>– 3.3 带有输入输出参数的存储过程<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testInOut(INOUT n INT)  – INOUT： 输入输出参数<br>BEGIN<br>　　– 查看变量<br>　　SELECT n;<br>　　SET n =500;<br>END $</p>
-<p>– 调用<br>SET @n=10;</p>
-<p>CALL pro_testInOut(@n);</p>
-<p>SELECT @n;</p>
-<p>– 3.4 带有条件判断的存储过程<br>– 需求：输入一个整数，如果1，则返回“星期一”,如果2，返回“星期二”,如果3，返回“星期三”。其他数字，返回“错误输入”;<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testIf(IN num INT,OUT str VARCHAR(20))<br>BEGIN<br>　　F num=1 THEN<br>　　　SET str=’星期一’;<br>　　ELSEIF num=2 THEN<br>　　　SET str=’星期二’;<br>　　ELSEIF num=3 THEN<br>　　　SET str=’星期三’;<br>　　ELSE<br>　　　SET str=’输入错误’;<br>　　END IF;<br>END $</p>
-<p>CALL pro_testIf(4,@str);</p>
-<p>SELECT @str;</p>
-<p>– 3.5 带有循环功能的存储过程<br>– 需求： 输入一个整数，求和。例如，输入100，统计1-100的和<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_testWhile(IN num INT,OUT result INT)<br>BEGIN<br>　　– 定义一个局部变量<br>　　DECLARE i INT DEFAULT 1;<br>　　DECLARE vsum INT DEFAULT 0;<br>　　WHILE i&lt;=num DO<br>　　　　SET vsum = vsum+i;<br>　　　　SET i=i+1;<br>　　END WHILE;<br>　　SET result=vsum;<br>END $</p>
-<p>DROP PROCEDURE pro_testWhile;</p>
-<p>CALL pro_testWhile(100,@result);</p>
-<p>SELECT @result;</p>
-<p>USE day16;</p>
-<p>– 3.6 使用查询的结果赋值给变量（INTO）<br>DELIMITER <code>$</code><br>CREATE PROCEDURE pro_findById2(IN eid INT,OUT vname VARCHAR(20) )<br>BEGIN<br>　　SELECT empName INTO vname FROM employee WHERE id=eid;<br>END $</p>
-<p>CALL pro_findById2(1,@NAME);</p>
-<p>SELECT @NAME;</p>
-</blockquote>
-<h3 id="触发器">触发器</h3><p>作用:<br>当操作了某张表时，希望同时触发一些动作/行为，可以使用触发器完成！！</p>
-<blockquote>
-<p>– 需求： 当向员工表插入一条记录时，希望mysql自动同时往日志表插入数据<br>– 创建触发器(添加)<br>CREATE TRIGGER tri_empAdd AFTER INSERT ON employee FOR EACH ROW    – 当往员工表插入一条记录时<br>     INSERT INTO test_log(content) VALUES(‘员工表插入了一条记录’);</p>
-<p>– 插入数据<br>INSERT INTO employee(id,empName,deptId) VALUES(7,’扎古斯’,1);<br>INSERT INTO employee(id,empName,deptId) VALUES(8,’扎古斯2’,1);</p>
-<p>– 创建触发器(修改)<br>CREATE TRIGGER tri_empUpd AFTER UPDATE ON employee FOR EACH ROW    – 当往员工表修改一条记录时<br>     INSERT INTO test_log(content) VALUES(‘员工表修改了一条记录’);</p>
-<p>– 修改<br> UPDATE employee SET empName=’eric’ WHERE id=7;</p>
-<p>– 创建触发器(删除)<br>CREATE TRIGGER tri_empDel AFTER DELETE ON employee FOR EACH ROW    – 当往员工表删除一条记录时<br>     INSERT INTO test_log(content) VALUES(‘员工表删除了一条记录’);</p>
-<p>– 删除<br> DELETE FROM employee WHERE id=7;</p>
-</blockquote>
-<h3 id="mysql权限问题">mysql权限问题</h3><blockquote>
-<p>– <strong><strong><em>*</em></strong></strong>五、mysql权限问题<strong><strong><strong><em>**</em></strong></strong></strong><br> – mysql数据库权限问题：root ：拥有所有权限（可以干任何事情）<br> – 权限账户，只拥有部分权限（CURD）例如，只能操作某个数据库的某张表<br> – 如何修改mysql的用户密码？<br> – password: md5加密函数(单向加密)<br> SELECT PASSWORD(‘root’); – *81F5E21E35407D884A6CD4A731AEBFB6AF209E1B</p>
-<p>–  mysql数据库，用户配置 : user表<br>USE mysql;</p>
-<p>SELECT * FROM USER;</p>
-<p>– 修改密码<br>UPDATE USER SET PASSWORD=PASSWORD(‘123456’) WHERE USER=’root’;</p>
-<p>– 分配权限账户<br>GRANT SELECT ON day16.employee TO ‘eric’@’localhost’ IDENTIFIED BY ‘123456’;<br>GRANT DELETE ON day16.employee TO ‘eric’@’localhost’ IDENTIFIED BY ‘123456’;</p>
-</blockquote>
-<h3 id="总结">总结</h3><p>mysql基础</p>
-<ul>
-<li>mysql存储结构： 数据库 -&gt; 表 -&gt; 数据   sql语句</li>
-<li>管理数据库：<ul>
-<li>增加： create database 数据库 default character utf8;</li>
-<li>删除： drop database 数据库;</li>
-<li>修改： alter database 数据库 default character gbk;</li>
-<li>查询： show databases / show create database 数据库;</li>
-</ul>
-</li>
-<li>管理表：<br>选择数据库：use 数据库;<ul>
-<li>增加： create table 表(字段名1 字段类型,字段名2 字段类型……);</li>
-<li>删除： drop table 表;</li>
-<li>修改：        </li>
-<li>添加字段： alter table 表 add [column] 字段名 字段类型;         </li>
-<li>删除字段:   alter table 表 drop [column] 字段名;</li>
-<li>修改字段类型： alter table 表 modify 字段名 新的字段类型;</li>
-<li>修改字段名称 ： alter table 表 change 旧字段名 新字段名 字段类型;</li>
-<li>修改表名称：   alter table 表 rename [to] 新表名;<br>查询：<br>show tables  /  desc student;</li>
-</ul>
-</li>
-<li>管理数据:<ul>
-<li>增加： insert into 表(字段1，字段2,。。。) -values(值1，值2.。。。。);</li>
-<li>删除： delete from 表 where 条件;</li>
-<li>修改： update 表 set 字段1=值1，字段2=值2…… where 条件;<br>查询： </li>
-<li>所有字段： select * from 表;</li>
-<li>指定字段： select 字段1,字段2…. from 表;</li>
-<li>指定别名： select 字段1 as 别名 from 表;</li>
-<li>合并列： select (字段1+字段2) from 表;</li>
-<li>去重： select distinct 字段 from 表;</li>
-<li>条件查询：</li>
-<li>逻辑条件 ：and(与)     or（或）<br>select * from 表 where 条件1 and/or 条件2</li>
-<li>比较条件： &gt;  &lt;  &gt;=  &lt;=  =  &lt;&gt;   between and(在。。。之间)<br>select * from 表 where servlet&gt;=90;</li>
-<li>判空条件：<br>判断null： is null   /  is not null<br>判断空字符串： =’’    /  &lt;&gt;’’</li>
-<li>模糊条件： like<br>%:  替换任意个字符<br>_:   替换一个字符            </li>
-<li>分页查询：limit 起始行,查询行数<br>起始行从0开始</li>
-<li>排序： order by 字段 asc/desc<br>asc: 正序，顺序<br>desc：反序，倒序</li>
-<li>分组查询：group by 字段</li>
-<li>分组后筛选： having 条件</li>
-</ul>
-</li>
-</ul>
-<p>SQL语句的分类：    </p>
-<ul>
-<li>DDL： 数据定义语言<br>create / drop / alter     </li>
-<li>DML：数据操作语句<br>insert / delete /update / truncate     </li>
-<li>DQL： 数据查询语言：<br>select / show     </li>
-</ul>
-<p>mysql加强</p>
-<ul>
-<li>数据约束（表约束）<ul>
-<li>默认值： default 默认值</li>
-<li>非空：   not null</li>
-<li>唯一： unique</li>
-<li>主键： primary key （非空+唯一）</li>
-<li>自增长： auto_increment</li>
-<li>外键： foreign key   约束两种表</li>
-</ul>
-</li>
-<li>关联查询（多表查询）<ul>
-<li>交叉连接（产生笛卡尔积：原因：连接条件不足够）  表数量-1</li>
-<li>内连接查询： inner join<br>只有满足连接条件的数据才会显示！！！</li>
-<li>左【外】连接查询：left [outer] join<br>左表的数据必须全部显示，用左表去匹配右表的数据，如果右表有符号条件的数据则显示符                    合条件的数据；如果不符合条件，则显示null。</li>
-<li>右【外】连接查询： right [outer] join<br>右表的数据必须全部显示，用右表去匹配左表的数据，如果左表有符号条件的数据则显示符                    合条件的数据；如果不符合条件，则显示null。</li>
-<li>自连接查询    </li>
-</ul>
-</li>
-<li>存储过程<ul>
-<li>创建存储过程语法<br>delimeter 结束符号<br>create procedure 名称(IN/OUT/INOUT  参数名称 参数类型)<br>begin<br>带逻辑的sql语句<br>end 结束符号</li>
-<li>调用存储过程<br>CALL 存储过程名称(实际参数);</li>
-</ul>
-</li>
-</ul>
-
       
     </div>
     
@@ -564,6 +387,10 @@
 
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2016/02/01/mysql加强/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -621,7 +448,7 @@
 <li>数据永久保存下来</li>
 <li>数据管理非常方便。（例如查询非常快速和方便）</li>
 </ol>
-<font color="red">数据可以说是企业的灵魂！！</font>
+<font color='red'>数据可以说是企业的灵魂！！</font>
 
 <h4 id="什么是数据库软件">什么是数据库软件</h4><p>数据库，俗称数据的仓库。方便管理数据的软件（或程序）。</p>
 <h4 id="市面上数据库软件">市面上数据库软件</h4><p>Oracle，甲骨文公司的产品。 当前最流行应用最广泛的数据库软件。和java语言兼容非常好。适合中大型，中大应用。</p>
@@ -631,150 +458,6 @@
 <p>关系型数据库。</p>
 <p>MongoDB： 非关系型数据库。</p>
 <p>先学mysql，后面再学oracle</p>
-<h4 id="MySQL入门">MySQL入门</h4><ol>
-<li>到mysql官网下载。</li>
-<li>安装mysql软件</li>
-<li>使用</li>
-</ol>
-<p>验证是否成功<br>打开cmd  -&gt; 输入 mysql -u root -p  回车   -&gt; 输入密码   回车<br><code>C:\Users\APPle&gt;mysql -u root -p</code><br><code>Enter password: ****</code></p>
-<blockquote>
-<p>Welcome to the MySQL monitor.  Commands end with ; or \g.<br>Your MySQL connection id is 2<br>Server version: 5.5.40 MySQL Community Server (GPL)<br>Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.<br>Oracle is a registered trademark of Oracle Corporation and/or its<br>affiliates. Other names may be trademarks of their respective<br>owners.<br>Type ‘help;’ or ‘\h’ for help. Type ‘\c’ to clear the current input statement.<br>mysql&gt;</p>
-</blockquote>
-<h3 id="数据库管理">数据库管理</h3><h4 id="查询所有数据库">查询所有数据库</h4><blockquote>
-<p>mysql&gt; show databases;<br>+——————–+<br>| Database           |<br>+——————–+<br>| information_schema | – mysql元数据，基础数据<br>| mysql              |    –mysql配置数据库，其中包含用户信息。（用户名和密码，权限管理）<br>| performance_schema |    –mysql数据库软件的运行数据，日志信息，性能数据<br>| test               |     –测试数据库。空的<br>+——————–+<br>4 rows in set (0.00 sec)</p>
-</blockquote>
-<h4 id="创建数据库">创建数据库</h4><blockquote>
-<p>mysql&gt; create database day15       – 指定默认字符集创建数据库<br>-&gt; default character set utf8<br>-&gt; ;<br>Query OK, 1 row affected (0.00 sec)</p>
-</blockquote>
-<h4 id="查看数据库的默认字符集">查看数据库的默认字符集</h4><blockquote>
-<p>mysql&gt; show create database day15;<br>+———-+—————————————————————-+<br>| Database | Create Database                                                |<br>+———-+—————————————————————-+<br>| day15    | CREATE DATABASE <code>day15</code> /<em>!40100 DEFAULT CHARACTER SET utf8 </em>/ |<br>+———-+—————————————————————-+<br>1 row in set (0.00 sec)</p>
-</blockquote>
-<h4 id="删除数据库">删除数据库</h4><blockquote>
-<p>mysql&gt; drop database day15;<br>Query OK, 0 rows affected (0.01 sec)</p>
-</blockquote>
-<h4 id="修改数据库">修改数据库</h4><blockquote>
-<p>mysql&gt; alter database day15 default character set gbk;<br>Query OK, 1 row affected (0.00 sec)</p>
-</blockquote>
-<h3 id="表管理">表管理</h3><p>选择数据库</p>
-<h4 id="查看所有表">查看所有表</h4><blockquote>
-<p>mysql&gt; show tables;<br>+—————–+<br>| Tables_in_day15 |<br>+—————–+<br>| student         |<br>+—————–+<br>1 row in set (0.00 sec)</p>
-</blockquote>
-<h4 id="创建表">创建表</h4><blockquote>
-<p>mysql&gt; create table student(<br>    -&gt; sid int,<br>    -&gt; sname varchar(20),<br>    -&gt; sage int<br>    -&gt; );<br>Query OK, 0 rows affected (0.01 sec)</p>
-</blockquote>
-<h4 id="查看表结构">查看表结构</h4><blockquote>
-<p>mysql&gt; desc student;<br>+——-+————-+——+—–+———+——-+<br>| Field | Type        | Null | Key | Default | Extra |<br>+——-+————-+——+—–+———+——-+<br>| sid   | int(11)     | YES  |     | NULL    |       |<br>| sname | varchar(20) | YES  |     | NULL    |       |<br>| sage  | int(11)     | YES  |     | NULL    |       |<br>+——-+————-+——+—–+———+——-+<br>3 rows in set (0.01 sec)</p>
-</blockquote>
-<h4 id="删除表">删除表</h4><blockquote>
-<p>mysql&gt; drop table student;<br>Query OK, 0 rows affected (0.01 sec)</p>
-</blockquote>
-<h4 id="修改表">修改表</h4><ol>
-<li><p>添加字段</p>
-<blockquote>
-<p>mysql&gt; alter table student add column sgender varchar(2);<br>Query OK, 0 rows affected (0.03 sec)<br>Records: 0  Duplicates: 0  Warnings: 0</p>
-</blockquote>
-</li>
-<li><p>删除字段</p>
-<blockquote>
-<p>mysql&gt; alter table student drop column sgender;<br>Query OK, 0 rows affected (0.03 sec)<br>Records: 0  Duplicates: 0  Warnings: 0</p>
-</blockquote>
-</li>
-<li><p>修改字段类型</p>
-<blockquote>
-<p>mysql&gt; alter table student modify column remark varchar(100);<br>Query OK, 0 rows affected (0.07 sec)<br>Records: 0  Duplicates: 0  Warnings: 0</p>
-</blockquote>
-</li>
-<li><p>修改字段名称</p>
-<blockquote>
-<p>mysql&gt; alter table student change column sgender gender varchar(2);<br>Query OK, 0 rows affected (0.03 sec)<br>Records: 0  Duplicates: 0  Warnings: 0</p>
-</blockquote>
-</li>
-<li><p>修改表名称</p>
-<blockquote>
-<p>mysql&gt; alter table student rename to teacher;<br>Query OK, 0 rows affected (0.01 sec)</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="增删改数据">增删改数据</h3><ol>
-<li><p>增加数据<br>插入所有字段。一定依次按顺序插入<br><code>INSERT INTO student VALUES(1,&#39;张三&#39;,&#39;男&#39;,20);</code><br>注意不能少或多字段值<br><code>INSERT INTO student VALUES(2,&#39;李四&#39;,&#39;女&#39;);</code><br>插入部分字段<br><code>INSERT INTO student(id,NAME) VALUES(2,&#39;李四&#39;);</code></p>
-</li>
-<li><p>修改数据<br>修改所有数据（建议少用）<br><code>UPDATE student SET gender=&#39;女&#39;;</code><br>带条件的修改（推荐使用）<br><code>UPDATE student SET gender=&#39;男&#39; WHERE id=1;</code> 修改id为1的学生，修改性别为男<br>修改多个字段,注意:<br>SET 字段名=值,字段名=值,….<br><code>UPDATE student SET gender=&#39;男&#39;,age=30 WHERE id=2;</code></p>
-</li>
-<li><p>删除数据<br>删除所有数据（建议少用）<br><code>DELETE FROM student;</code><br>带条件的删除(推荐使用)<br><code>DELETE FROM student WHERE id=2;</code><br>另一种方式<br><code>delete from: 可以全表删除</code><br>1）可以带条件删除<br>2）只能删除表的数据，不能删除表的约束<br>3）使用delete from删除的数据可以回滚（事务）<br><code>truncate table: 可以全表删除</code><br>1）不能带条件删除<br>2）即可以删除表的数据，也可以删除表的约束<br>3）使用truncate table删除的数据不能回滚<br><code>TRUNCATE TABLE student;</code></p>
-</li>
-</ol>
-<h3 id="查询数据（重点）">查询数据（重点）</h3><h4 id="查询所有列">查询所有列</h4><p><code>SELECT * FROM student;</code></p>
-<h4 id="查询指定列">查询指定列</h4><p><code>SELECT id,NAME,gender FROM student;</code></p>
-<h4 id="查询时添加常量列">查询时添加常量列</h4><blockquote>
-<p>需求： 在查询student表时添加一个班级列，内容为“java就业班”<br><code>SELECT id,NAME,gender,age,&#39;java就业班&#39; AS &#39;年级&#39;  FROM student;</code></p>
-</blockquote>
-<h4 id="查询时合并列">查询时合并列</h4><blockquote>
-<p>需求： 查询每个学生的servlet和jsp的总成绩<br><code>SELECT id,NAME,(servlet+jsp) AS &#39;总成绩&#39; FROM student;</code><br>注意：合并列只能合并数值类型的字段<br><code>SELECT id,(NAME+servlet) FROM student;</code></p>
-</blockquote>
-<h4 id="查询时去除重复记录">查询时去除重复记录</h4><blockquote>
-<p>需求： 查询学生的性别     男 女<br><code>SELECT DISTINCT gender FROM student;</code><br>另一种语法<br><code>SELECT DISTINCT(gender) FROM student;</code><br>需求: 查询学生所在的地区<br><code>SELECT DISTINCT address FROM student;</code></p>
-</blockquote>
-<h4 id="条件查询">条件查询</h4><ol>
-<li><p>逻辑条件： and(与)     or(或)</p>
-<blockquote>
-<p>需求： 查询id为2，且姓名为李四的学生<br><code>SELECT * FROM student WHERE id=2 AND NAME=&#39;李四&#39;; -- 交集</code><br>需求： 查询id为2，或姓名为张三的学生<br><code>SELECT * FROM student WHERE id=2 OR NAME=&#39;张三&#39;; -- 并集</code></p>
-</blockquote>
-</li>
-<li><p>比较条件： &gt;   &lt;   &gt;=  &lt;=  =  &lt;&gt;(不等于)     between and (等价于&gt;= 且 &lt;=)</p>
-<blockquote>
-<p>需求： 查询servlet成绩大于70分的学生<br><code>SELECT * FROM student WHERE servlet&gt;70;</code><br>需求： 查询jsp成绩大于等于75，且小于等于90分的学生<br><code>SELECT * FROM student WHERE jsp&gt;=75 AND jsp&lt;=90;</code><br>另一个语法<br><code>SELECT * FROM student WHERE jsp BETWEEN 75 AND 90; -- (包前包后)</code><br><code>SELECT * FROM student WHERE gender&lt;&gt;&#39;男&#39;;</code></p>
-</blockquote>
-</li>
-<li><p>判空条件(null 空字符串)：  is null / is not null / =’’  / &lt;&gt;’’</p>
-<blockquote>
-<p>需求： 查询地址为空的学生（包括null和空字符串）<br>null vs  空字符串<br>null：表示没有值<br>空字符串：有值的！<br>判断null<br><code>SELECT * FROM student WHERE address IS NULL ;</code><br>判断空字符串<br><code>SELECT * FROM student WHERE address=&#39;&#39;;</code><br><code>SELECT * FROM student WHERE address IS NULL OR address=&#39;&#39;; -- （包括null和空字符串）</code><br>需求： 查询有地址的学生(不包括null和空字符串)<br><code>SELECT * FROM student WHERE address IS NOT NULL AND address&lt;&gt;&#39;&#39;;</code></p>
-</blockquote>
-</li>
-<li><p>模糊条件： like<br>通常使用以下替换标记：<br>% : 表示任意个字符<br>_ : 表示一个字符</p>
-<blockquote>
-<p>需求： 查询姓‘张’的学生<br><code>SELECT * FROM student WHERE NAME LIKE &#39;李%&#39;;</code><br>需求： 查询姓‘李’，且姓名只有两个字的学生<br><code>SELECT * FROM student WHERE NAME LIKE &#39;李_&#39;;</code></p>
-</blockquote>
-</li>
-</ol>
-<h4 id="聚合查询">聚合查询</h4><ol>
-<li>聚合查询（使用聚合函数的查询）<br>常用的聚合函数： sum()  avg()  max()  min()  count()<blockquote>
-<p>需求：查询学生的servlet的总成绩 (sum() :求和函数)<br><code>SELECT SUM(servlet) AS &#39;servlet的总成绩&#39; FROM student;</code><br>需求： 查询学生的servlet的平均分<br><code>SELECT AVG(servlet) AS &#39;servlet的平均分&#39; FROM student;</code><br>需求: 查询当前servlet最高分<br><code>SELECT MAX(servlet) AS &#39;最高分&#39; FROM student;</code><br>需求： 查询最低分<br><code>SELECT MIN(servlet) AS &#39;最低分&#39; FROM student;</code><br>需求： 统计当前有多少学生(count(字段))<br><code>SELECT COUNT(*) FROM student;</code><br><code>SELECT COUNT(id) FROM student;</code><br>注意：count（）函数统计的数量不包含null的数据<br>使用count统计表的记录数，要使用不包含null值的字段<br><code>SELECT COUNT(age) FROM student;</code></p>
-</blockquote>
-</li>
-</ol>
-<h4 id="分页查询">分页查询</h4><ol>
-<li>分页查询（limit 起始行,查询几行）<br>起始行从0开始<br>分页：当前页  每页显示多少条<br>分页查询当前页的数据的sql:<br><code>SELECT * FROM student LIMIT (当前页-1)*每页显示多少条,每页显示多少条;</code><blockquote>
-<p>需求： 查询第1,2条记录（第1页的数据）<br><code>SELECT * FROM student LIMIT 0,2;</code><br>查询第3,4条记录（第2页的数据）<br><code>SELECT * FROM student LIMIT 2,2;</code><br>查询第5,6条记录（第3页的数据）<br><code>SELECT * FROM student LIMIT 4,2;</code><br>查询第7,8条记录 (没有记录不显示)<br><code>SELECT * FROM student LIMIT 6,2;</code></p>
-</blockquote>
-</li>
-</ol>
-<h4 id="查询排序">查询排序</h4><ol>
-<li>查询排序（order by ）<br>语法 ：order by 字段 asc/desc<br>asc: 顺序，正序。数值：递增，字母：自然顺序（a-z）<br>desc: 倒序，反序。数值：递减，字母：自然反序(z-a)<br>默认情况下，按照插入记录顺序排序<br><code>SELECT * FROM student;</code><blockquote>
-<p>需求： 按照id顺序排序<br><code>SELECT * FROM student ORDER BY id ASC;</code><br><code>SELECT * FROM student ORDER BY id; -- 默认正序</code><br><code>SELECT * FROM student ORDER BY id DESC;-- 反序</code><br>注意：多个排序条件<br>需求： 按照servlet正序，按照jsp的倒序<br><code>SELECT * FROM student ORDER BY servlet ASC,jsp DESC;</code></p>
-</blockquote>
-</li>
-</ol>
-<h4 id="分组查询">分组查询</h4><ol>
-<li>分组查询(group by)<blockquote>
-<p>需求： 查询男女的人数<br>预期结果：<br>男   3<br>女   2</p>
-<ol>
-<li>把学生按照性别分组(GROUP BY gender)</li>
-<li>统计每组的人数(COUNT(<em>))<br>`SELECT gender,COUNT(</em>) FROM student GROUP BY gender;`</li>
-</ol>
-</blockquote>
-</li>
-</ol>
-<h4 id="分组查询后筛选">分组查询后筛选</h4><ol>
-<li>分组查询后筛选<blockquote>
-<p>需求： 查询总人数大于2的性别</p>
-<ol>
-<li>查询男女的人数</li>
-<li>筛选出人数大于2的记录(having)<br>注意： 分组之前条件使用where关键字，分组之前条件使用having关键字<br><code>SELECT gender,COUNT(*) FROM student WHERE GROUP BY gender HAVING COUNT(*)&gt;2;</code></li>
-</ol>
-</blockquote>
-</li>
-</ol>
-
       
     </div>
     
@@ -787,6 +470,10 @@
 
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2016/01/18/mysql基础/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -841,84 +528,6 @@
 <li>在jsp页面的头部导入自定义标签库<br><code>&lt;%@taglib uri=&quot;http://gz.itcast.cn&quot; prefix=&quot;itcast&quot;%&gt;</code></li>
 <li>在jsp中使用自定义标签<br><code>&lt;itcast:showIp&gt;&lt;/itcast:showIp&gt;</code></li>
 </ul>
-<h4 id="自定义标签的执行过程">自定义标签的执行过程</h4><p>问题： <a href="http://localhost:8080/day14/01.hellotag.jsp" target="_blank" rel="external">http://localhost:8080/day14/01.hellotag.jsp</a>  如何访问到自定义标签？</p>
-<p>前提： tomcat服务器启动时，加载到每个web应用，加载每个web应用的WEB-INF目录下的所有文件！！！例如。web.xml, tld文件！！！</p>
-<blockquote>
-<ol>
-<li>访问01.hellotag.jsp资源</li>
-<li>tomcat服务器把jsp文件翻译成java源文件-&gt;编译class-&gt;构造类对象-&gt;调用_jspService（）方法</li>
-<li>检查jsp文件的taglib指令，是否存在一个名为<a href="http://gz.itcast.cn的tld文件。如果没有，则报错" target="_blank" rel="external">http://gz.itcast.cn的tld文件。如果没有，则报错</a></li>
-<li>上一步已经读到itcast.tld文件</li>
-<li>读到<itcast:showip>到itcast.tld文件中查询是否存在<name>为showIp的<tag>标签</tag></name></itcast:showip></li>
-<li>找到对应的<tag>标签，则读到<tag-class>内容</tag-class></tag></li>
-<li>得到 gz.itcast.a_tag.ShowIpTag<br>　　构造ShowIpTag对象，然后调用ShowIpTag里面的方法</li>
-</ol>
-</blockquote>
-<h4 id="自定义标签处理器类的生命周期">自定义标签处理器类的生命周期</h4><font color="red">SimpleTag接口：</font> 
-
-<blockquote>
-<p>void     setJspContext(JspContext pc)–设置pageContext对象，传入pageContext（一定调用）通过getJspCotext()方法得到pageContext对象</p>
-<p>void     setParent(JspTag parent)–设置父标签对象，传入父标签对象，如果没有父标签，则不调用此方法。通过getParent()方法得到父标签对象。</p>
-<p>void     setXXX(值)  –设置属性值。</p>
-<p>void     setJspBody(JspFragment jspBody)–设置标签体内容。标签体内容封装到JspFragment对象中，然后传入JspFragment对象。通过getJspBody()方法得到标签体内容。如果没有标签体内容，则不会调用此方法</p>
-<p>void     doTag()–执行标签时调用的方法。（一定调用）</p>
-</blockquote>
-<h4 id="自定义标签的作用">自定义标签的作用</h4><ul>
-<li>控制标签体内容是否输出</li>
-<li>控制标签余下内容是否输出</li>
-<li>控制重复输出标签体内容</li>
-<li>改变标签体内容</li>
-<li>带属性的标签<blockquote>
-<p><strong>属性的标签</strong>:在标签处理器中添加一个成语变量和setter方法<br>//1.声明属性的成员变量<br>  <code>private Integer num;</code><br>//2.关键点： 必须提供公开的setter方法，用于给属性赋值</p>
-  <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public <span class="keyword">void</span> setNum(Integer <span class="built_in">num</span>) &#123;</span><br><span class="line">	<span class="keyword">this</span>.<span class="built_in">num</span> = <span class="built_in">num</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-</ul>
-<h4 id="输出标签体内容格式">输出标签体内容格式</h4><p>JSP：   在传统标签中使用的。可以写和执行jsp的java代码。<br>scriptless:  标签体不可以写jsp的java代码<br>empty:    必须是空标签。<br>tagdependent : 标签体内容可以写jsp的java代码，但不会执行。</p>
-<h3 id="编码实战">编码实战</h3><h4 id="JavaBean">JavaBean</h4><p>JavaBean,  咖啡豆。 JavaBean是一种开发规范，可以说是一种技术。</p>
-<p>JavaBean就是一个普通的java类。只有符合以下规定才能称之为javabean：</p>
-<blockquote>
-<ol>
-<li>必须提供无参数的构造方法</li>
-<li>类中属性都必须私有化(private)</li>
-<li>该类提供公开的getter 和 setter方法</li>
-</ol>
-</blockquote>
-<font color="red">JavaBean的作用： 用于封装数据，保存数据。<br>访问javabean只能使用getter和setter方法</font>
-
-<p>JavaBean的使用场景：</p>
-<blockquote>
-<ol>
-<li>项目中用到实体对象（entity）符合javabean规范</li>
-<li>EL表达式访问对象属性。${student.name}调用getName()方法，符合javabean规范。</li>
-<li>jsp标签中的属性赋值。 setNum（Integer num）。符合javabean规范。</li>
-<li>jsp页面中使用javabean。符合javabean规范</li>
-</ol>
-</blockquote>
-<p>问题：<br>以下方法哪些属于javabean的规范的方法？ 答案 ：( 1，3，5，6  )<br>注意： boolean类型的get方法名称叫 isXXX()方法</p>
-<blockquote>
-<ol>
-<li><code>getName()</code>    </li>
-<li><code>getName(String name)</code></li>
-<li><code>setName(String name)</code>  </li>
-<li><code>setName()</code>    </li>
-<li><code>setFlag(boolean flag)</code>   </li>
-<li><code>isFlag()</code></li>
-</ol>
-</blockquote>
-<h4 id="web开发模式">web开发模式</h4><p>MVC开发模式:<br>Model - JavaBean实现。用于封装业务数据<br>View - Jsp实现。用于显示数据<br>Controller-  servlet实现。用于控制model和view<br>三层结构：<br>dao层： 和数据访问相关的操作<br>service层： 和业务逻辑相关的操作<br>web层： 和用户直接交互相关的操作（传接参数，跳转页面）</p>
-<h3 id="总结">总结</h3><p>自定义标签&amp;编码实战</p>
-<ol>
-<li>自定义标签步骤：<br>1.1. 编写标签处理器类，继承SimpleTagSupport类，覆盖doTag方法<br>1.2. 在WEB-INF目录下建立tld文件，在tld配置标签<br>1.3. 在jsp页面导入标签库，使用taglib指令<br>1.4. 在jsp页面中使用标签库中的标签</li>
-<li>自定义标签生命周期：<br> SimpleTag接口：<blockquote>
-<p><code>setJspContext(JspContext context)</code>  –传入pagContext对象<br> <code>setParent(JspTag tag)</code>   –传入父标签对象<br><code>setXXX(参数)</code>     –给属性赋值<br> <code>setJspBody(JspFrament jspBody)</code>  –传入标签体内容<br> <code>doTag()</code>      –执行标签</p>
-</blockquote>
-</li>
-<li>自定义标签的作用：<br>3.1. 控制是否输出标签体内容<br>　　输出： <code>this.getJspBody().invoke(null)</code><br>　　不输出:  不调用<code>invoke(null)</code>方法<br>3.2. 控制标签余下内容是否输出<br>　　输出： 什么不都做！<br>　　不输出： 抛出<code>SkipPageException</code>异常<br>3.3. 重复输出标签体内容<br>　　重复调用： <code>this.getJspBody().invoke(null)</code><br>3.4. 修改标签体内容<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">StringWriter sw = <span class="keyword">new</span> StringWriter();</span><br><span class="line"><span class="keyword">this</span>.getJspBody().invoke(sw);</span><br><span class="line">String content = sw.toString();</span><br><span class="line"><span class="comment">//修改内容</span></span><br><span class="line"><span class="comment">//手动输出到浏览器</span></span><br><span class="line"><span class="keyword">this</span>.getJspContext().getOut().writer(修改过的内容);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>　　3.5. 带属性的标签<br>　　　　a. 在标签处理器类中声明成员变量和setter方法，用于给属性变量赋值<br>　　　　b. 在tld文件中声明属性<br>　　　　c. 使用属性</p>
-
       
     </div>
     
@@ -931,6 +540,10 @@
 
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2016/01/14/自定义标签/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -972,7 +585,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Jsp的内置对象">Jsp的内置对象</h3><h4 id="什么是内置对象？">什么是内置对象？</h4><p>在jsp开发中，会频繁使用到一些对象。<br>　　例如HttpSession,ServletContext,ServletContext,HttpServletRequet。如果我们每次要使用这些对象都去创建这些对象就显示非常麻烦。所以Sun公司设计Jsp时，在jsp页面加载完毕之后就会自动帮开发者创建好这些对象，而开发者只需要直接使用这些对象调用方法即可！，这些创建好的对象就叫<font color="red">内置对象！！！！</font><br><strong>举例：</strong></p>
+        <h3 id="Jsp的内置对象">Jsp的内置对象</h3><h4 id="什么是内置对象？">什么是内置对象？</h4><p>在jsp开发中，会频繁使用到一些对象。<br>　　例如HttpSession,ServletContext,ServletContext,HttpServletRequet。如果我们每次要使用这些对象都去创建这些对象就显示非常麻烦。所以Sun公司设计Jsp时，在jsp页面加载完毕之后就会自动帮开发者创建好这些对象，而开发者只需要直接使用这些对象调用方法即可！，这些创建好的对象就叫<font color='red'>内置对象！！！！</font><br><strong>举例：</strong></p>
 <blockquote>
 <p>servlet:<br><code>HttpSession session = request.getSession(true); （需要开发者做）</code><br>jsp:<br><code>tomcat服务器：HttpSession session =request.getSession(true);(不需要开发者做)</code><br><code>开发者做的： session.getId();</code></p>
 </blockquote>
@@ -1022,138 +635,6 @@
 </tr>
 </tbody>
 </table>
-<h4 id="Out对象">Out对象</h4><p>out对象类型，JspWriter类，相当于带缓存的PrintWriter</p>
-<blockquote>
-<p>PrintWriter<br>wrier(内容)： 直接向浏览器写出内容。<br>JspWriter<br>writer(内容): 向jsp缓冲区写出内容</p>
-</blockquote>
-<p>当满足以下条件之一，缓冲区内容写出：</p>
-<ul>
-<li>缓冲区满了</li>
-<li>刷新缓存区</li>
-<li>关闭缓存区</li>
-<li>执行完毕jsp页面</li>
-</ul>
-<p><img src="/images/jspcache.png" alt=""></p>
-<h4 id="pageContext对象">pageContext对象</h4><p>pageContext对象的类型是PageContext，叫jsp的上下文对象</p>
-<font color="red">使用场景： 在自定义标签的时候，PageContext对象频繁使用到！！！</font>
-
-<ul>
-<li>可以获取其他八个内置对象 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> 01<span class="title">_hello_jsp</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">_jspService</span><span class="params">(request,response)</span></span>&#123;</span><br><span class="line">		创建内置对象</span><br><span class="line">		HttpSession session =....;</span><br><span class="line">		ServletConfig config = ....;</span><br><span class="line"></span><br><span class="line">		把<span class="number">8</span>个经常使用的内置对象封装到PageContext对象中</span><br><span class="line">		PageContext pageContext  = 封装；</span><br><span class="line">		调用method1方法</span><br><span class="line">		method1(pageContext);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">(PageContext pageContext)</span></span>&#123;</span><br><span class="line">		希望使用内置对象</span><br><span class="line">		从PageContext对象中获取其他<span class="number">8</span>个内置对象</span><br><span class="line">		JspWriter out =pageContext.getOut();</span><br><span class="line">		HttpServletRequest rquest = pageContext.getRequest();</span><br><span class="line">		........</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>本身是一个域对象</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ServletContext</td>
-<td>context域</td>
-<td>Servlet学习的</td>
-</tr>
-<tr>
-<td>HttpServletRequest</td>
-<td>request域</td>
-<td>Servlet学习的</td>
-</tr>
-<tr>
-<td>HttpSession</td>
-<td>session域</td>
-<td>Servlet学习的</td>
-</tr>
-<tr>
-<td>PageContext</td>
-<td>page域</td>
-<td>jsp学习的(包含四个)</td>
-</tr>
-</tbody>
-</table>
-<p>问题：Servlet里面有几个域对象，Jsp里面有几个域对象？</p>
-<font color="red">域对象作用： 保存数据和获取数据，用于共享数据</font>
-
-<blockquote>
-<p>保存数据:<br>1）默认情况下，保存到page域<br>    <code>pageContext.setAttribute(&quot;name&quot;);</code><br>2）可以向四个域对象保存数据<br>    <code>pageContext.setAttribute(&quot;name&quot;,域范围常量)</code></p>
-<p>获取数据:<br>1）默认情况下，从page域获取<br>    <code>pageContext.getAttribute(&quot;name&quot;)</code><br>2）可以从四个域中获取数据<br>    <code>pageContext.getAttribute(&quot;name&quot;,域范围常量)</code><br>    域范围常量:<br>    <code>PageContext.PAGE_SCOPE</code><br>    <code>PageContext.REQUEST_SCOPE</code><br>    <code>PageContext..SESSION_SCOPE</code><br>    <code>PageContext.APPLICATION_SCOPE</code><br>3）自动在四个域中搜索数据<br>    <code>pageContext.findAttribute(&quot;name&quot;);</code><br>顺序： <code>page域 -&gt; request域 -&gt; session域- &gt; context域（application域）</code></p>
-</blockquote>
-<h4 id="Jsp中的四个域对象">Jsp中的四个域对象</h4><ul>
-<li><p>域对象作用：保存数据  和 获取数据 ，用于数据共享。</p>
-</li>
-<li><p>域对象方法：</p>
-<blockquote>
-<p>setAttribute(“name”,Object) 保存数据<br> getAttribute(“name”)  获取数据<br> removeAttribute(“name”) 清除数据</p>
-</blockquote>
-</li>
-<li><p>域对象作用范围：</p>
-<blockquote>
-<font color="red">page域： 只能在当前jsp页面中使用（当前页面）<br> request域： 只能在同一个请求中使用（转发）<br> session域： 只能在同一个会话（session对象）中使用（私有的）<br> context域： 只能在同一个web应用中使用。（全局的）</font>
-
-</blockquote>
-</li>
-</ul>
-<h4 id="Jsp的最佳实践">Jsp的最佳实践</h4><p>Servlet技术： 开发动态资源。是一个java类，最擅长写java代码<br>jsp技术： 开发动态资源。通过java代码最擅长输出html代码。</p>
-<blockquote>
-<font color="red">各取所长：<br>　　在web项目中涉及到逻辑：<br>　　　　1）接收参数      servlet做<br>　　　　2）处理业务逻辑，返回结果    servlet做<br>　　　　3）显示数据到浏览器      jsp做<br>　　　　4）跳转到其他页面        servlet做<br><br>servlet+jsp模式<br>　　servlet:<br>　　　　1）接收参数<br>　　　　2）处理业务逻辑<br>　　　　3）把结果保存到域对象中<br>　　　　4）跳转到jsp页面<br>　　Jsp:<br>　　　　1）从域对象取出数据<br>　　　　2）把数据显示到浏览器<br><br>servlet的数据    -&gt;   jsp页面<br>List<contact>    使用域对象 共享数据</contact></font>
-
-</blockquote>
-<h4 id="EL表达式">EL表达式</h4><ul>
-<li><p>EL作用<br>jsp的核心语法： <font color="red">jsp表达式 &lt;%=%&gt;和 jsp脚本&lt;%  %&gt;。</font><br>以后开发jsp的原则：<font color="red"> 尽量在jsp页面中少写甚至不写java代码。</font><br><strong>使用EL表达式替换掉jsp表达式<br>EL表达式作用： 向浏览器输出域对象中的变量值或表达式计算的结果！！！<br>语法： ${变量或表达式}</strong></p>
-</li>
-<li><p>EL语法</p>
-<ul>
-<li>输出基本数据类型变量<blockquote>
-<p>从四个域获取<br><code>${name}</code><br>指定域获取<br><code>${pageScope.name}</code><br>域范围： <code>pageScoep / requestScope / sessionScope / applicationScope</code></p>
-</blockquote>
-</li>
-<li>输出对象的属性值<br><code>Student</code></li>
-<li>输出集合对象<br><code>List 和 Map</code></li>
-<li>EL表达式计算</li>
-</ul>
-</li>
-</ul>
-<h4 id="jsp标签">jsp标签</h4><ul>
-<li><p>jsp标签的作用<br>jsp标签作用：替换jsp脚本。</p>
-</li>
-<li><p>Jsp标签分类</p>
-<ul>
-<li>内置标签（动作标签）： 不需要在jsp页面导入标签</li>
-<li>jstl标签： 需要在jsp页面中导入标签</li>
-<li>自定义标签 ： 开发者自行定义，需要在jsp页面导入标签</li>
-</ul>
-</li>
-<li><p>动作标签</p>
-<ul>
-<li>转发标签：    <code>&lt;jsp:forward /&gt;</code></li>
-<li>参数标签：  <code>&lt;jsp:pararm/&gt;</code></li>
-<li>包含标签：  <code>&lt;jsp:include/&gt;</code><blockquote>
-<p>原理： 包含与被包含的页面先各自翻译成java源文件，然后再运行时合并在一起。（先翻译再合并），动态包含。<br>静态包含  vs  动态包含的区别？<br>1） 语法不同<br>静态包含语法： <code>&lt;%@inclue file=&quot;被包含的页面&quot;%&gt;</code><br>动态包含语法：　<code>&lt;jsp:include page=&quot;被包含的页面&quot;&gt;</code><br>2）参数传递不同<br>静态包含不能向被包含页面传递参数<br>动态包含可以向被包含页面传递参数<br>3）原理不同<br>静态包含： 先合并再翻译<br>动态包含： 先翻译再合并</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>JSTL标签<br>JSTL (全名：java  standard  tag  libarary   -  java标准标签库  )</p>
-<blockquote>
-<p><font color="red"><strong>核心标签库 （c标签库） 天天用</strong></font><br>国际化标签（fmt标签库）<br>EL函数库（fn函数库）<br>xml标签库（x标签库）<br>sql标签库（sql标签库）</p>
-</blockquote>
-</li>
-<li><p>使用JSTL标签步骤</p>
-<ul>
-<li>导入jstl支持的jar包（标签背后隐藏的java代码）<br><code>注意：使用javaee5.0的项目自动导入jstl支持jar包</code></li>
-<li>使用taglib指令导入标签库<br><code>&lt;%@taglib uri=&quot;tld文件的uri名称&quot; prefix=&quot;简写&quot; %&gt;</code></li>
-<li>在jsp中使用标签    <blockquote>
-<p>核心标签库的重点标签：<br>保存数据：<br>　　 <code>&lt;c:set&gt;&lt;/c:set&gt;</code><br>获取数据：<br>　　<code>&lt;c:out value=&quot;&quot;&gt;&lt;/c:out&gt;</code><br>单条件判断<br>　　<code>&lt;c:if test=&quot;&quot;&gt;&lt;/c:if&gt;</code><br>多条件判断<br>　　<code>&lt;c:choose&gt;&lt;/c:choose&gt;</code><br>　　<code>&lt;c:when test=&quot;&quot;&gt;&lt;/c:when&gt;</code><br>　　<code>&lt;c:otherwise&gt;&lt;/c:otherwise&gt;</code><br>循环数据<br>　　<code>&lt;c:forEach&gt;&lt;/c:forEach&gt;</code><br>　　<code>&lt;c:forTokens items=&quot;&quot; delims=&quot;&quot;&gt;&lt;/c:forTokens&gt;</code><br>重定向<br>　　<code>&lt;c:redirect&gt;&lt;/c:redirect&gt;</code></p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-
       
     </div>
     
@@ -1166,6 +647,10 @@
 
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2015/12/31/Jsp加强/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -1223,7 +708,7 @@
 </li>
 </ul>
 </li>
-<li><p><strong>Jsp的执行过程</strong><br>问题： 访问<a href="http://localhost:8080/day12/01.hello.jsp" target="_blank" rel="external">http://localhost:8080/day12/01.hello.jsp</a>  如何显示效果？</p>
+<li><p><strong>Jsp的执行过程</strong><br>问题： 访问<a href="http://localhost:8080/day12/01.hello.jsp">http://localhost:8080/day12/01.hello.jsp</a>  如何显示效果？</p>
 <ul>
 <li><p>访问到01.hello.jsp页面，tomcat扫描到jsp文件，在%tomcat%/work把jsp文件翻译成java源文件</p>
 <blockquote>
@@ -1239,59 +724,13 @@
 </li>
 <li>tomcat服务器调用_01_hello_jsp类里面方法，返回内容显示到浏览器。</li>
 </ul>
-<font color="red"> 第一次访问jsp：    走（1）（2）（3）（4）<br>第n次访问jsp：    走（4）<br>注意：jsp文件修改了或jsp的临时文件被删除了，要重新走翻译（1）和编译  （2）的过程</font>
+<font color='red'> 第一次访问jsp：    走（1）（2）（3）（4）<br>第n次访问jsp：    走（4）<br>注意：jsp文件修改了或jsp的临时文件被删除了，要重新走翻译（1）和编译  （2）的过程</font>
 </li>
 <li><p><strong>疑问</strong><br>问题： 为什么Jsp就是servlet！！！</p>
 </li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">jsp翻译的java文件：</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">_01_hello_jsp</span> <span class="keyword">extends</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">HttpJspBase</span></span><br><span class="line">    <span class="keyword">implements</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">JspSourceDependent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">HttpJspBase类：</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">HttpJspBase</span> <span class="keyword">extends</span> <span class="title">javax</span>.<span class="title">servlet</span>.<span class="title">http</span>.<span class="title">HttpServlet</span> <span class="keyword">implements</span> <span class="title">javax</span>.<span class="title">servlet</span>.<span class="title">jsp</span>.<span class="title">HttpJspPage</span> </span>&#123;</span><br></pre></td></tr></table></figure>
-<font color="red">结论：Jsp就是一个servlet程序！！！<br>　　　servlet的技术可以用在jsp程序中<br>　　　jsp的技术并不是全部适用于servlet程序！</font>
-
-<p>Servlet的生命周期：</p>
-<blockquote>
-<p>构造方法（第1次访问）<br>init方法（第1次访问）<br>service方法<br>destroy方法</p>
-</blockquote>
-<p>Jsp的生命周期</p>
-<blockquote>
-<p>翻译： jsp-&gt;java文件<br>编译： java文件-&gt;class文件（servlet程序）<br>构造方法（第1次访问）<br>init方法（第1次访问）：_jspInit()<br>service方法：_jspService()<br>destroy方法：_jspDestroy()</p>
-</blockquote>
-<h3 id="Jsp语法">Jsp语法</h3><ul>
-<li><p><strong>Jsp表达式</strong><br>语法：&lt;%=变量或表达式%&gt;<br>作用： 向浏览器输出变量的值或表达式计算的结果<br>注意：        </p>
-<blockquote>
-<p>表达式的原理就是翻译成out.print(“变量” );通过该方法向浏览器写出内容<br>表达式后面不需要带分号结束。</p>
-</blockquote>
-</li>
-<li><p><strong>Jsp的脚本</strong><br>语法：&lt;%java代码 %&gt;<br>作用： 执行java代码<br>注意：</p>
-<blockquote>
-<p>原理把脚本中java代码原封不动拷贝到_jspService方法中执行。</p>
-</blockquote>
-</li>
-<li><p><strong>Jsp的声明</strong><br>语法：&lt;%! 变量或方法 %&gt;<br>作用： 声明jsp的变量或方法<br>注意:</p>
-<blockquote>
-<p>变量翻译成成员变量，方法翻译成成员方法。<br>&lt;% 变量 %&gt;为局部变量<font color="red">不能声明方法</font>，&lt;%! 变量 %&gt;为全局变量</p>
-</blockquote>
-</li>
-<li><strong>Jsp的注释</strong><br>语法： &lt;%!–  jsp注释  –%&gt;<br>注意：<blockquote>
-<p>html的注释会被翻译和执行。而jsp的注释不能被翻译和执行。</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="Jsp的三大指令">Jsp的三大指令</h3><ul>
-<li><p><strong>include指令</strong><br>作用： 在当前页面用于包含其他页面<br>语法： &lt;%@include file=”common/header.jsp”%&gt;<br>注意：</p>
-<blockquote>
-<p>原理是把被包含的页面（header.jsp）的内容翻译到包含页面(index.jsp)中,合并成翻译成一个java源文件，再编译运行！！，这种包含叫静态包含（源码包含）<br>如果使用静态包含，被包含页面中不需要出现全局的html标签了！！！（如html、head、body）</p>
-</blockquote>
-</li>
-<li><p><strong>page指令</strong><br>作用： 告诉tomcat服务器如何翻译jsp文件</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">"java"</span>   --告诉服务器使用什么动态语言来翻译jsp文件</span><br><span class="line">	<span class="keyword">import</span>=<span class="string">"java.util.*"</span> --告诉服务器java文件使用什么包,导入包，多个包之间用逗号分割</span><br><span class="line">    pageEncoding=<span class="string">"utf-8"</span>  --告诉服务器使用什么编码翻译jsp文件（成java文件）</span><br><span class="line">	contentType=<span class="string">"text/html; charset=utf-8"</span>  --服务器发送浏览器的数据类型和内容编码</span><br><span class="line">	</span><br><span class="line">注意：在开发工具中，以后只需要设置pageEncoding即可解决中文乱码问题</span><br><span class="line">	errorPage=<span class="string">"error.jsp"</span></span><br><span class="line">	isErrorPage=<span class="string">"false"</span></span><br><span class="line">	buffer=<span class="string">"8kb"</span></span><br><span class="line">	session=<span class="string">"true"</span></span><br><span class="line">	isELIgnored=<span class="string">"false"</span></span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>配置全局的错误处理页面：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 全局错误处理页面配置 --&gt;</span><br><span class="line">&lt;error-page&gt;</span><br><span class="line">  &lt;error-code&gt;500&lt;/error-code&gt;</span><br><span class="line">  &lt;location&gt;/common/500.jsp&lt;/location&gt;</span><br><span class="line">&lt;/error-page&gt;</span><br><span class="line">&lt;error-page&gt;</span><br><span class="line">  &lt;error-code&gt;404&lt;/error-code&gt;</span><br><span class="line">  &lt;location&gt;/common/404.html&lt;/location&gt;</span><br><span class="line">&lt;/error-page&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong>taglib指令</strong></li>
-</ul>
-
+<font color='red'>结论：Jsp就是一个servlet程序！！！<br>　　　servlet的技术可以用在jsp程序中<br>　　　jsp的技术并不是全部适用于servlet程序！</font>
       
     </div>
     
@@ -1304,6 +743,10 @@
 
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2015/12/30/Jsp基础/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -1346,7 +789,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>会话管理： 管理浏览器客户端 和 服务器端之间会话过程中产生的会话数据。</p>
-<h3 id="Cookie技术">Cookie技术</h3><font color="red">Cookie特点：会话数据保存在浏览器客户端。</font>
+<h3 id="Cookie技术">Cookie技术</h3><font color='red'>Cookie特点：会话数据保存在浏览器客户端。</font>
 
 <h4 id="Cookie技术核心"><strong>Cookie技术核心</strong></h4><p>Cookie类：用于存储会话数据</p>
 <ul>
@@ -1370,100 +813,6 @@
 </li>
 <li>Cookie数据类型只能保存非中文字符串类型的。可以保存多个cookie，但是浏览器一般只允许存放300个Cookie，每个站点最多存放20个Cookie，每个Cookie的大小限制为4KB。</li>
 </ul>
-<h3 id="Session技术">Session技术</h3><h4 id="引入"><strong>引入</strong></h4><p>Cookie的局限：</p>
-<blockquote>
-<p>Cookie只能存字符串类型。不能保存对象<br>只能存非中文。<br>1个Cookie的容量不超过4KB。</p>
-</blockquote>
-<p>如果要保存非字符串，超过4kb内容，只能使用session技术！！！</p>
-<font color="red">Session特点：会话数据保存在服务器端。（内存中）</font>
-
-<h4 id="Session技术核心"><strong>Session技术核心</strong></h4><p>HttpSession类：用于保存会话数据</p>
-<ol>
-<li>创建或得到session对象<br><code>HttpSession getSession()</code><br><code>HttpSession getSession(boolean create)</code></li>
-<li>设置session对象<br><code>void setMaxInactiveInterval(int interval)  ： 设置session的有效时间</code><br><code>void invalidate()     ： 销毁session对象</code><br><code>java.lang.String getId()  ： 得到session编号</code></li>
-<li>保存会话数据到session对象<br><code>void setAttribute(java.lang.String name, java.lang.Object value)  ： 保存数据</code><br><code>java.lang.Object getAttribute(java.lang.String name)  ： 获取数据</code><br><code>void removeAttribute(java.lang.String name) ： 清除数据</code></li>
-</ol>
-<h4 id="Session原理"><strong>Session原理</strong></h4><p>问题： 服务器能够识别不同的浏览者！！<br>前提： 在哪个session域对象保存数据，就必须从哪个域对象取出！！！！</p>
-<ul>
-<li><p>浏览器1：(给s1分配一个唯一的标记：s001,把s001发送给浏览器)</p>
-<ul>
-<li>创建session对象，保存会话数据<br><code>HttpSession session = request.getSession();   --保存会话数据s1</code></li>
-</ul>
-</li>
-<li><p>浏览器1 的新窗口（带着s001的标记到服务器查询，s001-&gt;s1,返回s1） </p>
-<ul>
-<li>得到session对象的会话数据<br><code>HttpSession session = request.getSession();   --可以取出  s1</code></li>
-</ul>
-</li>
-<li><p>新的浏览器1：(没有带s001,不能返回s1)</p>
-<ul>
-<li>得到session对象的会话数据<br><code>HttpSession session = request.getSession();   --不可以取出  s2</code></li>
-</ul>
-</li>
-<li><p>浏览器2：(没有带s001,不能返回s1)</p>
-<ul>
-<li>得到session对象的会话数据<br><code>HttpSession session = request.getSession();  --不可以取出  s3</code></li>
-</ul>
-</li>
-</ul>
-<font color="red">代码解读：<code>HttpSession session = request.getSession();</code> </font>
-
-<ul>
-<li>第一次访问创建session对象，给session对象分配一个唯一的ID，叫JSESSIONID<br><code>new HttpSession();</code></li>
-<li>把JSESSIONID作为Cookie的值发送给浏览器保存<br><code>Cookie cookie = new Cookie(&quot;JSESSIONID&quot;, sessionID);</code><br><code>response.addCookie(cookie);</code></li>
-<li>第二次访问的时候，浏览器带着JSESSIONID的cookie访问服务器</li>
-<li>服务器得到JSESSIONID，在服务器的内存中搜索是否存放对应编号的session对象。<blockquote>
-<p><code>if(找到){
-return map.get(sessionID);
-}
-Map&lt;String,HttpSession&gt;
-&lt;&quot;s001&quot;, s1&gt;
-&lt;&quot;s001,&quot;s2&gt;</code></p>
-</blockquote>
-</li>
-<li>如果找到对应编号的session对象，直接返回该对象</li>
-<li>如果找不到对应编号的session对象，创建新的session对象，继续走1的流程</li>
-</ul>
-<font color="red">结论：通过JSESSION的cookie值在服务器找session对象！！！！！</font>
-
-<h4 id="Sesson细节"><strong>Sesson细节</strong></h4><ul>
-<li><code>java.lang.String getId()</code>  ： 得到session编号</li>
-<li>两个getSession方法：<ul>
-<li><code>getSession(true) / getSession()</code>  : 创建或得到session对象。没有匹配的session编号，自动创建新的session对象。</li>
-<li><code>getSession(false)</code>: 得到session对象。没有匹配的session编号，返回null</li>
-</ul>
-</li>
-<li><code>void setMaxInactiveInterval(int interval)</code>  ： 设置session的有效时间<br><font color="red">session对象销毁时间</font>：<ul>
-<li>默认情况30分服务器自动回收</li>
-<li>修改session回收时间</li>
-<li>全局修改session有效时间<blockquote>
-<p><code>&lt;!-- 修改session全局有效时间:分钟 --&gt;
-&lt;session-config&gt;
-&lt;session-timeout&gt;1&lt;/session-timeout&gt;
-&lt;/session-config&gt;</code></p>
-</blockquote>
-</li>
-<li>手动销毁session对象<br><code>void invalidate()： 销毁session对象</code></li>
-</ul>
-</li>
-<li>如何避免浏览器的JSESSIONID的cookie随着浏览器关闭而丢失的问题<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">* 手动发送一个硬盘保存的cookie给浏览器</span><br><span class="line">*/</span></span><br><span class="line">Cookie c = <span class="keyword">new</span> Cookie(<span class="string">"JSESSIONID"</span>,session.getId());</span><br><span class="line">c.setMaxAge(<span class="number">60</span>*<span class="number">60</span>);</span><br><span class="line">response.addCookie(c);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="总结">总结</h3><ul>
-<li><p>Cookie技术： 会话数据保存在浏览器客户端。</p>
-<blockquote>
-<p>Cookie核心的API：<br>在服务器端创建Cookie对象<br><code>Cookeie cookie = new Cookie(&quot;name&quot;,&quot;value&quot;);</code><br>把cookie发送给浏览器端（通过响应头：set-cookie）<br><code>response.addCookie(cookie);</code><br>浏览器带着cookie信息访问服务器（通过请求头：cookie），服务器得到cookie信息<br><code>Cookie[] cookies = request.getCookies();</code></p>
-<font color="red">局限：<br>只能保存字符串类型，不能保存中文<br>一个cookie不能超过4kb</font>
-</blockquote>
-</li>
-<li><p>Session技术：会话数据保存在服务器端。（内存）</p>
-<blockquote>
-<p>Session核心的API：<br>创建或得到session对象<br><code>HttpSession session = request.getSession(); //创建或得到session对象</code><br><code>request.getSession(false); //得到session对象</code><br>会话数据保存session对象中，和得到会话数据<br><code>session.setAttribute(&quot;name&quot;,Object);  保存数据</code><br><code>session.getAttribute(&quot;name&quot;)   得到数据</code><br><font color="red">注意</font>：<br><code>session.setIntactiveInterval(时间);   设置session过期时间</code><br><code>session.invalidate()  手动销毁session对象</code></p>
-</blockquote>
-</li>
-</ul>
-<p>此文章知识点来源传智博客发布的学习教程里面。以后会定期的更新，记录自己的学习历程，总结所学的知识点。</p>
-
       
     </div>
     
@@ -1476,6 +825,10 @@ Map&lt;String,HttpSession&gt;
 
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2015/12/29/会话管理/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -1527,189 +880,8 @@ Map&lt;String,HttpSession&gt;
 </ol>
 <p><strong>前提</strong>：<br>tomcat服务器启动时，首先加载webapps中的每个web应用的web.xml配置文件<br>http:// :http协议<br>localhost：在本地host文件中查找对应的IP地址（127.0.0.1）<br>8080：找到tomcat服务器(对应的端口)<br>/day10：在tomcat的webapps目录下找day10的目录<br>/first：资源名称</p>
 <blockquote>
-<p>在day10的web.xml中查找是否有匹配的url-pattern的内容（/first）<br> 如果匹配，则取出对应的servlet-name的名称，查看是否有对应的servlet配置<br> 如果匹配，则取出对应的servlet配置信息中的class内容：<br> <font color="red">通过反射:构造FirstServlet的对象，然后调用FirstServlet里面的方法</font></p>
+<p>在day10的web.xml中查找是否有匹配的url-pattern的内容（/first）<br> 如果匹配，则取出对应的servlet-name的名称，查看是否有对应的servlet配置<br> 如果匹配，则取出对应的servlet配置信息中的class内容：<br> <font color='red'>通过反射:构造FirstServlet的对象，然后调用FirstServlet里面的方法</font></p>
 </blockquote>
-<h3 id="Servlet的映射文件">Servlet的映射文件</h3><p>精确匹配：</p>
-<table>
-<thead>
-<tr>
-<th>url-pattern配置</th>
-<th>路径</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>/first</td>
-<td>http：//localhost:8080/day10/first</td>
-</tr>
-<tr>
-<td>/itcast/demo1</td>
-<td>http：//localhost:8080/day10/itcast/demo1</td>
-</tr>
-</tbody>
-</table>
-<p>模糊匹配：</p>
-<table>
-<thead>
-<tr>
-<th>url-pattern配置</th>
-<th>路径</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>/*</td>
-<td>http：//localhost:8080/day10/任意路径</td>
-</tr>
-<tr>
-<td>/itcast/*</td>
-<td>http：//localhost:8080/day10/itcast/任意路径</td>
-</tr>
-<tr>
-<td>*.后缀名（.do/.action）</td>
-<td>http：//localhost:8080/day10/任意路径.do</td>
-</tr>
-</tbody>
-</table>
-<font color="red"><strong>注意</strong></font>
-
-<ul>
-<li>url-pattern要么以 / 开头，要么以*开头。  例如， itcast是非法路径。</li>
-<li>不能同时使用两种模糊匹配，例如 /itcast/*.do是非法路径</li>
-<li>当有输入的URL有多个servlet同时被匹配的情况下：<ul>
-<li>精确匹配优先。（长的最像优先被匹配） </li>
-<li>以后缀名结尾的模糊url-pattern优先级最低！！！</li>
-</ul>
-</li>
-</ul>
-<h3 id="Servlet缺省路径">Servlet缺省路径</h3><p>　　servlet的缺省路径(<code>&lt;url-pattern&gt;/&lt;/url-pattern&gt;</code>）是在tomcat服务器内置的一个路径。该路径对应的是一个DefaultServlet（缺省Servlet）。这个缺省的Servlet的作用是用于解析web应用的静态资源文件。<br>问题： URL输入<a href="http://localhost:8080/day10/index.html" target="_blank" rel="external">http://localhost:8080/day10/index.html</a> 如何读取文件？？？？</p>
-<ul>
-<li>到当前day10应用下的web.xml文件查找是否有匹配的url-pattern。</li>
-<li>如果没有匹配的url-pattern，则交给tomcat的内置的DefaultServlet处理</li>
-<li>DefaultServlet程序到day10应用的根目录下查找是存在一个名称为index.html的静态文件。</li>
-<li>如果找到该文件，则读取该文件内容，返回给浏览器。</li>
-<li>如果找不到该文件，则返回404错误页面。<font color="red">结论： 先找动态资源，再找静态资源。</font>
-
-</li>
-</ul>
-<h3 id="Servlet的生命周期">Servlet的生命周期</h3><h4 id="引入"><strong>引入</strong></h4><p>Servlet的生命周期： servlet类对象什么时候创建，什么时候调用什么方法，什么时候销毁。<br>以前的对象： new Student（）； stu.study();   stu=null;<br>Servlet程序的生命周期由tomcat服务器控制的！！！！</p>
-<h4 id="Servlet重要的四个生命周期方法"><strong>Servlet重要的四个生命周期方法</strong></h4><p>构造方法： 创建servlet对象的时候调用。默认情况下，第一次访问servlet的时候创建servlet对象。只调用1次。证明servlet对象在tomcat是单实例的。<br>init方法： 创建完servlet对象的时候调用。只调用1次。<br>service方法： 每次发出请求时调用。调用n次。<br>destroy方法： 销毁servlet对象的时候调用。停止服务器或者重新部署web应用时销毁servlet对象。只调用1次。</p>
-<h4 id="伪代码演示Servlet的生命周期"><strong>伪代码演示Servlet的生命周期</strong></h4><p>Tomcat内部代码运行:</p>
-<ul>
-<li>通过映射找到到servlet-class的内容，字符串： <code>gz.itcast.a_servlet.FirstServlet</code></li>
-<li>通过反射构造FirstServlet对象</li>
-<li>得到字节码对象<br><code>Class clazz = class.forName(&quot;gz.itcast.a_servlet.FirstServlet&quot;);</code></li>
-<li>调用无参数的构造方法来构造对象<br><code>Object obj = clazz.newInstance();</code>  <font color="red">—1.servlet的构造方法被调用</font></li>
-<li>创建ServletConfig对象，通过反射调用init方法</li>
-<li>得到方法对象<br><code>Method m = clazz.getDeclareMethod(&quot;init&quot;,ServletConfig.class);</code></li>
-<li>调用方法<br><code>m.invoke(obj,config);</code><font color="red">–2.servlet的init方法被调用</font></li>
-<li>创建request，response对象，通过反射调用service方法</li>
-<li>得到方法对象<br><code>Methodm m =clazz.getDeclareMethod(&quot;service&quot;,HttpServletRequest.class,HttpServletResponse.class);</code></li>
-<li>调用方法<br><code>m.invoke(obj,request,response);</code>  <font color="red">–3.servlet的service方法被调用</font></li>
-<li>当tomcat服务器停止或web应用重新部署，通过反射调用destroy方法</li>
-<li>得到方法对象<br><code>Method m = clazz.getDeclareMethod(&quot;destroy&quot;,null);</code></li>
-<li>调用方法<br><code>m.invoke(obj,null);</code>            <font color="red">–4.servlet的destroy方法被调用</font></li>
-</ul>
-<h3 id="用时序图来演示servlet的生命周期">用时序图来演示servlet的生命周期</h3><p><img src="/images/servlet.png" alt=""></p>
-<h3 id="Servlet的自动加载">Servlet的自动加载</h3><p>默认情况下，第一次访问servlet的时候创建servlet对象。如果servlet的构造方法或init方法中执行了比较多的逻辑代码，那么导致用户第一次访问sevrlet的时候比较慢。<br>改变servlet创建对象的时机： 提前到加载web应用的时候！！！<br>在servlet的配置信息中，加上一个<load-on-startup>即可！！<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;servlet&gt; </span><br><span class="line">        &lt;servlet-<span class="property">name</span>&gt;LifeDemo&lt;/servlet-<span class="property">name</span>&gt;</span><br><span class="line">        &lt;servlet-<span class="type">class</span>&gt;gz.itcast.c_life.LifeDemo&lt;/servlet-<span class="type">class</span>&gt;</span><br><span class="line">        &lt;load-<span class="function_start"><span class="keyword">on</span></span>-startup&gt;<span class="number">1</span>&lt;/load-<span class="function_start"><span class="keyword">on</span></span>-startup&gt;</span><br><span class="line">&lt;/servlet&gt;</span><br></pre></td></tr></table></figure></load-on-startup></p>
-<h3 id="Servlet的多线程并发问题">Servlet的多线程并发问题</h3><font color="red">注意： servlet对象在tomcat服务器是单实例多线程的。</font><br>　　因为servlet是多线程的，所以当多个servlet的线程同时访问了servlet的共享数据，如成员变量，可能会引发线程安全问题。<br><br>解决办法：<br>　　把使用到共享数据的代码块进行同步（使用<code>synchronized</code>关键字进行同步）<br>　　建议在servlet类中尽量不要使用成员变量。如果确实要使用成员，必须同步。而且尽量缩小同步代码块的范围。（哪里使用到了成员变量，就同步哪里！！），以避免因为同步而导致并发效率降低。<br><font color="red">Servlet学习</font>
-
-<blockquote>
-<p>HttpServletRequest  请求对象：获取请求信息<br>HttpServletResponse 响应对象： 设置响应对象<br>ServletConfig对象    servlet配置对象<br>ServletContext对象 servlet的上下文对象</p>
-</blockquote>
-<h3 id="ServletConfig对象">ServletConfig对象</h3><h4 id="作用"><strong>作用</strong></h4><p>　　ServletConfig对象:＜主要是用于加载servlet的初始化参数。在一个web应用可以存在多个ServletConfig对象（一个Servlet对应一个ServletConfig对象）</p>
-<h4 id="对象创建和得到"><strong>对象创建和得到</strong></h4><p>创建时机： 在创建完servlet对象之后，在调用init方法之前创建。<br>得到对象： 直接从有参数的init方法中得到！！！</p>
-<h4 id="servlet的初始化参数配置"><strong>servlet的初始化参数配置</strong></h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>ConfigDemo<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>gz.itcast.f_config.ConfigDemo<span class="tag">&lt;/<span class="title">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 初始参数： 这些参数会在加载web应用的时候，封装到ServletConfig对象中 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">init-param</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="title">param-name</span>&gt;</span>path<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="title">param-value</span>&gt;</span>e:/b.txt<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">init-param</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<font color="red">注意： servlet的参数只能由当前的这个sevlet获取！！！！<br></font>ServletConfig的API：<font color="red"></font>
-
-<ul>
-<li>java.lang.String getInitParameter(java.lang.String name)  根据参数名获取参数值</li>
-<li>java.util.Enumeration getInitParameterNames()    获取所有参数</li>
-<li>ServletContext getServletContext()     得到servlet上下文对象</li>
-<li>java.lang.String getServletName()       得到servlet的名称</li>
-</ul>
-<h3 id="ServletContext对象">ServletContext对象</h3><h4 id="引入-1"><strong>引入</strong></h4><p>　　ServletContext对象,叫做Servlet的上下文对象。表示一个当前的web应用环境。一个web应用中只有一个ServletContext对象。</p>
-<h4 id="对象创建和得到-1"><strong>对象创建和得到</strong></h4><p>创建时机：加载web应用时创建ServletContext对象。<br>得到对象：从ServletConfig对象的getServletContext方法得到<br>Sun公司设计:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">创建ServletContext对象  ServletContext context = <span class="keyword">new</span> ServletContext()</span><br><span class="line">创建ServletConfig对象   ServetConfig config = <span class="keyword">new</span> ServletConfig();</span><br><span class="line">                        config.setServletContxt(context);</span><br><span class="line"><span class="class"><span class="keyword">class</span>  <span class="title">ServletConfig</span></span>&#123;</span><br><span class="line">	ServletContext context;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> ServletContext <span class="title">getServletContxt</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> contxt;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">( ServletConfig config )</span></span>&#123;</span><br><span class="line">	得到ServletConfig对象</span><br><span class="line">	从ServletConfig对象中得到ServletContext对象</span><br><span class="line">	SerlvetContext context = config.getServletContext();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="ServletContext对象的核心API(作用)"><strong>ServletContext对象的核心API(作用)</strong></h4><blockquote>
-<p>java.lang.String getContextPath()   –得到当前web应用的路径(<font color="red">用在请求重定向的资源名称中</font>)</p>
-<p>java.lang.String getInitParameter(java.lang.String name)  –得到web应用的初始化参数<br>java.util.Enumeration getInitParameterNames()  </p>
-<p>void setAttribute(java.lang.String name, java.lang.Object object) –域对象有关的方法<br>java.lang.Object getAttribute(java.lang.String name)<br>void removeAttribute(java.lang.String name)  </p>
-<p>RequestDispatcher getRequestDispatcher(java.lang.String path)   –转发（类似于重定向）</p>
-<p>java.lang.String getRealPath(java.lang.String path)     –得到web应用的资源文件<br>java.io.InputStream getResourceAsStream(java.lang.String path) </p>
-</blockquote>
-<h4 id="域对象有关的方法"><strong>域对象有关的方法</strong></h4><p>域对象：作用是用于保存数据，获取数据。可以在不同的动态资源之间共享数据。<br>案例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">案例<span class="number">1</span>：</span><br><span class="line">response.sendRedirect(<span class="string">"/Servlet2?name=eric"</span>)</span><br><span class="line">String request.getParameter(<span class="string">"name"</span>);</span><br><span class="line"></span><br><span class="line">案例<span class="number">2</span>:</span><br><span class="line"><span class="comment">//保存数据</span></span><br><span class="line"><span class="comment">//1.得到域对象</span></span><br><span class="line">ServletContext context = <span class="keyword">this</span>.getServletContext();</span><br><span class="line"><span class="comment">//2.把数据保存到域对象中</span></span><br><span class="line">context.setAttribute(<span class="string">"name"</span>, <span class="string">"eric"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取数据</span></span><br><span class="line"><span class="comment">//1.得到域对象</span></span><br><span class="line">ServletContext context = <span class="keyword">this</span>.getServletContext();</span><br><span class="line"><span class="comment">//2.从域对象中取出数据</span></span><br><span class="line">String name = (String)context.getAttribute(<span class="string">"name"</span>);</span><br></pre></td></tr></table></figure></p>
-<p>方案1： 可以通过传递参数的形式，共享数据。局限：只能传递字符串类型。<br>方案2： 可以使用域对象共享数据，<font color="red">好处：可以共享任何类型的数据！！！！！</font></p>
-<p>ServletContext就是一个域对象！！！！</p>
-<ul>
-<li>保存数据：void setAttribute(java.lang.String name, java.lang.Object object)                    </li>
-<li>获取数据： java.lang.Object getAttribute(java.lang.String name)  </li>
-<li>删除数据： void removeAttribute(java.lang.String name)  </li>
-</ul>
-<font color="red">ServletContext域对象：作用范围在整个web应用中有效！！！<br>所有域对象</font>
-
-<blockquote>
-<p>HttpServletRequet 域对象<br>ServletContext域对象<br>HttpSession 域对象<br>PageContext域对象    </p>
-</blockquote>
-<h4 id="转发法"><strong>转发法</strong></h4><p><code>RequestDispatcher getRequestDispatcher(java.lang.String path)</code><br>转发<br><code>request.setAttribute(&quot;name&quot;,&quot;rose&quot;);</code><br><code>this.getServletContext().getRequestDispatcher(&quot;/GetDateServlet&quot;).forward(request, response);</code></p>
-<ul>
-<li>地址栏不会改变</li>
-<li>转发只能转发到当前web应用内的资源</li>
-<li>可以在转发过程中，可以把数据保存到request域对象中</li>
-</ul>
-<p>重定向<br><code>response.sendRedirect(&quot;/day10/GetDataServlet&quot;);</code></p>
-<ul>
-<li>地址栏会改变，变成重定向到地址。</li>
-<li>重定向可以跳转到当前web应用，或其他web应用，甚至是外部域名网站。</li>
-<li>不能再重定向的过程，把数据保存到request中。</li>
-</ul>
-<font color="red">结论： 如果要使用request域对象进行数据共享，只能用转发技术！！！</font>
-
-<h3 id="总结">总结</h3><h4 id="Servlet编程">Servlet编程</h4><ul>
-<li>Servlet生命周期（重点）<ul>
-<li>构造方法： 创建servlet对象。默认情况下，第一次访问servlet对象时。只调用1次。</li>
-<li>init方法（有参）： 创建完servlet对象后调用。只调用1次。注意： 会调用无参的init方法。</li>
-<li>service方法： servlet提供服务的方法。每次发出请求调用。注意： request对象 ，response对象</li>
-<li>destroy方法：tomcat服务器停止或web应用重新部署，servlet对象销毁，destroy方法被调用。</li>
-</ul>
-</li>
-<li>ServletConfig对象<ul>
-<li>获取servlet的初始化参数：<blockquote>
-<p>getInitParameter(“name”);<br>getInitParameterNames();</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>ServletContext对象</p>
-<ul>
-<li><p>得到web应用路径：</p>
-<blockquote>
-<p>context.getContextPath();<br>request.getContextPath();  等价于上面的代码</p>
-</blockquote>
-</li>
-<li><p>得到web应用参数：</p>
-<blockquote>
-<p>context.getInitParameter(“name”);<br>context.getInitParameterNames();</p>
-</blockquote>
-</li>
-<li><p>域对象:</p>
-<blockquote>
-<p>context.setAttribute(“name”,Object): 保存数据<br>context.getAttribute(“name”)   得到数据<br>context.removeAttribue(“name”)  清除数据</p>
-</blockquote>
-</li>
-<li><p>转发</p>
-<blockquote>
-<p>context.getRequestDispatcher(“路径”).forward(request,response);<br>request.getRequestDispacher(“路径”).forward(request,response);  等价于上面的代码</p>
-</blockquote>
-</li>
-<li>得到web应用中的资源文件<blockquote>
-<p>context.getRealPath(“路径”)<br>context.getResourceAsStream(“路径”);</p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-<p>此文章知识点来源传智博客发布的学习教程里面。以后会定期的更新，记录自己的学习历程，总结所学的知识点。</p>
-
       
     </div>
     
@@ -1722,6 +894,10 @@ Map&lt;String,HttpSession&gt;
 
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2015/12/28/servlet编程/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>

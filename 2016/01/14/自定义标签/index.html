@@ -30,7 +30,7 @@
 编写一个普通的java类，继承SimpleTagSupport类，叫标签处理器类
 
 1234567891011121314151617181920212223242526272829 /** * 标签处理器类 * @author APPle * 1）继承SimpleTagSupport * */">
-<meta property="og:updated_time" content="2016-02-26T02:39:21.669Z">
+<meta property="og:updated_time" content="2016-02-26T06:49:48.909Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义标签">
 <meta name="twitter:description" content="自定义标签引入需求： 向浏览器输出当前客户的IP地址 （只能使用jsp标签）
@@ -230,6 +230,7 @@
 <li>在jsp页面的头部导入自定义标签库<br><code>&lt;%@taglib uri=&quot;http://gz.itcast.cn&quot; prefix=&quot;itcast&quot;%&gt;</code></li>
 <li>在jsp中使用自定义标签<br><code>&lt;itcast:showIp&gt;&lt;/itcast:showIp&gt;</code></li>
 </ul>
+<a id="more"></a>
 <h4 id="自定义标签的执行过程">自定义标签的执行过程</h4><p>问题： <a href="http://localhost:8080/day14/01.hellotag.jsp" target="_blank" rel="external">http://localhost:8080/day14/01.hellotag.jsp</a>  如何访问到自定义标签？</p>
 <p>前提： tomcat服务器启动时，加载到每个web应用，加载每个web应用的WEB-INF目录下的所有文件！！！例如。web.xml, tld文件！！！</p>
 <blockquote>
