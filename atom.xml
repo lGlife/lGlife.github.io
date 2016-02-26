@@ -885,7 +885,7 @@
     <link href="http://yoursite.com/2015/12/29/%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86/"/>
     <id>http://yoursite.com/2015/12/29/会话管理/</id>
     <published>2015-12-29T06:02:12.000Z</published>
-    <updated>2015-12-29T09:31:00.259Z</updated>
+    <updated>2016-02-26T02:45:10.716Z</updated>
     <content type="html"><![CDATA[<p>会话管理： 管理浏览器客户端 和 服务器端之间会话过程中产生的会话数据。</p>
 <h3 id="Cookie技术">Cookie技术</h3><font color="red">Cookie特点：会话数据保存在浏览器客户端。</font>
 
@@ -1012,7 +1012,7 @@ Map&lt;String,HttpSession&gt;
 <h4 id="Cookie技]]>
     </summary>
     
-      <category term="学习" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="servlet" scheme="http://yoursite.com/tags/servlet/"/>
     
   </entry>
   
@@ -1233,7 +1233,7 @@ Map&lt;String,HttpSession&gt;
     <link href="http://yoursite.com/2015/12/24/Http%E5%8D%8F%E8%AE%AE/"/>
     <id>http://yoursite.com/2015/12/24/Http协议/</id>
     <published>2015-12-24T03:21:02.000Z</published>
-    <updated>2015-12-25T09:40:52.809Z</updated>
+    <updated>2016-02-26T02:46:36.222Z</updated>
     <content type="html"><![CDATA[<h3 id="什么是http协议">什么是http协议</h3><p>http协议：对浏览器客户端和服务端之间数据传输的格式规范<font color="red">数据传输的格式规范</font></p>
 <h3 id="查看http协议的工具">查看http协议的工具</h3><ol>
 <li>使用火狐的firebug插件（右键-&gt;firebug-&gt;网络）</li>
@@ -1323,7 +1323,7 @@ Map&lt;String,HttpSession&gt;
 <h3 id="查看http协议的工具">查看http协议的工具</h3]]>
     </summary>
     
-      <category term="学习" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="http" scheme="http://yoursite.com/tags/http/"/>
     
   </entry>
   
