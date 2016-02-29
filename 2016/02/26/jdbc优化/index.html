@@ -32,7 +32,7 @@
 使用BenUtils组件：
 
 引入commons-beanu">
-<meta property="og:updated_time" content="2016-02-29T13:07:25.732Z">
+<meta property="og:updated_time" content="2016-02-29T13:11:08.926Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDBC优化">
 <meta name="twitter:description" content="BeanUtils组件1.1    简介程序中对javabean的操作很频繁， 所以apache提供了一套开源的api，方便对javabean的操作！即BeanUtils组件。BeanUtils组件，  作用是简化javabean的操作！
@@ -230,7 +230,7 @@
 <li>引入日志支持包: commons-logging-1.1.3.jar</li>
 </ol>
 <p>如果缺少日志jar文件，报错：<br>java.lang.NoClassDefFoundError: org/apache/commons/logging/LogFactory<br>    at org.apache.commons.beanutils.ConvertUtilsBean.<init>(ConvertUtilsBean.java:157)<br>    at org.apache.commons.beanutils.BeanUtilsBean.<init>(BeanUtilsBean.java:117)<br>    at org.apache.commons.beanutils.BeanUtilsBean$1.initialValue(BeanUtilsBean.java:68)<br>    at </init></init></p>
-<!--阅读全文-->
+<a id="more"></a>
 <p>1.2    实例, 基本用法<br>方法1： 对象属性的拷贝<br>BeanUtils.copyProperty(admin, “userName”, “jack”);<br>BeanUtils.setProperty(admin, “age”, 18);<br>方法2： 对象的拷贝<br>BeanUtils.copyProperties(newAdmin, admin);<br>方法3： map数据拷贝到javabean中<br>【注意：map中的key要与javabean的属性名称一致】<br>BeanUtils.populate(adminMap, map);</p>
 <pre><code><span class="comment">//1. 对javabean的基本操作</span>
 <span class="annotation">@Test</span>
